@@ -1,0 +1,36 @@
+allprojects {
+    apply plugin: "idea"
+
+    version = "0.1.0"
+
+    ext {
+        gdxVersion = "1.9.8"
+        visuiVersion = "1.4.0"
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+project(":desktop") {
+    apply plugin: "java"
+
+    dependencies {
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+    }
+}
+
+project(":core") {
+    apply plugin: "java"
+
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile "com.kotcrab.vis:vis-ui:$visuiVersion"
+    }
+}

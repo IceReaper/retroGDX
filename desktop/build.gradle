@@ -1,0 +1,20 @@
+apply plugin: "java"
+
+sourceSets.main.java.srcDirs = ["src/"]
+
+project.ext.mainClassName = "retrogdx.DesktopLauncher"
+
+task run(dependsOn: classes, type: JavaExec) {
+    main = project.mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+    workingDir = new File("../")
+}
+
+jar {
+    from files(sourceSets.main.output.classesDir)
+    from { configurations.compile.collect { zipTree(it) } }
+
+    manifest {
+        attributes 'Main-Class': project.mainClassName
+    }
+}
