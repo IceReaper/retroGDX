@@ -6,6 +6,7 @@ allprojects {
     ext {
         gdxVersion = "1.9.8"
         visuiVersion = "1.4.0"
+        reflectionsVersion = "0.9.11"
     }
 
     repositories {
@@ -32,5 +33,6 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.kotcrab.vis:vis-ui:$visuiVersion"
+        compile "org.reflections:reflections:$reflectionsVersion"
     }
 }

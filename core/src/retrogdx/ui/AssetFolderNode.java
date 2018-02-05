@@ -5,13 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 
-public abstract class AssetNode extends Node {
-    protected Table previewArea;
-
-    public AssetNode(Table previewArea, String name) {
-        super(new VisLabel(name));
-
-        this.previewArea = previewArea;
+public abstract class AssetFolderNode extends AssetFileNode {
+    public AssetFolderNode(Table previewArea, String name) {
+        super(previewArea, name);
 
         this.add(new Node(new VisLabel("...")));
     }
@@ -29,6 +25,4 @@ public abstract class AssetNode extends Node {
     }
 
     protected abstract Array<Node> populate();
-
-    protected abstract void showPreview();
 }

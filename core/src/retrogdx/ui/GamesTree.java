@@ -8,8 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTree;
+import org.reflections.Reflections;
 import retrogdx.Game;
-import retrogdx.games.dune2.Dune2;
+
+import java.util.Set;
 
 import static com.badlogic.gdx.scenes.scene2d.ui.Tree.*;
 
@@ -27,22 +29,30 @@ public class GamesTree extends VisScrollPane {
 
         tree.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                AssetNode selected = (AssetNode) tree.getSelection().first();
+                Node selected = tree.getSelection().first();
                 previewArea.clearChildren();
 
-                if (selected == null) {
+                if (!(selected instanceof AssetFileNode)) {
                     showPreview();
                 } else {
-                    selected.showPreview();
+                    ((AssetFileNode) selected).showPreview();
                 }
             }
         });
 
-        for (FileHandle file : Gdx.files.internal("games").list()) {
-            Game game = new Dune2(previewArea);
+        Set<Class<? extends Game>> gameClasses = new Reflections("retrogdx.games").getSubTypesOf(Game.class);
 
-            if (game.parse(file)) {
-                ((VisTree) this.getActor()).add((Node) game);
+        for (FileHandle file : Gdx.files.internal("games").list()) {
+            for (Class<? extends Game> gameClass : gameClasses) {
+                try {
+                    Game game = gameClass.getConstructor(Table.class).newInstance(this.previewArea);
+
+                    if (game.parse(file)) {
+                        ((VisTree) this.getActor()).add((Node) game);
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
 

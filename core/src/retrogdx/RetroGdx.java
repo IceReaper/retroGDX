@@ -25,13 +25,12 @@ public class RetroGdx extends ApplicationAdapter {
         Table previewArea = new Table();
         GamesTree gamesTree = new GamesTree(previewArea);
 
-        root.add(gamesTree).width(250).fillY();
-        root.add(previewArea).expand();
-        root.setDebug(true);
+        root.add(gamesTree).width(320).expandY().fillY();
+        root.add(previewArea).expand().fill();
         this.stage.addActor(root);
 
         // TODO we need generic preview classes for:
-        // 1. Text (plain text)
+        // 1. Text (plain text) => DONE, but stretch / fit doesnt work yet!
         // 2. Image (plain image)
         // 3. Animation (multiple frames)
         // 4. Spritesheet (multiple animations)

@@ -5,10 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import retrogdx.ui.AssetNode;
+import retrogdx.ui.AssetFolderNode;
 import retrogdx.Game;
 
-public class Dune2 extends AssetNode implements Game {
+public class Dune2 extends AssetFolderNode implements Game {
     private FileHandle folder;
 
     public Dune2(Table previewArea) {
