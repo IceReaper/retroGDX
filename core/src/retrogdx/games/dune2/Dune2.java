@@ -5,8 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import retrogdx.ui.AssetFolderNode;
 import retrogdx.Game;
+import retrogdx.games.dune2.nodes.PakNode;
+import retrogdx.ui.AssetFolderNode;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Dune2 extends AssetFolderNode implements Game {
     private FileHandle folder;
@@ -25,15 +30,22 @@ public class Dune2 extends AssetFolderNode implements Game {
     }
 
     protected Array<Node> populate() {
-        Array<Node> files = new Array<>();
+        Map<String, Node> files = new HashMap<>();
 
         for (FileHandle file : this.folder.list()) {
             if (file.extension().equals("PAK")) {
-                files.add(new PakFile(this.previewArea, file));
+                files.put(file.name(), new PakNode(this.previewArea, file));
             }
         }
 
-        return files;
+        Map<String, Node> sorted = new TreeMap<>(files);
+        Array<Node> result = new Array<>();
+
+        for (String key : sorted.keySet()) {
+            result.add(files.get(key));
+        }
+
+        return result;
     }
 
     protected void showPreview() {

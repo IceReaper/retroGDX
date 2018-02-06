@@ -1,6 +1,7 @@
-package retrogdx.games.dune2;
+package retrogdx.games.dune2.nodes;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import retrogdx.games.dune2.readers.Ini;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.TextPreview;
 import retrogdx.utils.SmartByteBuffer;
@@ -16,7 +17,8 @@ public class IniNode extends AssetFileNode {
     }
 
     protected void showPreview() {
-        SmartByteBuffer buffer = this.sliceInfo.slice();
-        this.previewArea.add(new TextPreview(buffer.readString(buffer.capacity())));
+        Ini ini = new Ini(this.sliceInfo.slice());
+        // TODO encoding?! Or is this just a gdx bug?
+        this.previewArea.add(new TextPreview(ini.getText()));
     }
 }
