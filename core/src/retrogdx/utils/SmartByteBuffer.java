@@ -159,6 +159,7 @@ public class SmartByteBuffer {
         SmartByteBuffer instance = SmartByteBuffer.wrap(data);
         instance.parent = this;
         instance.parentOffset = offset;
+        instance.order(this.order());
         return instance;
     }
 

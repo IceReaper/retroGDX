@@ -19,6 +19,6 @@ public class IniNode extends AssetFileNode {
     protected void showPreview() {
         Ini ini = new Ini(this.sliceInfo.slice());
         // TODO encoding?! Or is this just a gdx bug?
-        this.previewArea.add(new TextPreview(ini.getText()));
+        this.previewArea.add(new TextPreview(ini.text));
     }
 }

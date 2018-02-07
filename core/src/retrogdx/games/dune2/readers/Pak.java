@@ -12,12 +12,12 @@ public class Pak {
 
     public Pak(SmartByteBuffer buffer) {
         this.buffer = buffer;
-        this.buffer.order(ByteOrder.LITTLE_ENDIAN);
     }
 
     public Map<String, SliceInfo> getFiles() {
         Map<String, SliceInfo> files = new LinkedHashMap<>();
 
+        this.buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.buffer.position(0);
 
         while (true) {

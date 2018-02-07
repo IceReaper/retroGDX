@@ -29,9 +29,11 @@ public class PakNode extends AssetFolderNode {
             } else if (file.getKey().endsWith(".SHP")) {
                 // TODO spritesheet
             } else if (file.getKey().endsWith(".WSA")) {
-                // TODO animation
+                nodes.add(new WsaNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".VOC")) {
                 // TODO soundfile
+            } else if (file.getKey().endsWith(".PAL")) {
+                nodes.add(new PalNode(this.previewArea, file.getKey(), file.getValue()));
 
             } else if (file.getKey().endsWith(".ADL")) {
                 // TODO soundfile
@@ -52,8 +54,6 @@ public class PakNode extends AssetFolderNode {
                 // TODO font
             } else if (file.getKey().endsWith(".CPS")) {
                 // TODO UNK
-            } else if (file.getKey().endsWith(".PAL")) {
-                nodes.add(new PalNode(this.previewArea, file.getKey(), file.getValue()));
 
             } else if (file.getKey().endsWith(".TBL")) {
                 // TODO UNK

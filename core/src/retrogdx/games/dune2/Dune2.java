@@ -7,13 +7,17 @@ import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import retrogdx.Game;
 import retrogdx.games.dune2.nodes.PakNode;
+import retrogdx.games.dune2.readers.Pak;
+import retrogdx.games.dune2.readers.Pal;
 import retrogdx.ui.AssetFolderNode;
+import retrogdx.utils.SmartByteBuffer;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class Dune2 extends AssetFolderNode implements Game {
+    public static int[] PALETTE;
     private FileHandle folder;
 
     public Dune2(Table previewArea) {
@@ -23,6 +27,15 @@ public class Dune2 extends AssetFolderNode implements Game {
     public boolean parse(FileHandle folder) {
         if (folder.child("DUNE2.EXE").exists()) {
             this.folder = folder;
+
+            Pak pak = new Pak(SmartByteBuffer.wrap(folder.child("DUNE.PAK").readBytes()));
+
+            for (Map.Entry<String, SmartByteBuffer.SliceInfo> entry : pak.getFiles().entrySet()) {
+                if (entry.getKey().equals("IBM.PAL")) {
+                    Dune2.PALETTE = new Pal(entry.getValue().slice()).colors;
+                }
+            }
+
             return true;
         }
 
