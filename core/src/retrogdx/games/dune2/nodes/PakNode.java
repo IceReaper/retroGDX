@@ -11,6 +11,7 @@ import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
 import retrogdx.utils.SmartByteBuffer.SliceInfo;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +42,14 @@ public class PakNode extends AssetFolderNode {
             } else if (file.getKey().endsWith(".PAL")) {
                 nodes.add(new PalNode(this.previewArea, file.getKey(), file.getValue()));
                 this.palettes.put(file.getKey(), file.getValue());
+            } else if (file.getKey().endsWith(".ICN")) {
+                // TODO tileset
+            } else if (file.getKey().endsWith(".MAP")) {
+                // TODO Use in conjuction with ICN?
+            } else if (file.getKey().endsWith(".FNT")) {
+                // TODO font
+            } else if (file.getKey().endsWith(".CPS")) {
+                // TODO image
 
             } else if (file.getKey().endsWith(".ADL")) {
                 // TODO soundfile
@@ -53,26 +62,17 @@ public class PakNode extends AssetFolderNode {
             } else if (file.getKey().endsWith(".TAN")) {
                 // TODO soundfile
             } else if (file.getKey().endsWith(".DRV")) {
-                // TODO UNK
+                // TODO UNK - pc speaker related?
             } else if (file.getKey().endsWith(".ADV")) {
-                // TODO UNK
-
-            } else if (file.getKey().endsWith(".FNT")) {
-                // TODO font
-            } else if (file.getKey().endsWith(".CPS")) {
-                // TODO UNK
+                // TODO UNK - Soundcard driver?
 
             } else if (file.getKey().endsWith(".TBL")) {
-                // TODO UNK
+                nodes.add(new TblNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".EMC")) {
-                // TODO UNK
-            } else if (file.getKey().endsWith(".ICN")) {
-                // TODO UNK
-            } else if (file.getKey().endsWith(".MAP")) {
-                // TODO UNK
+                // TODO scripts
 
             } else if (file.getKey().endsWith(".ENG") || file.getKey().endsWith(".FRE") || file.getKey().endsWith(".GER")) {
-                // TODO strings
+                // TODO strings (compressed)
             }
         }
 
