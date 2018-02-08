@@ -18,6 +18,7 @@ import java.util.TreeMap;
 
 public class Dune2 extends AssetFolderNode implements Game {
     public static int[] PALETTE;
+    public static int[] PALETTE_ALT;
     private FileHandle folder;
 
     public Dune2(Table previewArea) {
@@ -33,6 +34,8 @@ public class Dune2 extends AssetFolderNode implements Game {
             for (Map.Entry<String, SmartByteBuffer.SliceInfo> entry : pak.getFiles().entrySet()) {
                 if (entry.getKey().equals("IBM.PAL")) {
                     Dune2.PALETTE = new Pal(entry.getValue().slice()).colors;
+                } else if (entry.getKey().equals("BENE.PAL")) {
+                    Dune2.PALETTE_ALT = new Pal(entry.getValue().slice()).colors;
                 }
             }
 

@@ -6,13 +6,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import retrogdx.games.dune2.readers.Pak;
+import retrogdx.games.dune2.readers.Pal;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
+import retrogdx.utils.SmartByteBuffer.SliceInfo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class PakNode extends AssetFolderNode {
     private FileHandle file;
+    private Map<String, SliceInfo> palettes = new HashMap<>();
+    private Map<String, SliceInfo> animations = new HashMap<>();
 
     public PakNode(Table previewArea, FileHandle file) {
         super(previewArea, file.name());
@@ -27,13 +32,15 @@ public class PakNode extends AssetFolderNode {
             if (file.getKey().endsWith(".INI")) {
                 nodes.add(new IniNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".SHP")) {
-                // TODO spritesheet
+                nodes.add(new ShpNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".WSA")) {
-                nodes.add(new WsaNode(this.previewArea, file.getKey(), file.getValue()));
+                nodes.add(new WsaNode(this.previewArea, file.getKey(), file.getValue(), this.palettes, this.animations));
+                this.animations.put(file.getKey(), file.getValue());
             } else if (file.getKey().endsWith(".VOC")) {
                 // TODO soundfile
             } else if (file.getKey().endsWith(".PAL")) {
                 nodes.add(new PalNode(this.previewArea, file.getKey(), file.getValue()));
+                this.palettes.put(file.getKey(), file.getValue());
 
             } else if (file.getKey().endsWith(".ADL")) {
                 // TODO soundfile
