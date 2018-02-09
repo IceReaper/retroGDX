@@ -41,7 +41,7 @@ public class PakNode extends AssetFolderNode {
                 nodes.add(new PalNode(this.previewArea, file.getKey(), file.getValue()));
                 this.palettes.put(file.getKey(), file.getValue());
             } else if (file.getKey().endsWith(".ICN")) {
-                // TODO tileset
+                nodes.add(new IcnNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".MAP")) {
                 // TODO Use in conjuction with ICN?
             } else if (file.getKey().endsWith(".FNT")) {

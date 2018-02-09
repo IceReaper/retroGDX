@@ -52,7 +52,7 @@ public class Shp {
         ShpImage image = new ShpImage();
 
         int flags = buffer.readShort();
-        int slices = buffer.readUByte();
+        int slices = buffer.readUByte(); // slices == image.width
         image.width = buffer.readUShort();
         image.height = buffer.readUByte();
         int dataLeft = buffer.readUShort() - 10;
@@ -89,6 +89,7 @@ public class Shp {
             data = Algorythms.decompress(data);
         }
 
+        // data.length == dataSize
         data = Algorythms.zeroFill(data);
 
         for (int j = 0; j < data.length; j++) {

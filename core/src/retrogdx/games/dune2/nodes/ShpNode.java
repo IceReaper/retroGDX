@@ -31,21 +31,31 @@ public class ShpNode extends AssetFileNode {
             height = Math.max(image.height, height);
         }
 
-        Pixmap pixmap = new Pixmap(width * shp.images.length, height, Pixmap.Format.RGBA8888);
+        int totalX = (int) Math.ceil(Math.sqrt(shp.images.length));
+        int totalY = (int) Math.ceil(shp.images.length / (float) totalX);
+
+        Pixmap pixmap = new Pixmap(totalX * width, totalY * height, Pixmap.Format.RGBA8888);
         int[] palette = Dune2.PALETTE;
 
         if (this.name.equals("MENSHPM.SHP")) {
             palette = Dune2.PALETTE_ALT;
         }
 
-        // TODO PIECES palette?
+        for (int ty = 0; ty < totalX; ty++) {
+            for (int tx = 0; tx < totalY; tx++) {
+                int tileIndex = tx + ty * totalX;
 
-        for (int i = 0; i < shp.images.length; i++) {
-            ShpImage image = shp.images[i];
-            for (int y = 0; y < image.height; y++) {
-                for (int x = 0; x < image.width; x++) {
-                    int index = image.pixels[x + y * image.width] & 0xff;
-                    pixmap.drawPixel(i * width + x, y, palette[index]);
+                if (tileIndex >= shp.images.length) {
+                    break;
+                }
+
+                ShpImage image = shp.images[tileIndex];
+
+                for (int y = 0; y < image.height; y++) {
+                    for (int x = 0; x < image.width; x++) {
+                        int index = image.pixels[x + y * image.width] & 0xff;
+                        pixmap.drawPixel(tx * width + x, ty * height + y, palette[index]);
+                    }
                 }
             }
         }
