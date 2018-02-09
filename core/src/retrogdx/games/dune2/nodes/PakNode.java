@@ -6,12 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import retrogdx.games.dune2.readers.Pak;
-import retrogdx.games.dune2.readers.Pal;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
 import retrogdx.utils.SmartByteBuffer.SliceInfo;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +24,7 @@ public class PakNode extends AssetFolderNode {
     }
 
     protected Array<Node> populate() {
-        Pak pak = new Pak(SmartByteBuffer.wrap(this.file));
+        Pak pak = new Pak(SmartByteBuffer.wrap(this.file.readBytes()));
         Array<Node> nodes = new Array<>();
 
         for (Map.Entry<String, SmartByteBuffer.SliceInfo> file : pak.getFiles().entrySet()) {
@@ -52,15 +50,15 @@ public class PakNode extends AssetFolderNode {
                 // TODO image
 
             } else if (file.getKey().endsWith(".ADL")) {
-                // TODO soundfile
+                // TODO music
             } else if (file.getKey().endsWith(".C55")) {
-                // TODO soundfile
+                // TODO music
             } else if (file.getKey().endsWith(".XMI")) {
-                // TODO soundfile
+                // TODO music
             } else if (file.getKey().endsWith(".PCS")) {
-                // TODO soundfile
+                // TODO music
             } else if (file.getKey().endsWith(".TAN")) {
-                // TODO soundfile
+                // TODO music
             } else if (file.getKey().endsWith(".DRV")) {
                 // TODO UNK - pc speaker related?
             } else if (file.getKey().endsWith(".ADV")) {

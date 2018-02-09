@@ -1,10 +1,11 @@
 package retrogdx.games.dune2.readers;
 
-import com.badlogic.gdx.utils.Array;
 import retrogdx.games.dune2.Algorythms;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Shp {
     public class ShpImage {
@@ -24,7 +25,7 @@ public class Shp {
         boolean useInt = (buffer.readInt() >> 16) == 0x00;
         buffer.position(buffer.position() - 4);
 
-        Array<ShpImage> images = new Array<>();
+        List<ShpImage> images = new ArrayList<>();
 
         for (int i = 0; i < numFrames; i++) {
             int offset = (useInt ? buffer.readInt() + 2 : buffer.readShort());
@@ -40,9 +41,9 @@ public class Shp {
             buffer.position(position);
         }
 
-        this.images = new ShpImage[images.size];
+        this.images = new ShpImage[images.size()];
 
-        for (int i = 0; i < images.size; i++) {
+        for (int i = 0; i < images.size(); i++) {
             this.images[i] = images.get(i);
         }
     }

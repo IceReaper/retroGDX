@@ -13,7 +13,7 @@ import retrogdx.Game;
 
 import java.util.Set;
 
-import static com.badlogic.gdx.scenes.scene2d.ui.Tree.*;
+import static com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 
 public class GamesTree extends VisScrollPane {
     private Table previewArea;

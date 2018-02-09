@@ -1,7 +1,5 @@
 package retrogdx.utils;
 
-import com.badlogic.gdx.files.FileHandle;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -30,10 +28,6 @@ public class SmartByteBuffer {
     private int[] debug;
     private SmartByteBuffer parent;
     private int parentOffset;
-
-    public static SmartByteBuffer wrap(FileHandle file) {
-        return SmartByteBuffer.wrap(file.readBytes());
-    }
 
     public static SmartByteBuffer wrap(byte[] bytes) {
         SmartByteBuffer instance = new SmartByteBuffer();

@@ -1,13 +1,14 @@
 package retrogdx.games.dune2;
 
-import com.badlogic.gdx.utils.Array;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Algorythms {
     public static byte[] decompress(byte[] compressed80) {
-        Array<Byte> decompressed = new Array<>();
+        List<Byte> decompressed = new ArrayList<>();
         SmartByteBuffer buffer = SmartByteBuffer.wrap(compressed80);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -41,7 +42,7 @@ public class Algorythms {
                 if ((command >> 7) == 0b0) {
                     // cmd 2: dst => dst
                     count = (command >> 4) + 3;
-                    position = decompressed.size - (((command & 0b00001111) << 8) + buffer.readUByte());
+                    position = decompressed.size() - (((command & 0b00001111) << 8) + buffer.readUByte());
                 } else {
                     if (command == 0b11111111) {
                         // cmd 5: dst => dst
@@ -60,9 +61,9 @@ public class Algorythms {
             }
         }
 
-        byte[] result = new byte[decompressed.size];
+        byte[] result = new byte[decompressed.size()];
 
-        for (int i = 0; i < decompressed.size; i++) {
+        for (int i = 0; i < decompressed.size(); i++) {
             result[i] = decompressed.get(i);
         }
 
@@ -70,7 +71,7 @@ public class Algorythms {
     }
 
     public static byte[] xor(byte[] original, byte[] changeset) {
-        Array<Byte> decompressed = new Array<>();
+        List<Byte> decompressed = new ArrayList<>();
         SmartByteBuffer buffer = SmartByteBuffer.wrap(changeset);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -83,7 +84,7 @@ public class Algorythms {
                 byte value = buffer.readByte();
 
                 for (int i = 0; i < count; i++) {
-                    decompressed.add((byte) (original[decompressed.size] ^ value));
+                    decompressed.add((byte) (original[decompressed.size()] ^ value));
                 }
 
             } else if ((command >> 7) == 0b0) {
@@ -91,7 +92,7 @@ public class Algorythms {
                 int count = command & 0b01111111;
 
                 for (int i = 0; i < count; i++) {
-                    decompressed.add((byte) (original[decompressed.size] ^ buffer.readByte()));
+                    decompressed.add((byte) (original[decompressed.size()] ^ buffer.readByte()));
                 }
 
             } else if (command == 0b10000000) {
@@ -103,7 +104,7 @@ public class Algorythms {
                     byte value = buffer.readByte();
 
                     for (int i = 0; i < count; i++) {
-                        decompressed.add((byte) (original[decompressed.size] ^ value));
+                        decompressed.add((byte) (original[decompressed.size()] ^ value));
                     }
 
                 } else if ((command2 >> 14) == 0b10) {
@@ -111,14 +112,14 @@ public class Algorythms {
                     int count = command2 & 0b0011111111111111;
 
                     for (int i = 0; i < count; i++) {
-                        decompressed.add((byte) (original[decompressed.size] ^ buffer.readByte()));
+                        decompressed.add((byte) (original[decompressed.size()] ^ buffer.readByte()));
                     }
                 } else {
                     // cmd 2: unchanged
                     int count = command2 & 0b0111111111111111;
 
                     for (int i = 0; i < count; i++) {
-                        decompressed.add(original[decompressed.size]);
+                        decompressed.add(original[decompressed.size()]);
                     }
                 }
 
@@ -127,14 +128,14 @@ public class Algorythms {
                 int count = command & 0b01111111;
 
                 for (int i = 0; i < count; i++) {
-                    decompressed.add(original[decompressed.size]);
+                    decompressed.add(original[decompressed.size()]);
                 }
             }
         }
 
-        byte[] result = new byte[decompressed.size];
+        byte[] result = new byte[decompressed.size()];
 
-        for (int i = 0; i < decompressed.size; i++) {
+        for (int i = 0; i < decompressed.size(); i++) {
             result[i] = decompressed.get(i);
         }
 
@@ -142,7 +143,7 @@ public class Algorythms {
     }
 
     public static byte[] zeroFill(byte[] data) {
-        Array<Byte> decompressed = new Array<>();
+        List<Byte> decompressed = new ArrayList<>();
         SmartByteBuffer buffer = SmartByteBuffer.wrap(data);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -160,9 +161,9 @@ public class Algorythms {
             }
         }
 
-        byte[] result = new byte[decompressed.size];
+        byte[] result = new byte[decompressed.size()];
 
-        for (int i = 0; i < decompressed.size; i++) {
+        for (int i = 0; i < decompressed.size(); i++) {
             result[i] = decompressed.get(i);
         }
 

@@ -30,12 +30,9 @@ public class RetroGdx extends ApplicationAdapter {
         this.stage.addActor(root);
 
         // TODO we need generic preview classes for:
-        // 1. Text (plain text) => DONE, but stretch / fit doesnt work yet!
-        // 2. Image (plain image)
-        // 3. Animation (multiple frames)
-        // 4. Spritesheet (multiple animations)
-        // 5. Audio (plain sound)
-        // 6. Video (animation + aligned audio)
+        // 1. Spritesheet (multiple animations)
+        // 2. Audio (plain sound)
+        // 3. Video (animation + aligned audio)
         // TODO and special solutions for additional file types.
     }
 

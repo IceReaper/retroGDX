@@ -1,10 +1,11 @@
 package retrogdx.games.dune2.readers;
 
-import com.badlogic.gdx.utils.Array;
 import retrogdx.games.dune2.Algorythms;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Wsa {
     public byte[][] frames;
@@ -25,7 +26,7 @@ public class Wsa {
         this.height = buffer.readUShort();
         this.animationSpeed = buffer.readInt();
 
-        Array<byte[]> frames = new Array<>();
+        List<byte[]> frames = new ArrayList<>();
 
         if (prevFrame == null) {
             prevFrame = new byte[this.width * this.height];
@@ -51,9 +52,9 @@ public class Wsa {
             buffer.position(position);
         }
 
-        this.frames = new byte[frames.size][this.width * this.height];
+        this.frames = new byte[frames.size()][this.width * this.height];
 
-        for (int i = 0; i < frames.size; i++) {
+        for (int i = 0; i < frames.size(); i++) {
             this.frames[i] = frames.get(i);
         }
     }

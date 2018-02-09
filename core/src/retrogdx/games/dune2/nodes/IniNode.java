@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.readers.Ini;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.TextPreview;
-import retrogdx.utils.SmartByteBuffer;
 import retrogdx.utils.SmartByteBuffer.SliceInfo;
 
 public class IniNode extends AssetFileNode {
