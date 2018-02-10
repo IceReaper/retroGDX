@@ -3,18 +3,22 @@ package retrogdx.games.earth2140.nodes;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import retrogdx.generic.nodes.PaletteNode;
 import retrogdx.generic.nodes.PlainTextNode;
 import retrogdx.games.earth2140.readers.Wd;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
 import retrogdx.utils.SliceInfo;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import static com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 
 public class WdNode extends AssetFolderNode {
     private FileHandle file;
+    private Map<String, SliceInfo> palettes = new HashMap<>();
 
     public WdNode(Table previewArea, FileHandle file) {
         super(previewArea, file.name());
@@ -29,18 +33,19 @@ public class WdNode extends AssetFolderNode {
             if (file.getKey().endsWith(".TXT")) {
                 nodes.add(new PlainTextNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".INI")) {
-                    nodes.add(new PlainTextNode(this.previewArea, file.getKey(), file.getValue()));
+                nodes.add(new PlainTextNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".FLC")) {
                 // TODO autodesk animation.
             } else if (file.getKey().endsWith(".SMP")) {
                 nodes.add(new SmpNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".PAL")) {
-                // TODO pal for .DAT images.
+                nodes.add(new PaletteNode(this.previewArea, file.getKey(), file.getValue()));
+                this.palettes.put(file.getKey(), file.getValue());
             } else if (file.getKey().endsWith(".DAT")) {
                 if (file.getKey().startsWith("DATA/LEVEL")) {
                     // TODO map
                 } else {
-                    // TODO image
+                    nodes.add(new DatImageNode(this.previewArea, file.getKey(), file.getValue(), this.palettes));
                 }
             } else if (file.getKey().endsWith(".KER")) {
                 // TODO font metadata

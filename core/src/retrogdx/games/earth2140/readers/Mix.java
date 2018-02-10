@@ -2,6 +2,8 @@ package retrogdx.games.earth2140.readers;
 
 import retrogdx.utils.SmartByteBuffer;
 
+import java.nio.ByteOrder;
+
 public class Mix {
     public class MixImage {
         public int width;
@@ -16,6 +18,7 @@ public class Mix {
     public int[][] palettes;
 
     public Mix(SmartByteBuffer buffer) {
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
         String mixFile = buffer.readString(10); // "MIX FILE  "
