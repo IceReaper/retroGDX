@@ -2,6 +2,7 @@ package retrogdx.ui;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Scaling;
 import com.kotcrab.vis.ui.widget.VisImage;
 import com.kotcrab.vis.ui.widget.VisScrollPane;
 
@@ -9,6 +10,9 @@ public class ImagePreview extends VisScrollPane {
     public ImagePreview(Pixmap image) {
         super(new VisImage(new Texture(image)));
         this.setFadeScrollBars(false);
-        // TODO implement zooming with left / right click!
+        this.setOverscroll(false, false);
+        ((VisImage) this.getActor()).setScaling(Scaling.none);
+
+        // TODO implement zooming
     }
 }

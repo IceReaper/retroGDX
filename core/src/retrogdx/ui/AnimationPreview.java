@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 import com.kotcrab.vis.ui.widget.VisImage;
 import com.kotcrab.vis.ui.widget.VisScrollPane;
 
@@ -13,13 +14,12 @@ public class AnimationPreview extends VisScrollPane {
 
     public AnimationPreview(Animation<TextureRegion> animation) {
         super(new VisImage());
-
         this.animation = animation;
-
         this.setFadeScrollBars(false);
+        this.setOverscroll(false, false);
+        ((VisImage) this.getActor()).setScaling(Scaling.none);
 
-        // TODO implement zooming with left / right click!
-
+        // TODO implement zooming
         // TODO implement player controls
     }
 

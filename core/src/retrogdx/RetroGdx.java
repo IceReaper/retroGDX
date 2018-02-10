@@ -4,7 +4,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisTable;
@@ -22,7 +21,8 @@ public class RetroGdx extends ApplicationAdapter {
         VisTable root = new VisTable();
         root.setFillParent(true);
 
-        Table previewArea = new Table();
+        PreviewArea previewArea = new PreviewArea();
+        previewArea.debug();
         GamesTree gamesTree = new GamesTree(previewArea);
 
         root.add(gamesTree).width(320).expandY().fillY();
