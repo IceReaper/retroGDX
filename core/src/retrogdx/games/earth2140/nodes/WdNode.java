@@ -3,7 +3,7 @@ package retrogdx.games.earth2140.nodes;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import retrogdx.generic.nodes.PaletteNode;
+import retrogdx.generic.nodes.AutodeskFlicNode;
 import retrogdx.generic.nodes.PlainTextNode;
 import retrogdx.games.earth2140.readers.Wd;
 import retrogdx.ui.AssetFolderNode;
@@ -35,11 +35,10 @@ public class WdNode extends AssetFolderNode {
             } else if (file.getKey().endsWith(".INI")) {
                 nodes.add(new PlainTextNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".FLC")) {
-                // TODO autodesk animation.
+                nodes.add(new AutodeskFlicNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".SMP")) {
                 nodes.add(new SmpNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".PAL")) {
-                nodes.add(new PaletteNode(this.previewArea, file.getKey(), file.getValue()));
                 this.palettes.put(file.getKey(), file.getValue());
             } else if (file.getKey().endsWith(".DAT")) {
                 if (file.getKey().startsWith("DATA/LEVEL")) {

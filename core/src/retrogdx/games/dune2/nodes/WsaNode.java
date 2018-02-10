@@ -48,27 +48,29 @@ public class WsaNode extends AssetFileNode {
 
         Wsa wsa = new Wsa(this.sliceInfo.slice(), lastWsa == null ? null : lastWsa.frames[lastWsa.frames.length - 1]);
 
-        Pixmap pixmap = new Pixmap(wsa.width * wsa.frames.length, wsa.height, Pixmap.Format.RGBA8888);
-        int[] palette = Dune2.PALETTE;
-
-        if (this.name.equals("WESTWOOD.WSA")) {
-            palette = new Pal(this.palettes.get("WESTWOOD.PAL").slice()).colors;
-        } else if (this.name.startsWith("INTRO")) {
-            palette = new Pal(this.palettes.get("INTRO.PAL").slice()).colors;
-        }
+        Texture[] frames = new Texture[wsa.frames.length];
 
         for (int i = 0; i < wsa.frames.length; i++) {
+            Pixmap pixmap = new Pixmap(wsa.width, wsa.height, Pixmap.Format.RGBA8888);
+            int[] palette = Dune2.PALETTE;
+
+            if (this.name.equals("WESTWOOD.WSA")) {
+                palette = new Pal(this.palettes.get("WESTWOOD.PAL").slice()).colors;
+            } else if (this.name.startsWith("INTRO")) {
+                palette = new Pal(this.palettes.get("INTRO.PAL").slice()).colors;
+            }
+
             for (int y = 0; y < wsa.height; y++) {
                 for (int x = 0; x < wsa.width; x++) {
                     int index = wsa.frames[i][x + y * wsa.width] & 0xff;
-                    pixmap.drawPixel(i * wsa.width + x, y, palette[index]);
+                    pixmap.drawPixel(x, y, palette[index]);
                 }
             }
+
+            frames[i] = new Texture(pixmap);
         }
 
-        Texture texture = new Texture(pixmap);
-        TextureRegion[][] frames = TextureRegion.split(texture, wsa.width, wsa.height);
-        Animation<TextureRegion> animation = new Animation<>(1024f / wsa.animationSpeed, frames[0]);
+        Animation<Texture> animation = new Animation<>(1024f / wsa.animationSpeed, frames);
 
         this.previewArea.add(new AnimationPreview(animation));
     }

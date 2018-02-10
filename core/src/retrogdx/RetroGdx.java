@@ -22,7 +22,6 @@ public class RetroGdx extends ApplicationAdapter {
         root.setFillParent(true);
 
         PreviewArea previewArea = new PreviewArea();
-        previewArea.debug();
         GamesTree gamesTree = new GamesTree(previewArea);
 
         root.add(gamesTree).width(320).expandY().fillY();
