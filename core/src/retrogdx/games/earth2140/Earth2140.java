@@ -1,4 +1,4 @@
-package retrogdx.games.dune2;
+package retrogdx.games.earth2140;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -9,37 +9,24 @@ import retrogdx.Game;
 import retrogdx.games.dune2.nodes.PakNode;
 import retrogdx.games.dune2.readers.Pak;
 import retrogdx.games.dune2.readers.Pal;
+import retrogdx.games.earth2140.nodes.WdNode;
 import retrogdx.ui.AssetFolderNode;
-import retrogdx.utils.SliceInfo;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Dune2 extends AssetFolderNode implements Game {
-    public static int[] PALETTE;
-    public static int[] PALETTE_ALT;
+public class Earth2140 extends AssetFolderNode implements Game {
     private FileHandle folder;
 
-    public Dune2(Table previewArea) {
-        super(previewArea, "Dune II: The Building of a Dynasty");
+    public Earth2140(Table previewArea) {
+        super(previewArea, "Earth 2140");
     }
 
     public boolean parse(FileHandle folder) {
-        if (folder.child("DUNE2.EXE").exists()) {
+        if (folder.child("E2140.exe").exists()) {
             this.folder = folder;
-
-            Pak pak = new Pak(SmartByteBuffer.wrap(folder.child("DUNE.PAK").readBytes()));
-
-            for (Map.Entry<String, SliceInfo> entry : pak.getFiles().entrySet()) {
-                if (entry.getKey().equals("IBM.PAL")) {
-                    Dune2.PALETTE = new Pal(entry.getValue().slice()).colors;
-                } else if (entry.getKey().equals("BENE.PAL")) {
-                    Dune2.PALETTE_ALT = new Pal(entry.getValue().slice()).colors;
-                }
-            }
-
             return true;
         }
 
@@ -50,10 +37,12 @@ public class Dune2 extends AssetFolderNode implements Game {
         Map<String, Node> files = new HashMap<>();
 
         for (FileHandle file : this.folder.list()) {
-            if (file.extension().equals("PAK")) {
-                files.put(file.name(), new PakNode(this.previewArea, file));
+            if (file.extension().equals("WD")) {
+                files.put(file.name(), new WdNode(this.previewArea, file));
             }
         }
+
+        // TODO add movie and music directories too!
 
         Map<String, Node> sorted = new TreeMap<>(files);
         Array<Node> result = new Array<>();

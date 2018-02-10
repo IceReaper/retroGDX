@@ -6,7 +6,7 @@ import retrogdx.games.dune2.Dune2;
 import retrogdx.games.dune2.readers.Icn;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.ImagePreview;
-import retrogdx.utils.SmartByteBuffer.SliceInfo;
+import retrogdx.utils.SliceInfo;
 
 public class IcnNode extends AssetFileNode {
     private SliceInfo sliceInfo;

@@ -1,22 +1,22 @@
-package retrogdx.games.dune2.nodes;
+package retrogdx.generic.nodes;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import retrogdx.games.dune2.readers.Ini;
+import retrogdx.generic.readers.PlainText;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.TextPreview;
-import retrogdx.utils.SmartByteBuffer.SliceInfo;
+import retrogdx.utils.SliceInfo;
 
-public class IniNode extends AssetFileNode {
+public class PlainTextNode extends AssetFileNode {
     private SliceInfo sliceInfo;
 
-    public IniNode(Table previewArea, String name, SliceInfo sliceInfo) {
+    public PlainTextNode(Table previewArea, String name, SliceInfo sliceInfo) {
         super(previewArea, name);
 
         this.sliceInfo = sliceInfo;
     }
 
     protected void showPreview() {
-        Ini ini = new Ini(this.sliceInfo.slice());
+        PlainText ini = new PlainText(this.sliceInfo.slice());
         // TODO encoding?! Or is this just a gdx bug?
         this.previewArea.add(new TextPreview(ini.text));
     }

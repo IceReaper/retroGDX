@@ -1,11 +1,11 @@
-package retrogdx.games.dune2.readers;
+package retrogdx.generic.readers;
 
 import retrogdx.utils.SmartByteBuffer;
 
-public class Ini {
+public class PlainText {
     public String text;
 
-    public Ini(SmartByteBuffer buffer) {
+    public PlainText(SmartByteBuffer buffer) {
         buffer.position(0);
         this.text = buffer.readString(buffer.capacity());
     }

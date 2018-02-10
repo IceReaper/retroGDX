@@ -4,25 +4,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class SmartByteBuffer {
-    public class SliceInfo {
-        private SmartByteBuffer buffer;
-        private int offset;
-        private int length;
-
-        public SliceInfo(SmartByteBuffer buffer, int offset, int length) {
-            this.buffer = buffer;
-            this.offset = offset;
-            this.length = length;
-        }
-
-        public SmartByteBuffer slice() {
-            int position = this.buffer.position();
-            this.buffer.position(this.offset);
-            SmartByteBuffer slice = this.buffer.slice(this.length);
-            this.buffer.position(position);
-            return slice;
-        }
-    }
 
     private ByteBuffer byteBuffer;
     private int[] debug;
@@ -147,6 +128,7 @@ public class SmartByteBuffer {
     }
 
     public SmartByteBuffer slice(int length) {
+        // TODO implement slice position, so we do not need to clone bytes!
         int offset = this.byteBuffer.position();
         byte[] data = new byte[length];
         this.byteBuffer.get(data);

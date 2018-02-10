@@ -6,12 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import retrogdx.games.dune2.readers.Pak;
+import retrogdx.generic.nodes.PlainTextNode;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
-import retrogdx.utils.SmartByteBuffer.SliceInfo;
+import retrogdx.utils.SliceInfo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class PakNode extends AssetFolderNode {
     private FileHandle file;
@@ -27,9 +29,9 @@ public class PakNode extends AssetFolderNode {
         Pak pak = new Pak(SmartByteBuffer.wrap(this.file.readBytes()));
         Array<Node> nodes = new Array<>();
 
-        for (Map.Entry<String, SmartByteBuffer.SliceInfo> file : pak.getFiles().entrySet()) {
+        for (Entry<String, SliceInfo> file : pak.getFiles().entrySet()) {
             if (file.getKey().endsWith(".INI")) {
-                nodes.add(new IniNode(this.previewArea, file.getKey(), file.getValue()));
+                nodes.add(new PlainTextNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".SHP")) {
                 nodes.add(new ShpNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".WSA")) {

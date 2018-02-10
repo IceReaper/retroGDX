@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.readers.Pal;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.ImagePreview;
-import retrogdx.utils.SmartByteBuffer.SliceInfo;
+import retrogdx.utils.SliceInfo;
 
 public class PalNode extends AssetFileNode {
     private SliceInfo sliceInfo;

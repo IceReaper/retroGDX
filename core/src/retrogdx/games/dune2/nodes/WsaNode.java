@@ -10,7 +10,7 @@ import retrogdx.games.dune2.readers.Pal;
 import retrogdx.games.dune2.readers.Wsa;
 import retrogdx.ui.AnimationPreview;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.utils.SmartByteBuffer.SliceInfo;
+import retrogdx.utils.SliceInfo;
 
 import java.util.Map;
 

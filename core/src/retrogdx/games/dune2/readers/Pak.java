@@ -1,7 +1,7 @@
 package retrogdx.games.dune2.readers;
 
 import retrogdx.utils.SmartByteBuffer;
-import retrogdx.utils.SmartByteBuffer.SliceInfo;
+import retrogdx.utils.SliceInfo;
 
 import java.nio.ByteOrder;
 import java.util.LinkedHashMap;
