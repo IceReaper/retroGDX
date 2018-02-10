@@ -50,7 +50,7 @@ public class WdNode extends AssetFolderNode {
                 if (file.getKey().startsWith("MIXMAX")) {
                     // TODO UNK what is this ?!
                 } else {
-                    // TODO sprites
+                    nodes.add(new MixNode(this.previewArea, file.getKey(), file.getValue()));
                 }
             } else {
                 System.out.println(file.getKey());
