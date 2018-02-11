@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import retrogdx.games.dune2.readers.Pak;
+import retrogdx.generic.nodes.CreativeVocNode;
 import retrogdx.generic.nodes.PlainTextNode;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
@@ -37,7 +38,7 @@ public class PakNode extends AssetFolderNode {
                 nodes.add(new WsaNode(this.previewArea, file.getKey(), file.getValue(), this.palettes, this.animations));
                 this.animations.put(file.getKey(), file.getValue());
             } else if (file.getKey().endsWith(".VOC")) {
-                // TODO soundfile
+                nodes.add(new CreativeVocNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".PAL")) {
                 nodes.add(new PalNode(this.previewArea, file.getKey(), file.getValue()));
                 this.palettes.put(file.getKey(), file.getValue());
