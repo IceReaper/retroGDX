@@ -42,7 +42,7 @@ public class WdNode extends AssetFolderNode {
                 this.palettes.put(file.getKey(), file.getValue());
             } else if (file.getKey().endsWith(".DAT")) {
                 if (file.getKey().startsWith("DATA/LEVEL")) {
-                    // TODO map
+                    nodes.add(new DatMapNode(this.previewArea, file.getKey(), file.getValue()));
                 } else {
                     nodes.add(new DatImageNode(this.previewArea, file.getKey(), file.getValue(), this.palettes));
                 }
