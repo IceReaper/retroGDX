@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import retrogdx.games.bam.readers.Stf;
 import retrogdx.generic.nodes.PaletteNode;
+import retrogdx.generic.nodes.RiffWaveNode;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
 
@@ -27,6 +28,7 @@ public class StfNode extends AssetFolderNode {
         for (Entry<String, SmartByteBuffer> file : stf.getFiles().entrySet()) {
             // TODO merge other files from https://github.com/IceReaper/GameExtractor-Blood-Magic/tree/master/src/bam/formats
             if (file.getKey().endsWith(".SND")) {
+                nodes.add(new RiffWaveNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".MSX")) {
             } else if (file.getKey().endsWith(".PAL")) {
                 nodes.add(new PaletteNode(this.previewArea, file.getKey(), file.getValue()));
