@@ -3,25 +3,23 @@ package retrogdx.generic.nodes;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.generic.readers.AutodeskFlic;
 import retrogdx.ui.AnimationPreview;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.ImagePreview;
-import retrogdx.utils.SliceInfo;
+import retrogdx.utils.SmartByteBuffer;
 
 public class AutodeskFlicNode extends AssetFileNode {
-    private SliceInfo sliceInfo;
+    private SmartByteBuffer smartByteBuffer;
 
-    public AutodeskFlicNode(Table previewArea, String name, SliceInfo sliceInfo) {
+    public AutodeskFlicNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
         super(previewArea, name);
 
-        this.sliceInfo = sliceInfo;
+        this.smartByteBuffer = smartByteBuffer;
     }
 
     protected void showPreview() {
-        AutodeskFlic flic = new AutodeskFlic(this.sliceInfo.slice());
+        AutodeskFlic flic = new AutodeskFlic(this.smartByteBuffer);
 
         Texture[] frames = new Texture[flic.frames.length];
 

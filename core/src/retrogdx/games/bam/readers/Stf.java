@@ -1,6 +1,5 @@
 package retrogdx.games.bam.readers;
 
-import retrogdx.utils.SliceInfo;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.nio.ByteOrder;
@@ -14,8 +13,8 @@ public class Stf {
         this.buffer = buffer;
     }
 
-    public Map<String, SliceInfo> getFiles() {
-        Map<String, SliceInfo> files = new LinkedHashMap<>();
+    public Map<String, SmartByteBuffer> getFiles() {
+        Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
 
         this.buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.buffer.position(0);
@@ -39,7 +38,7 @@ public class Stf {
                 compressedSize = 256 * 3;
             }
 
-            files.put(id + "." + fileTypes[fileType], this.buffer.getSliceInfo(this.buffer.position() + headerSize, compressedSize));
+            files.put(id + "." + fileTypes[fileType], this.buffer.slice(this.buffer.position() + headerSize, compressedSize));
             this.buffer.position(this.buffer.position() + headerSize + compressedSize);
         }
 

@@ -1,7 +1,6 @@
 package retrogdx.games.dune2.readers;
 
 import retrogdx.utils.SmartByteBuffer;
-import retrogdx.utils.SliceInfo;
 
 import java.nio.ByteOrder;
 import java.util.LinkedHashMap;
@@ -14,8 +13,8 @@ public class Pak {
         this.buffer = buffer;
     }
 
-    public Map<String, SliceInfo> getFiles() {
-        Map<String, SliceInfo> files = new LinkedHashMap<>();
+    public Map<String, SmartByteBuffer> getFiles() {
+        Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
 
         this.buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.buffer.position(0);
@@ -36,7 +35,7 @@ public class Pak {
                 endOffset = this.buffer.capacity();
             }
 
-            files.put(fileName, this.buffer.getSliceInfo(offset, endOffset - offset));
+            files.put(fileName, this.buffer.slice(offset, endOffset - offset));
         }
 
         return files;

@@ -9,7 +9,6 @@ import retrogdx.games.dune2.readers.Pak;
 import retrogdx.generic.nodes.PlainTextNode;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
-import retrogdx.utils.SliceInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +16,8 @@ import java.util.Map.Entry;
 
 public class PakNode extends AssetFolderNode {
     private FileHandle file;
-    private Map<String, SliceInfo> palettes = new HashMap<>();
-    private Map<String, SliceInfo> animations = new HashMap<>();
+    private Map<String, SmartByteBuffer> palettes = new HashMap<>();
+    private Map<String, SmartByteBuffer> animations = new HashMap<>();
 
     public PakNode(Table previewArea, FileHandle file) {
         super(previewArea, file.name());
@@ -29,7 +28,7 @@ public class PakNode extends AssetFolderNode {
         Pak pak = new Pak(SmartByteBuffer.wrap(this.file.readBytes()));
         Array<Node> nodes = new Array<>();
 
-        for (Entry<String, SliceInfo> file : pak.getFiles().entrySet()) {
+        for (Entry<String, SmartByteBuffer> file : pak.getFiles().entrySet()) {
             if (file.getKey().endsWith(".INI")) {
                 nodes.add(new PlainTextNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".SHP")) {

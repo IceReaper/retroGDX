@@ -3,27 +3,26 @@ package retrogdx.games.dune2.nodes;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.Dune2;
 import retrogdx.games.dune2.readers.Pal;
 import retrogdx.games.dune2.readers.Wsa;
 import retrogdx.ui.AnimationPreview;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.utils.SliceInfo;
+import retrogdx.utils.SmartByteBuffer;
 
 import java.util.Map;
 
 public class WsaNode extends AssetFileNode {
-    private SliceInfo sliceInfo;
+    private SmartByteBuffer smartByteBuffer;
     private String name;
-    private Map<String, SliceInfo> palettes;
-    private Map<String, SliceInfo> animations;
+    private Map<String, SmartByteBuffer> palettes;
+    private Map<String, SmartByteBuffer> animations;
 
-    public WsaNode(Table previewArea, String name, SliceInfo sliceInfo, Map<String, SliceInfo> palettes, Map<String, SliceInfo> animations) {
+    public WsaNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer, Map<String, SmartByteBuffer> palettes, Map<String, SmartByteBuffer> animations) {
         super(previewArea, name);
 
-        this.sliceInfo = sliceInfo;
+        this.smartByteBuffer = smartByteBuffer;
         this.name = name;
         this.palettes = palettes;
         this.animations = animations;
@@ -33,20 +32,20 @@ public class WsaNode extends AssetFileNode {
         Wsa lastWsa = null;
 
         if (this.name.equals("INTRO7B.WSA")) {
-            lastWsa = new Wsa(this.animations.get("INTRO7A.WSA").slice());
+            lastWsa = new Wsa(this.animations.get("INTRO7A.WSA"));
         } else if (this.name.equals("INTRO8B.WSA")) {
-            lastWsa = new Wsa(this.animations.get("INTRO8A.WSA").slice());
+            lastWsa = new Wsa(this.animations.get("INTRO8A.WSA"));
         } else if (this.name.equals("INTRO8C.WSA")) {
-            lastWsa = new Wsa(this.animations.get("INTRO8A.WSA").slice());
+            lastWsa = new Wsa(this.animations.get("INTRO8A.WSA"));
         } else if (this.name.equals("HFINALC.WSA")) {
-            lastWsa = new Wsa(this.animations.get("HFINALB.WSA").slice());
+            lastWsa = new Wsa(this.animations.get("HFINALB.WSA"));
         } else if (this.name.equals("OFINALB.WSA")) {
-            lastWsa = new Wsa(this.animations.get("OFINALA.WSA").slice());
+            lastWsa = new Wsa(this.animations.get("OFINALA.WSA"));
         } else if (this.name.equals("OFINALC.WSA")) {
-            lastWsa = new Wsa(this.animations.get("OFINALA.WSA").slice());
+            lastWsa = new Wsa(this.animations.get("OFINALA.WSA"));
         }
 
-        Wsa wsa = new Wsa(this.sliceInfo.slice(), lastWsa == null ? null : lastWsa.frames[lastWsa.frames.length - 1]);
+        Wsa wsa = new Wsa(this.smartByteBuffer, lastWsa == null ? null : lastWsa.frames[lastWsa.frames.length - 1]);
 
         Texture[] frames = new Texture[wsa.frames.length];
 
@@ -55,9 +54,9 @@ public class WsaNode extends AssetFileNode {
             int[] palette = Dune2.PALETTE;
 
             if (this.name.equals("WESTWOOD.WSA")) {
-                palette = new Pal(this.palettes.get("WESTWOOD.PAL").slice()).colors;
+                palette = new Pal(this.palettes.get("WESTWOOD.PAL")).colors;
             } else if (this.name.startsWith("INTRO")) {
-                palette = new Pal(this.palettes.get("INTRO.PAL").slice()).colors;
+                palette = new Pal(this.palettes.get("INTRO.PAL")).colors;
             }
 
             for (int y = 0; y < wsa.height; y++) {

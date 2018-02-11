@@ -1,80 +1,70 @@
 package retrogdx.utils;
 
-import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class SmartByteBuffer {
+    private byte[] bytes;
+    private int position = 0;
+    private int capacity ;
+    private ByteOrder order;
 
-    private ByteBuffer byteBuffer;
-    private int[] debug;
     private SmartByteBuffer parent;
-    private int parentOffset;
+    private int parentPosition;
 
     public static SmartByteBuffer wrap(byte[] bytes) {
         SmartByteBuffer instance = new SmartByteBuffer();
-        instance.byteBuffer = ByteBuffer.wrap(bytes);
+        instance.bytes = bytes;
+        instance.capacity = bytes.length;
         return instance;
     }
 
-    public void debug() {
-        this.debug = new int[this.byteBuffer.capacity()];
-    }
+    private byte readByte(int position) {
+        if (position < 0 || position >= this.capacity) {
+            throw new IndexOutOfBoundsException();
+        }
 
-    private void debug(int position, int length, ByteType type) {
         if (this.parent != null) {
-            this.parent.debug(this.parentOffset + position, length, type);
-        }
-
-        if (this.debug != null) {
-            for (int i = 0; i < length; i++) {
-                this.debug[position + i] = type.getColor().toIntBits();
-            }
+            return this.parent.readByte(this.parentPosition + position);
+        } else {
+            return this.bytes[position];
         }
     }
-
-    // TODO refactor renderDebug to generate libgdx compatible texture.
 
     public byte readByte() {
-        this.debug(this.byteBuffer.position(), 1, ByteType.BYTE);
-
-        return this.byteBuffer.get();
+        return this.readByte(this.position++);
     }
 
     public short readUByte() {
-        this.debug(this.byteBuffer.position(), 1, ByteType.UBYTE);
-
-        return (short) (this.byteBuffer.get() & 0xff);
+        return (short) (this.readByte() & 0xff);
     }
 
     public short readShort() {
-        this.debug(this.byteBuffer.position(), 2, ByteType.SHORT);
-
-        return this.byteBuffer.getShort();
+        short first = this.readUByte();
+        short second = this.readUByte();
+        return (short) (this.order == ByteOrder.LITTLE_ENDIAN ? first | (second << 8) : second | (first << 8));
     }
 
     public int readUShort() {
-        this.debug(this.byteBuffer.position(), 2, ByteType.USHORT);
-
-        return this.byteBuffer.getShort() & 0xffff;
+        return this.readShort() & 0xffff;
     }
 
     public int readInt() {
-        this.debug(this.byteBuffer.position(), 4, ByteType.INT);
-
-        return this.byteBuffer.getInt();
+        int first = this.readUShort();
+        int second = this.readUShort();
+        return this.order == ByteOrder.LITTLE_ENDIAN ? first | (second << 16) : second | (first << 16);
     }
 
     public long readUInt() {
-        this.debug(this.byteBuffer.position(), 4, ByteType.UINT);
-
-        return this.byteBuffer.getInt() & 0xffffffffL;
+        return this.readInt() & 0xffffffffL;
     }
 
     public byte[] readBytes(int length) {
-        this.debug(this.byteBuffer.position(), length, ByteType.BYTES);
-
         byte[] target = new byte[length];
-        this.byteBuffer.get(target);
+
+        for (int i = 0; i < length; i++) {
+            target[i] = this.readByte();
+        }
+
         return target;
     }
 
@@ -82,9 +72,7 @@ public class SmartByteBuffer {
         StringBuilder string = new StringBuilder();
 
         while (true) {
-            this.debug(this.byteBuffer.position(), 1, ByteType.STRING);
-
-            byte readByte = this.byteBuffer.get();
+            byte readByte = this.readByte();
 
             if (readByte == 0x00) {
                 return string.toString();
@@ -95,10 +83,7 @@ public class SmartByteBuffer {
     }
 
     public String readString(int length) {
-        this.debug(this.byteBuffer.position(), length, ByteType.STRING);
-
-        byte[] string = new byte[length];
-        this.byteBuffer.get(string);
+        byte[] string = this.readBytes(length);
 
         while (length > 0 && string[length - 1] == 0x00) {
             length--;
@@ -108,38 +93,41 @@ public class SmartByteBuffer {
     }
 
     public int capacity() {
-        return this.byteBuffer.capacity();
+        return this.capacity;
     }
 
     public int position() {
-        return this.byteBuffer.position();
+        return this.position;
     }
 
     public void position(int position) {
-        this.byteBuffer.position(position);
+        this.position = position;
     }
 
     public ByteOrder order() {
-        return this.byteBuffer.order();
+        return this.order;
     }
 
     public void order(ByteOrder order) {
-        this.byteBuffer.order(order);
+        this.order = order;
     }
 
     public SmartByteBuffer slice(int length) {
-        // TODO implement slice position, so we do not need to clone bytes!
-        int offset = this.byteBuffer.position();
-        byte[] data = new byte[length];
-        this.byteBuffer.get(data);
-        SmartByteBuffer instance = SmartByteBuffer.wrap(data);
-        instance.parent = this;
-        instance.parentOffset = offset;
-        instance.order(this.order());
-        return instance;
+        SmartByteBuffer slice = this.slice(this.position, length);
+        this.position += length;
+        return slice;
     }
 
-    public SliceInfo getSliceInfo(int offset, int length) {
-        return new SliceInfo(this, offset, length);
+    public SmartByteBuffer slice(int position, int length) {
+        if (position + length > this.capacity || length < 1) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        SmartByteBuffer slice = new SmartByteBuffer();
+        slice.capacity = length;
+        slice.order = this.order;
+        slice.parent = this;
+        slice.parentPosition = position;
+        return slice;
     }
 }

@@ -5,19 +5,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.generic.readers.Palette;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.ImagePreview;
-import retrogdx.utils.SliceInfo;
+import retrogdx.utils.SmartByteBuffer;
 
 public class PaletteNode extends AssetFileNode {
-    private SliceInfo sliceInfo;
+    private SmartByteBuffer smartByteBuffer;
 
-    public PaletteNode(Table previewArea, String name, SliceInfo sliceInfo) {
+    public PaletteNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
         super(previewArea, name);
 
-        this.sliceInfo = sliceInfo;
+        this.smartByteBuffer = smartByteBuffer;
     }
 
     protected void showPreview() {
-        Palette palette = new Palette(this.sliceInfo.slice());
+        Palette palette = new Palette(this.smartByteBuffer);
 
         Pixmap pixmap = new Pixmap(16, 16, Pixmap.Format.RGBA8888);
 

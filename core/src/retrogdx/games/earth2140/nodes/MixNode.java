@@ -5,19 +5,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.Mix;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.ImagePreview;
-import retrogdx.utils.SliceInfo;
+import retrogdx.utils.SmartByteBuffer;
 
 public class MixNode extends AssetFileNode {
-    private SliceInfo sliceInfo;
+    private SmartByteBuffer smartByteBuffer;
 
-    public MixNode(Table previewArea, String name, SliceInfo sliceInfo) {
+    public MixNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
         super(previewArea, name);
 
-        this.sliceInfo = sliceInfo;
+        this.smartByteBuffer = smartByteBuffer;
     }
 
     protected void showPreview() {
-        Mix mix = new Mix(this.sliceInfo.slice());
+        Mix mix = new Mix(this.smartByteBuffer);
 
         int width = 0;
         int height = 0;

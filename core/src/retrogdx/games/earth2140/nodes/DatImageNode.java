@@ -6,26 +6,26 @@ import retrogdx.games.earth2140.readers.DatImage;
 import retrogdx.generic.readers.Palette;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.ImagePreview;
-import retrogdx.utils.SliceInfo;
+import retrogdx.utils.SmartByteBuffer;
 
 import java.util.Map;
 
 public class DatImageNode extends AssetFileNode {
-    private SliceInfo sliceInfo;
+    private SmartByteBuffer smartByteBuffer;
     private String name;
-    private Map<String, SliceInfo> palettes;
+    private Map<String, SmartByteBuffer> palettes;
 
-    public DatImageNode(Table previewArea, String name, SliceInfo sliceInfo, Map<String, SliceInfo> palettes) {
+    public DatImageNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer, Map<String, SmartByteBuffer> palettes) {
         super(previewArea, name);
 
-        this.sliceInfo = sliceInfo;
+        this.smartByteBuffer = smartByteBuffer;
         this.name = name;
         this.palettes = palettes;
     }
 
     protected void showPreview() {
-        DatImage dat = new DatImage(this.sliceInfo.slice());
-        Palette palette = new Palette(this.palettes.get(this.name.substring(0, this.name.length() - 3) + "PAL").slice());
+        DatImage dat = new DatImage(this.smartByteBuffer);
+        Palette palette = new Palette(this.palettes.get(this.name.substring(0, this.name.length() - 3) + "PAL"));
 
         Pixmap pixmap = new Pixmap(dat.width, dat.height, Pixmap.Format.RGBA8888);
 

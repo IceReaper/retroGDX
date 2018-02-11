@@ -8,7 +8,6 @@ import retrogdx.generic.nodes.PlainTextNode;
 import retrogdx.games.earth2140.readers.Wd;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
-import retrogdx.utils.SliceInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +17,7 @@ import static com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 
 public class WdNode extends AssetFolderNode {
     private FileHandle file;
-    private Map<String, SliceInfo> palettes = new HashMap<>();
+    private Map<String, SmartByteBuffer> palettes = new HashMap<>();
 
     public WdNode(Table previewArea, FileHandle file) {
         super(previewArea, file.name());
@@ -29,7 +28,7 @@ public class WdNode extends AssetFolderNode {
         Wd wd = new Wd(SmartByteBuffer.wrap(this.file.readBytes()));
         Array<Node> nodes = new Array<>();
 
-        for (Entry<String, SliceInfo> file : wd.getFiles().entrySet()) {
+        for (Entry<String, SmartByteBuffer> file : wd.getFiles().entrySet()) {
             if (file.getKey().endsWith(".TXT")) {
                 nodes.add(new PlainTextNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".INI")) {

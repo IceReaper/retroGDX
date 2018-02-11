@@ -9,7 +9,7 @@ public class Pal {
         buffer.position(0);
 
         for (int i = 0; i < 256; i++) {
-            colors[i] = (buffer.readByte() << 26) | (buffer.readByte() << 18) | (buffer.readByte() << 10) | 0xff;
+            this.colors[i] = (buffer.readByte() << 26) | (buffer.readByte() << 18) | (buffer.readByte() << 10) | 0xff;
         }
     }
 }

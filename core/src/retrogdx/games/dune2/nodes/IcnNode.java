@@ -6,21 +6,21 @@ import retrogdx.games.dune2.Dune2;
 import retrogdx.games.dune2.readers.Icn;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.ImagePreview;
-import retrogdx.utils.SliceInfo;
+import retrogdx.utils.SmartByteBuffer;
 
 public class IcnNode extends AssetFileNode {
-    private SliceInfo sliceInfo;
+    private SmartByteBuffer smartByteBuffer;
     private String name;
 
-    public IcnNode(Table previewArea, String name, SliceInfo sliceInfo) {
+    public IcnNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
         super(previewArea, name);
 
-        this.sliceInfo = sliceInfo;
+        this.smartByteBuffer = smartByteBuffer;
         this.name = name;
     }
 
     protected void showPreview() {
-        Icn icn = new Icn(this.sliceInfo.slice());
+        Icn icn = new Icn(this.smartByteBuffer);
         int totalX = (int) Math.ceil(Math.sqrt(icn.tiles.length));
         int totalY = (int) Math.ceil(icn.tiles.length / (float) totalX);
 

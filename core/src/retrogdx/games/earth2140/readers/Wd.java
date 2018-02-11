@@ -1,7 +1,6 @@
 package retrogdx.games.earth2140.readers;
 
 import retrogdx.utils.SmartByteBuffer;
-import retrogdx.utils.SliceInfo;
 
 import java.nio.ByteOrder;
 import java.util.LinkedHashMap;
@@ -14,8 +13,8 @@ public class Wd {
         this.buffer = buffer;
     }
 
-    public Map<String, SliceInfo> getFiles() {
-        Map<String, SliceInfo> files = new LinkedHashMap<>();
+    public Map<String, SmartByteBuffer> getFiles() {
+        Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
 
         this.buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.buffer.position(0);
@@ -27,7 +26,7 @@ public class Wd {
                 int fileStartOffset = this.buffer.readInt();
                 int fileEndOffset = this.buffer.readInt();
 
-                files.put(files.size() + ".SMP", this.buffer.getSliceInfo(fileStartOffset + 0x400, fileEndOffset - fileStartOffset));
+                files.put(files.size() + ".SMP", this.buffer.slice(fileStartOffset + 0x400, fileEndOffset - fileStartOffset));
 
                 if (fileEndOffset == 0x00) {
                     break;
@@ -49,7 +48,7 @@ public class Wd {
                 String fileName = this.buffer.readString().toUpperCase();
                 this.buffer.position(position);
 
-                files.put(fileName, this.buffer.getSliceInfo(offset, length));
+                files.put(fileName, this.buffer.slice(offset, length));
             }
         }
 

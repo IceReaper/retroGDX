@@ -10,7 +10,6 @@ import retrogdx.games.dune2.nodes.PakNode;
 import retrogdx.games.dune2.readers.Pak;
 import retrogdx.games.dune2.readers.Pal;
 import retrogdx.ui.AssetFolderNode;
-import retrogdx.utils.SliceInfo;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.util.HashMap;
@@ -32,11 +31,11 @@ public class Dune2 extends AssetFolderNode implements Game {
 
             Pak pak = new Pak(SmartByteBuffer.wrap(folder.child("DUNE.PAK").readBytes()));
 
-            for (Map.Entry<String, SliceInfo> entry : pak.getFiles().entrySet()) {
+            for (Map.Entry<String, SmartByteBuffer> entry : pak.getFiles().entrySet()) {
                 if (entry.getKey().equals("IBM.PAL")) {
-                    Dune2.PALETTE = new Pal(entry.getValue().slice()).colors;
+                    Dune2.PALETTE = new Pal(entry.getValue()).colors;
                 } else if (entry.getKey().equals("BENE.PAL")) {
-                    Dune2.PALETTE_ALT = new Pal(entry.getValue().slice()).colors;
+                    Dune2.PALETTE_ALT = new Pal(entry.getValue()).colors;
                 }
             }
 

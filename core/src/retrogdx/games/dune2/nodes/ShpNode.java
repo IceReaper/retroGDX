@@ -7,21 +7,21 @@ import retrogdx.games.dune2.readers.Shp;
 import retrogdx.games.dune2.readers.Shp.ShpImage;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.ImagePreview;
-import retrogdx.utils.SliceInfo;
+import retrogdx.utils.SmartByteBuffer;
 
 public class ShpNode extends AssetFileNode {
-    private SliceInfo sliceInfo;
+    private SmartByteBuffer smartByteBuffer;
     private String name;
 
-    public ShpNode(Table previewArea, String name, SliceInfo sliceInfo) {
+    public ShpNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
         super(previewArea, name);
 
-        this.sliceInfo = sliceInfo;
+        this.smartByteBuffer = smartByteBuffer;
         this.name = name;
     }
 
     protected void showPreview() {
-        Shp shp = new Shp(this.sliceInfo.slice());
+        Shp shp = new Shp(this.smartByteBuffer);
 
         int width = 0;
         int height = 0;

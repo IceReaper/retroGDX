@@ -5,19 +5,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.readers.Tbl;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.ImagePreview;
-import retrogdx.utils.SliceInfo;
+import retrogdx.utils.SmartByteBuffer;
 
 public class TblNode extends AssetFileNode {
-    private SliceInfo sliceInfo;
+    private SmartByteBuffer smartByteBuffer;
 
-    public TblNode(Table previewArea, String name, SliceInfo sliceInfo) {
+    public TblNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
         super(previewArea, name);
 
-        this.sliceInfo = sliceInfo;
+        this.smartByteBuffer = smartByteBuffer;
     }
 
     protected void showPreview() {
-        Tbl tbl = new Tbl(this.sliceInfo.slice());
+        Tbl tbl = new Tbl(this.smartByteBuffer);
 
         Pixmap pixmap = new Pixmap(16, 16, Pixmap.Format.RGBA8888);
 
