@@ -9,7 +9,7 @@ public class Palette {
         buffer.position(0);
 
         for (int i = 0; i < 256; i++) {
-            colors[i] = (buffer.readByte() << 24) | (buffer.readByte() << 16) | (buffer.readByte() << 8) | 0xff;
+            this.colors[i] = (buffer.readByte() << 24) | (buffer.readByte() << 16) | (buffer.readByte() << 8) | 0xff;
         }
     }
 }
