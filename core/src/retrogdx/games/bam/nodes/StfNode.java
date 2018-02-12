@@ -29,12 +29,13 @@ public class StfNode extends AssetFolderNode {
             // TODO merge other files from https://github.com/IceReaper/GameExtractor-Blood-Magic/tree/master/src/bam/formats
             if (file.getKey().endsWith(".SND")) {
                 nodes.add(new RiffWaveNode(this.previewArea, file.getKey(), file.getValue()));
-            } else if (file.getKey().endsWith(".MSX")) {
+            } else if (file.getKey().endsWith(".HMP")) {
+                // TODO music
             } else if (file.getKey().endsWith(".PAL")) {
                 nodes.add(new PaletteNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".ANI")) {
-            } else if (file.getKey().endsWith(".MAP")) {
-            } else if (file.getKey().endsWith(".TIL")) {
+            } else if (file.getKey().endsWith(".MIF")) {
+            } else if (file.getKey().endsWith(".TLB")) {
             } else if (file.getKey().endsWith(".BNK")) {
             } else if (file.getKey().endsWith(".SQB")) {
             } else if (file.getKey().endsWith(".FNT")) {
