@@ -10,7 +10,6 @@ import retrogdx.generic.nodes.RiffWaveNode;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
 
-import java.util.Map;
 import java.util.Map.Entry;
 
 public class ResNode extends AssetFolderNode {
@@ -30,7 +29,7 @@ public class ResNode extends AssetFolderNode {
                 nodes.add(new RiffWaveNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".D3GR")) {
             } else if (file.getKey().endsWith(".PAL")) {
-
+                nodes.add(new PalNode(this.previewArea, file.getKey(), file.getValue()));
             }
         }
 
