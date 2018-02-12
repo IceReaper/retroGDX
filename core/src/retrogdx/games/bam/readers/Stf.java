@@ -19,7 +19,7 @@ public class Stf {
         this.buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.buffer.position(0);
 
-        String[] fileTypes = new String[]{null, "ANI", null, "HMP", "SND", "PAL", null, "FNT", "SQB", null, null, null, "BNK", null, null, null, null, null, "TLB", "MIF"};
+        String[] fileTypes = new String[]{null, "ANI", null, "HMP", "wav", "PAL", null, "FNT", "SQB", null, null, null, "BNK", null, null, null, null, null, "TLB", "MIF"};
 
         while (this.buffer.position() < this.buffer.capacity()) {
             int id = this.buffer.readUShort();

@@ -6,15 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import retrogdx.Game;
+import retrogdx.games.warwind.WarWind;
 import retrogdx.ui.AssetFolderNode;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class WarWind2 extends AssetFolderNode implements Game {
-    private FileHandle folder;
-
+public class WarWind2 extends WarWind {
     public WarWind2(Table previewArea) {
         super(previewArea, "War Wind 2");
     }
@@ -26,25 +25,6 @@ public class WarWind2 extends AssetFolderNode implements Game {
         }
 
         return false;
-    }
-
-    protected Array<Node> populate() {
-        Map<String, Node> files = new HashMap<>();
-
-        for (FileHandle file : this.folder.list()) {
-            //if (file.extension().equals("STF")) {
-            //    files.put(file.name(), new StfNode(this.previewArea, file));
-            //}
-        }
-
-        Map<String, Node> sorted = new TreeMap<>(files);
-        Array<Node> result = new Array<>();
-
-        for (String key : sorted.keySet()) {
-            result.add(files.get(key));
-        }
-
-        return result;
     }
 
     protected void showPreview() {

@@ -1,6 +1,7 @@
 package retrogdx.generic.nodes;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import retrogdx.generic.readers.RiffWave;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.utils.SmartByteBuffer;
 
@@ -17,17 +18,7 @@ public class RiffWaveNode extends AssetFileNode {
     }
 
     protected void showPreview() {
-        byte[] bytes = this.buffer.readBytes(this.buffer.capacity());
-
-        try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new ByteArrayInputStream(bytes));
-            AudioFormat audioFormat = audioStream.getFormat();
-            DataLine.Info info = new DataLine.Info(Clip.class, audioFormat);
-            Clip sourceLine = (Clip) AudioSystem.getLine(info);
-            sourceLine.open(audioStream);
-            sourceLine.start();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+        RiffWave wave = new RiffWave(this.buffer);
+        wave.clip.start();
     }
 }

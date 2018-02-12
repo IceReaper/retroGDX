@@ -27,7 +27,7 @@ public class StfNode extends AssetFolderNode {
 
         for (Entry<String, SmartByteBuffer> file : stf.getFiles().entrySet()) {
             // TODO merge other files from https://github.com/IceReaper/GameExtractor-Blood-Magic/tree/master/src/bam/formats
-            if (file.getKey().endsWith(".SND")) {
+            if (file.getKey().endsWith(".wav")) {
                 nodes.add(new RiffWaveNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".HMP")) {
                 // TODO music
