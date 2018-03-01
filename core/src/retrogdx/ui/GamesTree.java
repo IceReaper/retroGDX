@@ -19,6 +19,7 @@ import static com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 
 public class GamesTree extends VisScrollPane {
     private Table previewArea;
+    private Node lastSelected = null;
 
     public GamesTree(Table previewArea) {
         super(new VisTree());
@@ -32,6 +33,12 @@ public class GamesTree extends VisScrollPane {
         tree.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 Node selected = tree.getSelection().first();
+
+                if (lastSelected == selected) {
+                    return;
+                }
+
+                lastSelected = selected;
                 previewArea.clearChildren();
 
                 if (!(selected instanceof AssetFileNode)) {
