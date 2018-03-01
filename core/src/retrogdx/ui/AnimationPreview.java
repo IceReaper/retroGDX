@@ -21,7 +21,6 @@ public class AnimationPreview extends VisScrollPane implements Disposable {
         ((VisImage) this.getActor()).setScaling(Scaling.none);
 
         // TODO implement zooming
-        // TODO implement player controls
     }
 
     public void act(float delta) {

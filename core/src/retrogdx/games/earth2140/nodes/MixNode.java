@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.Mix;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.ImagePreview;
+import retrogdx.ui.ImageSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class MixNode extends AssetFileNode {
@@ -19,45 +20,27 @@ public class MixNode extends AssetFileNode {
     protected void showPreview() {
         Mix mix = new Mix(this.smartByteBuffer);
 
-        int width = 0;
-        int height = 0;
+        Pixmap[] pixmaps = new Pixmap[mix.images.length];
 
-        for (Mix.MixImage image : mix.images) {
-            width = Math.max(image.width, width);
-            height = Math.max(image.height, height);
-        }
+        for (int i = 0; i < mix.images.length; i++) {
+            Mix.MixImage image = mix.images[i];
+            pixmaps[i] = new Pixmap(image.width, image.height, Pixmap.Format.RGBA8888);
 
-        int totalX = (int) Math.ceil(Math.sqrt(mix.images.length));
-        int totalY = (int) Math.ceil(mix.images.length / (float) totalX);
+            for (int y = 0; y < image.height; y++) {
+                for (int x = 0; x < image.width; x++) {
+                    int color;
 
-        Pixmap pixmap = new Pixmap(totalX * width, totalY * height, Pixmap.Format.RGBA8888);
-
-        for (int ty = 0; ty < totalX; ty++) {
-            for (int tx = 0; tx < totalY; tx++) {
-                int tileIndex = tx + ty * totalX;
-
-                if (tileIndex >= mix.images.length) {
-                    break;
-                }
-
-                Mix.MixImage image = mix.images[tileIndex];
-
-                for (int y = 0; y < image.height; y++) {
-                    for (int x = 0; x < image.width; x++) {
-                        int color;
-
-                        if (image.paletteIndex == -1) {
-                            color = image.pixelsRgb[x + y * image.width];
-                        } else {
-                            color = mix.palettes[image.paletteIndex][image.pixelsIndexed[x + y * image.width] & 0xff];
-                        }
-
-                        pixmap.drawPixel(tx * width + x, ty * height + y, color);
+                    if (image.paletteIndex == -1) {
+                        color = image.pixelsRgb[x + y * image.width];
+                    } else {
+                        color = mix.palettes[image.paletteIndex][image.pixelsIndexed[x + y * image.width] & 0xff];
                     }
+
+                    pixmaps[i].drawPixel(x,  y, color);
                 }
             }
         }
 
-        this.previewArea.add(new ImagePreview(pixmap));
+        this.previewArea.add(new ImageSetPreview(pixmaps));
     }
 }

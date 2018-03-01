@@ -23,43 +23,25 @@ public class ShpNode extends AssetFileNode {
     protected void showPreview() {
         Shp shp = new Shp(this.smartByteBuffer);
 
-        int width = 0;
-        int height = 0;
-
-        for (Shp.ShpImage image : shp.images) {
-            width = Math.max(image.width, width);
-            height = Math.max(image.height, height);
-        }
-
-        int totalX = (int) Math.ceil(Math.sqrt(shp.images.length));
-        int totalY = (int) Math.ceil(shp.images.length / (float) totalX);
-
-        Pixmap pixmap = new Pixmap(totalX * width, totalY * height, Pixmap.Format.RGBA8888);
+        Pixmap[] pixmaps = new Pixmap[shp.images.length];
         int[] palette = Dune2.PALETTE;
 
         if (this.name.equals("MENSHPM.SHP")) {
             palette = Dune2.PALETTE_ALT;
         }
 
-        for (int ty = 0; ty < totalX; ty++) {
-            for (int tx = 0; tx < totalY; tx++) {
-                int tileIndex = tx + ty * totalX;
+        for (int i = 0; i < shp.images.length; i++) {
+            ShpImage image = shp.images[i];
+            pixmaps[i] = new Pixmap(image.width, image.height, Pixmap.Format.RGBA8888);
 
-                if (tileIndex >= shp.images.length) {
-                    break;
-                }
-
-                ShpImage image = shp.images[tileIndex];
-
-                for (int y = 0; y < image.height; y++) {
-                    for (int x = 0; x < image.width; x++) {
-                        int index = image.pixels[x + y * image.width] & 0xff;
-                        pixmap.drawPixel(tx * width + x, ty * height + y, palette[index]);
-                    }
+            for (int y = 0; y < image.height; y++) {
+                for (int x = 0; x < image.width; x++) {
+                    int index = image.pixels[x + y * image.width] & 0xff;
+                    pixmaps[i].drawPixel(x, y, palette[index]);
                 }
             }
         }
 
-        this.previewArea.add(new ImageSetPreview(pixmap));
+        this.previewArea.add(new ImageSetPreview(pixmaps));
     }
 }

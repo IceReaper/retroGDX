@@ -21,29 +21,21 @@ public class IcnNode extends AssetFileNode {
 
     protected void showPreview() {
         Icn icn = new Icn(this.smartByteBuffer);
-        int totalX = (int) Math.ceil(Math.sqrt(icn.tiles.length));
-        int totalY = (int) Math.ceil(icn.tiles.length / (float) totalX);
 
-        Pixmap pixmap = new Pixmap(totalX * icn.width, totalY * icn.height, Pixmap.Format.RGBA8888);
+        Pixmap[] pixmaps = new Pixmap[icn.tiles.length];
         int[] palette = Dune2.PALETTE;
 
-        for (int ty = 0; ty < totalX; ty++) {
-            for (int tx = 0; tx < totalY; tx++) {
-                int tileIndex = tx + ty * totalX;
+        for (int i = 0; i < icn.tiles.length; i++) {
+            pixmaps[i] = new Pixmap(icn.width, icn.height, Pixmap.Format.RGBA8888);
 
-                if (tileIndex >= icn.tiles.length) {
-                    break;
-                }
-
-                for (int y = 0; y < icn.height; y++) {
-                    for (int x = 0; x < icn.width; x++) {
-                        int index = icn.tiles[tileIndex][x + y * icn.width] & 0xff;
-                        pixmap.drawPixel(tx * icn.width + x, ty * icn.height + y, palette[index]);
-                    }
+            for (int y = 0; y < icn.height; y++) {
+                for (int x = 0; x < icn.width; x++) {
+                    int index = icn.tiles[i][x + y * icn.width] & 0xff;
+                    pixmaps[i].drawPixel(x, y, palette[index]);
                 }
             }
         }
 
-        this.previewArea.add(new ImageSetPreview(pixmap));
+        this.previewArea.add(new ImageSetPreview(pixmaps));
     }
 }
