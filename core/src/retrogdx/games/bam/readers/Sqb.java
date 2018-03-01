@@ -24,7 +24,7 @@ public class Sqb {
             buffer.position(start + texts * 8 + textOffset);
 
             try {
-                text.append(id + " :: " + buffer.readString() + "\n");
+                text.append(id + " :: " + buffer.readString("CP850") + "\n");
             } catch (Exception ignored) {
             }
 

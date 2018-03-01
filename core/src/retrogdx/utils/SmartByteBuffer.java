@@ -1,5 +1,7 @@
 package retrogdx.utils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;
 
 public class SmartByteBuffer {
@@ -69,24 +71,44 @@ public class SmartByteBuffer {
     }
 
     public String readString() {
-        StringBuilder string = new StringBuilder();
+        return this.readString("UTF-8");
+    }
+
+    public String readString(String encoding) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         while (true) {
             byte readByte = this.readByte();
 
             if (readByte == 0x00) {
-                return string.toString();
+                break;
             }
 
-            string.append(new String(new byte[]{readByte}));
+            byteArrayOutputStream.write(readByte);
         }
+
+        try {
+            return byteArrayOutputStream.toString(encoding);
+        } catch (Exception ignored) {
+        }
+
+        return byteArrayOutputStream.toString();
     }
 
     public String readString(int length) {
+        return this.readString(length, "UTF-8");
+    }
+
+    public String readString(int length, String encoding) {
         byte[] string = this.readBytes(length);
 
         while (length > 0 && string[length - 1] == 0x00) {
             length--;
+        }
+
+        try {
+            return new String(string, encoding).substring(0, length);
+        } catch (Exception ignored) {
         }
 
         return new String(string).substring(0, length);

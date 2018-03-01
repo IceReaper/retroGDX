@@ -31,7 +31,7 @@ public class PakNode extends AssetFolderNode {
 
         for (Entry<String, SmartByteBuffer> file : pak.getFiles().entrySet()) {
             if (file.getKey().endsWith(".INI")) {
-                nodes.add(new PlainTextNode(this.previewArea, file.getKey(), file.getValue()));
+                nodes.add(new PlainTextNode(this.previewArea, file.getKey(), file.getValue(), "CP850"));
             } else if (file.getKey().endsWith(".SHP")) {
                 nodes.add(new ShpNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".WSA")) {

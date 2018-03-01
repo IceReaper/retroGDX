@@ -26,7 +26,6 @@ public class StfNode extends AssetFolderNode {
         Array<Node> nodes = new Array<>();
 
         for (Entry<String, SmartByteBuffer> file : stf.getFiles().entrySet()) {
-            // TODO merge other files from https://github.com/IceReaper/GameExtractor-Blood-Magic/tree/master/src/bam/formats
             if (file.getKey().endsWith(".wav")) {
                 nodes.add(new RiffWaveNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".HMP")) {
@@ -36,11 +35,15 @@ public class StfNode extends AssetFolderNode {
             } else if (file.getKey().endsWith(".ANI")) {
                 nodes.add(new AniNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".MIF")) {
+                // TODO map
             } else if (file.getKey().endsWith(".TLB")) {
+                // TODO tileset
             } else if (file.getKey().endsWith(".BNK")) {
+                // TODO soundbank
             } else if (file.getKey().endsWith(".SQB")) {
                 nodes.add(new SqbNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".FNT")) {
+                // TODO font
             }
         }
 
