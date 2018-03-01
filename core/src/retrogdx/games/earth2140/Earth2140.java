@@ -5,9 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import retrogdx.ui.Game;
 import retrogdx.games.earth2140.nodes.WdNode;
-import retrogdx.ui.AssetFolderNode;
+import retrogdx.ui.Game;
 
 import java.util.HashMap;
 import java.util.Map;

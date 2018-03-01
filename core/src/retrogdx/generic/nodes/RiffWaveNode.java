@@ -5,9 +5,6 @@ import retrogdx.generic.readers.RiffWave;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.utils.SmartByteBuffer;
 
-import javax.sound.sampled.*;
-import java.io.ByteArrayInputStream;
-
 public class RiffWaveNode extends AssetFileNode {
     private SmartByteBuffer buffer;
 

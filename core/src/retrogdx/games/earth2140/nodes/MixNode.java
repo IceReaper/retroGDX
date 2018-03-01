@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.Mix;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.ImagePreview;
 import retrogdx.ui.ImageSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 

@@ -23,23 +23,22 @@ public class Stf {
 
         while (this.buffer.position() < this.buffer.capacity()) {
             int id = this.buffer.readUShort();
-            int compressionType = this.buffer.readInt();
-            int uncompressedSize = this.buffer.readInt();
+            this.buffer.readInt(); // compressionType
+            this.buffer.readInt(); // uncompressedSize
             int compressedSize = this.buffer.readInt();
             int fileType = this.buffer.readShort();
-            int headerEntries = this.buffer.readUShort();
+            this.buffer.readUShort(); // headerEntries
             int headerSize = this.buffer.readInt();
-            int unk1 = this.buffer.readShort(); // 0
-            int unk2 = this.buffer.readShort(); // 0
-            int unk3 = this.buffer.readShort(); // 0xfefe
+            this.buffer.readShort(); // 0
+            this.buffer.readShort(); // 0
+            this.buffer.readShort(); // 0xfefe
 
-            if (headerSize == 0 && compressedSize == 0 && fileType == 5) {
+            if (compressedSize == 0 && fileType == 5) {
                 // This format seems a little broken!
                 compressedSize = 256 * 3;
             }
 
-            files.put(id + "." + fileTypes[fileType], this.buffer.slice(this.buffer.position() + headerSize, compressedSize));
-            this.buffer.position(this.buffer.position() + headerSize + compressedSize);
+            files.put(id + "." + fileTypes[fileType], this.buffer.slice(headerSize + compressedSize));
         }
 
         return files;

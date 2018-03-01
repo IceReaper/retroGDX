@@ -1,7 +1,6 @@
 package retrogdx.generic.nodes;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import retrogdx.generic.readers.CreativeVoc;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.utils.SmartByteBuffer;

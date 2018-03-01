@@ -34,6 +34,7 @@ public class StfNode extends AssetFolderNode {
             } else if (file.getKey().endsWith(".PAL")) {
                 nodes.add(new PaletteNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".ANI")) {
+                nodes.add(new AniNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".MIF")) {
             } else if (file.getKey().endsWith(".TLB")) {
             } else if (file.getKey().endsWith(".BNK")) {

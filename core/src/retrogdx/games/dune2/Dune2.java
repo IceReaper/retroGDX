@@ -5,11 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import retrogdx.ui.Game;
 import retrogdx.games.dune2.nodes.PakNode;
 import retrogdx.games.dune2.readers.Pak;
 import retrogdx.games.dune2.readers.Pal;
-import retrogdx.ui.AssetFolderNode;
+import retrogdx.ui.Game;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.util.HashMap;

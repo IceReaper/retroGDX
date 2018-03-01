@@ -38,10 +38,10 @@ public class D3gr {
     private D3grImage readFrame(SmartByteBuffer buffer) {
         D3grImage image = new D3grImage();
 
-        int unk1 = buffer.readInt();
-        int unk2 = buffer.readInt();
-        int unk3 = buffer.readShort();
-        int unk4 = buffer.readShort();
+        int unk1 = buffer.readInt(); // TODO palette related?
+        int unk2 = buffer.readInt(); // TODO mostly (or always?) 2
+        int unk3 = buffer.readShort(); // TODO origin x?
+        int unk4 = buffer.readShort(); // TODO origin y?
         image.height = buffer.readShort();
         image.width = buffer.readShort();
         image.pixels = buffer.readBytes(image.width * image.height);

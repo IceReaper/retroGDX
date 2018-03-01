@@ -3,9 +3,9 @@ package retrogdx.games.earth2140.nodes;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import retrogdx.games.earth2140.readers.Wd;
 import retrogdx.generic.nodes.AutodeskFlicNode;
 import retrogdx.generic.nodes.PlainTextNode;
-import retrogdx.games.earth2140.readers.Wd;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
 

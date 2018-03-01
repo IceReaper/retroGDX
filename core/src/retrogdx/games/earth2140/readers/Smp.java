@@ -2,11 +2,7 @@ package retrogdx.games.earth2140.readers;
 
 import retrogdx.utils.SmartByteBuffer;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
+import javax.sound.sampled.*;
 import java.io.ByteArrayInputStream;
 
 public class Smp {
