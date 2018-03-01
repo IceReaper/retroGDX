@@ -8,7 +8,6 @@ public class Mix {
     public class MixImage {
         public int width;
         public int height;
-        public int bpp;
         public int paletteIndex;
         public byte[] pixelsIndexed;
         public int[] pixelsRgb;
@@ -21,22 +20,22 @@ public class Mix {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
-        String mixFile = buffer.readString(10); // "MIX FILE  "
-        int dataLength = buffer.readInt();
+        buffer.readString(10); // "MIX FILE  "
+        buffer.readInt(); // dataLength
         int dataCount = buffer.readInt();
         int dataOffset = buffer.readInt();
         int paletteCount = buffer.readInt();
         int paletteStartIndex = buffer.readInt();
-        int paletteOffset = buffer.readInt();
+        buffer.readInt(); // paletteOffset
 
-        String entry = buffer.readString(5); // "ENTRY"
+        buffer.readString(5); // "ENTRY"
         int[] dataOffsets = new int[dataCount];
 
         for (int i = 0; i < dataCount; i++) {
             dataOffsets[i] = buffer.readInt() + dataOffset;
         }
 
-        String pal = buffer.readString(5); // " PAL "
+        buffer.readString(5); // " PAL "
         this.palettes = new int[paletteCount][256];
 
         for (int i = 0; i < paletteCount; i++) {
@@ -45,7 +44,7 @@ public class Mix {
             }
         }
 
-        String data = buffer.readString(5); // "DATA "
+        buffer.readString(5); // "DATA "
         this.images = new MixImage[dataCount];
 
         for (int i = 0; i < dataCount; i++) {
@@ -82,16 +81,16 @@ public class Mix {
             // Compressed, indexed
             image.pixelsIndexed = new byte[image.width * image.height];
 
-            int width = buffer.readInt(); // duplicate
-            int height = buffer.readInt(); // duplicate
-            int dataBlockLength = buffer.readInt();
+            buffer.readInt(); // width duplicate
+            buffer.readInt(); // height duplicate
+            buffer.readInt(); // dataBlockLength
             int scanLinesCount = buffer.readInt();
             int segmentBlockLength = buffer.readInt();
 
-            int headerInfoBlockSize = buffer.readInt();
-            int unk2 = buffer.readInt(); // == height * 2 + 38
-            int unk3 = buffer.readInt(); // == height * 4 + 40
-            int headerBlockLength = buffer.readInt();
+            buffer.readInt(); // headerInfoBlockSize
+            buffer.readInt(); // == height * 2 + 38
+            buffer.readInt(); // == height * 4 + 40
+            buffer.readInt(); // headerBlockLength
 
             int[] scanLines = new int[scanLinesCount];
             int[] dataOffsets = new int[scanLinesCount];
@@ -135,7 +134,7 @@ public class Mix {
                         lineSize += skip + pixels;
                     }
 
-                    writePosition += width - lineSize;
+                    writePosition += image.width - lineSize;
                 }
             }
         }

@@ -15,7 +15,7 @@ public class DatImage {
 
         this.width = buffer.readUShort();
         this.height = buffer.readUShort();
-        int unk = buffer.readUShort();
+        int unk = buffer.readUShort(); // TODO This contains some information
         this.pixels = buffer.readBytes(this.width * this.height);
     }
 }

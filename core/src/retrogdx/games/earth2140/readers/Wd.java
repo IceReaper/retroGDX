@@ -25,10 +25,11 @@ public class Wd {
             while (this.buffer.position() < 0x400) {
                 int fileStartOffset = this.buffer.readInt();
                 int fileEndOffset = this.buffer.readInt();
+                this.buffer.position(this.buffer.position() - 4);
 
                 files.put(files.size() + ".SMP", this.buffer.slice(fileStartOffset + 0x400, fileEndOffset - fileStartOffset));
 
-                if (fileEndOffset == 0x00) {
+                if (fileEndOffset + 0x400 == this.buffer.capacity()) {
                     break;
                 }
             }
@@ -38,9 +39,9 @@ public class Wd {
             for (int i = 0; i < numFiles; i++) {
                 int offset = this.buffer.readInt();
                 int length = this.buffer.readInt();
-                int unk1 = this.buffer.readInt();
-                int unk2 = this.buffer.readInt();
-                int unk3 = this.buffer.readInt();
+                this.buffer.readInt(); // 0
+                this.buffer.readInt(); // 0
+                int unk = this.buffer.readInt(); // TODO this contains a value or can be 0
                 int fileNameOffset = this.buffer.readInt();
 
                 int position = this.buffer.position();

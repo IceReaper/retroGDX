@@ -17,7 +17,7 @@ public class D3gr {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
-        String magic = buffer.readString(4);
+        buffer.readString(4); // D3GR
         int unk1 = buffer.readInt(); // maybe flags
         int framesStart = buffer.readInt();
         int unk3 = buffer.readInt(); // 0, rare 28

@@ -23,7 +23,7 @@ public class Wsa {
         int numFrames = buffer.readUShort() + 1;
         this.width = buffer.readUShort();
         this.height = buffer.readUShort();
-        int unk = buffer.readInt(); // This could have been the animation speed, unsure...
+        int unk = buffer.readInt(); // TODO libwestwood states, this is the animation speed?
 
         List<byte[]> frames = new ArrayList<>();
 

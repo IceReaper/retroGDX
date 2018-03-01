@@ -31,7 +31,6 @@ public class Shp {
             int offset = (useInt ? buffer.readInt() + 2 : buffer.readShort());
 
             if (offset == buffer.capacity()) {
-                // Not a frame, pointer to file end
                 continue;
             }
 
@@ -52,15 +51,14 @@ public class Shp {
         ShpImage image = new ShpImage();
 
         int flags = buffer.readShort();
-        int slices = buffer.readUByte(); // slices == image.width
+        buffer.readUByte(); // slices
         image.width = buffer.readUShort();
         image.height = buffer.readUByte();
         int dataLeft = buffer.readUShort() - 10;
-        int dataSize = buffer.readUShort();
+        buffer.readUShort(); // dataSize
 
         byte[] table;
 
-        // TODO what is this table?!
         if ((flags & 0b001) != 0) {
             int n = (flags & 0b100) != 0 ? buffer.readUByte() : 16;
             table = new byte[n];
@@ -89,7 +87,6 @@ public class Shp {
             data = Algorythms.decompress(data);
         }
 
-        // data.length == dataSize
         data = Algorythms.zeroFill(data);
 
         for (int j = 0; j < data.length; j++) {

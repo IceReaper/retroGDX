@@ -17,7 +17,7 @@ public class Icn extends Iff {
     }
 
     protected void read(SmartByteBuffer buffer) {
-        String type = buffer.readString(4); // ICON
+        buffer.readString(4); // ICON
 
         while (buffer.position() < buffer.capacity()) {
             String token = buffer.readString(4);
@@ -60,10 +60,10 @@ public class Icn extends Iff {
     private void readSset(SmartByteBuffer buffer) {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
 
-        int unk1 = buffer.readUShort();
+        buffer.readUShort(); // 0
         int tileDataSize = buffer.readUShort();
-        int unk3 = buffer.readUShort();
-        int unk4 = buffer.readUShort();
+        buffer.readUShort(); // 0
+        buffer.readUShort(); // 0
 
         this.tiles = new byte[tileDataSize / this.bpp * 8 / this.width / this.height][this.width * this.height];
 

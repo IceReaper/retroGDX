@@ -49,7 +49,7 @@ public class PakNode extends AssetFolderNode {
             } else if (file.getKey().endsWith(".FNT")) {
                 // TODO font
             } else if (file.getKey().endsWith(".CPS")) {
-                // TODO image
+                nodes.add(new CpsNode(this.previewArea, file.getKey(), file.getValue()));
 
             } else if (file.getKey().endsWith(".ADL")) {
                 // TODO music

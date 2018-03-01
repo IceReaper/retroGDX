@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Scaling;
 import com.kotcrab.vis.ui.widget.*;
@@ -18,8 +17,6 @@ public class ImageSetPreview extends VisTable implements Disposable {
         } else {
             this.images = images;
         }
-
-        this.debugAll();
 
         VisImage image = new VisImage(new Texture(this.images[0]));
         image.setScaling(Scaling.none);

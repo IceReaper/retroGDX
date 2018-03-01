@@ -9,7 +9,7 @@ public abstract class Iff {
         buffer.position(0);
         buffer.order(ByteOrder.BIG_ENDIAN);
 
-        String magic = buffer.readString(4); // FORM
+        buffer.readString(4); // FORM
         int dataSize = buffer.readInt();
         this.read(buffer.slice(dataSize));
     }
