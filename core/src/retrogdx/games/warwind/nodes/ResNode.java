@@ -28,6 +28,7 @@ public class ResNode extends AssetFolderNode {
             if (file.getKey().endsWith(".wav")) {
                 nodes.add(new RiffWaveNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".D3GR")) {
+                nodes.add(new D3grNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".PAL")) {
                 nodes.add(new PalNode(this.previewArea, file.getKey(), file.getValue()));
             }

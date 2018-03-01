@@ -27,12 +27,6 @@ public class RetroGdx extends ApplicationAdapter {
         root.add(gamesTree).width(320).expandY().fillY();
         root.add(previewArea).expand().fill();
         this.stage.addActor(root);
-
-        // TODO we need generic preview classes for:
-        // 1. Spritesheet (multiple animations)
-        // 2. Audio (plain sound)
-        // 3. Video (animation + aligned audio)
-        // TODO and special solutions for additional file types.
     }
 
     public void render() {
