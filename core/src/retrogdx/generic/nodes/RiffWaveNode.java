@@ -3,6 +3,7 @@ package retrogdx.generic.nodes;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.generic.readers.RiffWave;
 import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.AudioPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class RiffWaveNode extends AssetFileNode {
@@ -16,6 +17,7 @@ public class RiffWaveNode extends AssetFileNode {
 
     protected void showPreview() {
         RiffWave wave = new RiffWave(this.buffer);
-        wave.clip.start();
+
+        this.previewArea.add(new AudioPreview(wave.clip));
     }
 }

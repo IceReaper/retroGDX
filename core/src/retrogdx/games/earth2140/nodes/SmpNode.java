@@ -3,6 +3,7 @@ package retrogdx.games.earth2140.nodes;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.Smp;
 import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.AudioPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class SmpNode extends AssetFileNode {
@@ -17,7 +18,6 @@ public class SmpNode extends AssetFileNode {
     protected void showPreview() {
         Smp smp = new Smp(this.smartByteBuffer);
 
-        // TODO replace with audio player widget
-        smp.clip.start();
+        this.previewArea.add(new AudioPreview(smp.clip));
     }
 }

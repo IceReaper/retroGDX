@@ -3,6 +3,7 @@ package retrogdx.generic.nodes;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.generic.readers.CreativeVoc;
 import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.AudioPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class CreativeVocNode extends AssetFileNode {
@@ -16,6 +17,7 @@ public class CreativeVocNode extends AssetFileNode {
 
     protected void showPreview() {
         CreativeVoc voc = new CreativeVoc(this.buffer);
-        voc.clip.start();
+
+        this.previewArea.add(new AudioPreview(voc.clip));
     }
 }
