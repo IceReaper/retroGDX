@@ -37,7 +37,7 @@ public class StfNode extends AssetFolderNode {
             } else if (file.getKey().endsWith(".MIF")) {
                 // TODO map
             } else if (file.getKey().endsWith(".TLB")) {
-                // TODO tileset
+                nodes.add(new TlbNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".BNK")) {
                 // TODO soundbank
             } else if (file.getKey().endsWith(".SQB")) {

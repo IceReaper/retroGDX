@@ -52,8 +52,9 @@ public class Ani {
         frame.originX = buffer.readInt();
         frame.originY = buffer.readInt();
 
-        frame.width = buffer.readShort();
+        frame.width = buffer.readShort() * 2;
         frame.height = buffer.readShort();
+        frame.pixels = new byte[frame.width * frame.height];
 
         int unk1 = buffer.readShort(); // TODO
 
@@ -61,7 +62,12 @@ public class Ani {
 
         int pos = buffer.position();
         buffer.position(pixelsStart + frameOffset);
-        frame.pixels = buffer.readBytes(frame.width * frame.height);
+
+        for (int i = 0; i < frame.width * frame.height; i += 2) {
+            frame.pixels[i] = buffer.readByte();
+            frame.pixels[i + 1] = frame.pixels[i];
+        }
+
         buffer.position(pos);
 
         return frame;
