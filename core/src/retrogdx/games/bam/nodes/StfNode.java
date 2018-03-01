@@ -39,6 +39,7 @@ public class StfNode extends AssetFolderNode {
             } else if (file.getKey().endsWith(".TLB")) {
             } else if (file.getKey().endsWith(".BNK")) {
             } else if (file.getKey().endsWith(".SQB")) {
+                nodes.add(new SqbNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".FNT")) {
             }
         }

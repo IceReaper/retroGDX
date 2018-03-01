@@ -5,7 +5,7 @@ import java.nio.ByteOrder;
 public class SmartByteBuffer {
     private byte[] bytes;
     private int position = 0;
-    private int capacity ;
+    private int capacity;
     private ByteOrder order;
 
     private SmartByteBuffer parent;

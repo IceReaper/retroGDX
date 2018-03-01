@@ -29,7 +29,7 @@ public class AniNode extends AssetFileNode {
             for (int y = 0; y < image.height; y++) {
                 for (int x = 0; x < image.width; x++) {
                     int index = image.pixels[x + y * image.width] & 0xff;
-                    pixmap.drawPixel(x, y, (index << 24) | (index << 16) | (index << 8) |0xff);
+                    pixmap.drawPixel(x, y, (index << 24) | (index << 16) | (index << 8) | 0xff);
                 }
             }
 

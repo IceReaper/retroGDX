@@ -35,7 +35,7 @@ public class MixNode extends AssetFileNode {
                         color = mix.palettes[image.paletteIndex][image.pixelsIndexed[x + y * image.width] & 0xff];
                     }
 
-                    pixmaps[i].drawPixel(x,  y, color);
+                    pixmaps[i].drawPixel(x, y, color);
                 }
             }
         }

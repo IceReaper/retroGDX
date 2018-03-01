@@ -92,7 +92,7 @@ public class Icn extends Iff {
         int numColors = 1 << this.bpp;
         this.rpal = new byte[buffer.capacity() / numColors][numColors];
 
-        for (int i = 0; i < this.rpal.length; i++){
+        for (int i = 0; i < this.rpal.length; i++) {
             for (int j = 0; j < numColors; j++) {
                 this.rpal[i][j] = buffer.readByte();
             }

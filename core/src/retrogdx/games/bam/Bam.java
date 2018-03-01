@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Bam extends Game{
+public class Bam extends Game {
     private FileHandle folder;
 
     public Bam(Table previewArea) {
