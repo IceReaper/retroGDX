@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import retrogdx.Game;
+import retrogdx.ui.Game;
 import retrogdx.games.dune2.nodes.PakNode;
 import retrogdx.games.dune2.readers.Pak;
 import retrogdx.games.dune2.readers.Pal;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Dune2 extends AssetFolderNode implements Game {
+public class Dune2 extends Game {
     public static int[] PALETTE;
     public static int[] PALETTE_ALT;
     private FileHandle folder;
@@ -26,30 +26,40 @@ public class Dune2 extends AssetFolderNode implements Game {
     }
 
     public boolean parse(FileHandle folder) {
-        if (folder.child("DUNE2.EXE").exists()) {
-            this.folder = folder;
+        for (FileHandle file : folder.list()) {
+            if (file.name().equalsIgnoreCase("DUNE2.EXE")) {
+                this.folder = folder;
+            }
+        }
 
-            Pak pak = new Pak(SmartByteBuffer.wrap(folder.child("DUNE.PAK").readBytes()));
+        if (this.folder == null) {
+            return false;
+        }
+
+        for (FileHandle file : folder.list()) {
+            if (!file.name().equalsIgnoreCase("DUNE.PAK")) {
+                continue;
+            }
+
+            Pak pak = new Pak(SmartByteBuffer.wrap(file.readBytes()));
 
             for (Map.Entry<String, SmartByteBuffer> entry : pak.getFiles().entrySet()) {
-                if (entry.getKey().equals("IBM.PAL")) {
+                if (entry.getKey().equalsIgnoreCase("IBM.PAL")) {
                     Dune2.PALETTE = new Pal(entry.getValue()).colors;
-                } else if (entry.getKey().equals("BENE.PAL")) {
+                } else if (entry.getKey().equalsIgnoreCase("BENE.PAL")) {
                     Dune2.PALETTE_ALT = new Pal(entry.getValue()).colors;
                 }
             }
-
-            return true;
         }
 
-        return false;
+        return true;
     }
 
     protected Array<Node> populate() {
         Map<String, Node> files = new HashMap<>();
 
         for (FileHandle file : this.folder.list()) {
-            if (file.extension().equals("PAK")) {
+            if (file.extension().equalsIgnoreCase("PAK")) {
                 files.put(file.name(), new PakNode(this.previewArea, file));
             }
         }

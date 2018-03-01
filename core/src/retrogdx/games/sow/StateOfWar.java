@@ -5,24 +5,30 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import retrogdx.Game;
+import retrogdx.ui.Game;
 import retrogdx.ui.AssetFolderNode;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class StateOfWar extends AssetFolderNode implements Game {
+public class StateOfWar extends Game {
     private FileHandle folder;
 
     public StateOfWar(Table previewArea) {
         super(previewArea, "State of War");
     }
 
+    protected StateOfWar(Table previewArea, String game) {
+        super(previewArea, game);
+    }
+
     public boolean parse(FileHandle folder) {
-        if (folder.child("State of War.exe").exists()) {
-            this.folder = folder;
-            return true;
+        for (FileHandle file : folder.list()) {
+            if (file.name().equalsIgnoreCase("State of War.exe")) {
+                this.folder = folder;
+                return true;
+            }
         }
 
         return false;
@@ -32,9 +38,6 @@ public class StateOfWar extends AssetFolderNode implements Game {
         Map<String, Node> files = new HashMap<>();
 
         for (FileHandle file : this.folder.list()) {
-            //if (file.extension().equals("STF")) {
-            //    files.put(file.name(), new StfNode(this.previewArea, file));
-            //}
         }
 
         Map<String, Node> sorted = new TreeMap<>(files);

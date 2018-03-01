@@ -69,7 +69,7 @@ public class WsaNode extends AssetFileNode {
             frames[i] = new Texture(pixmap);
         }
 
-        Animation<Texture> animation = new Animation<>(1024f / wsa.animationSpeed, frames);
+        Animation<Texture> animation = new Animation<>(0.15f, frames);
 
         this.previewArea.add(new AnimationPreview(animation));
     }

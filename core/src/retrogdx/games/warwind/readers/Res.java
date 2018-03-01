@@ -37,14 +37,14 @@ public class Res {
                 case 0x3344:
                     files.put(i + ".D3GR", fileBuffer);
                     break;
-                case 0x0870:
-                    files.put(i + ".PAL", fileBuffer);
-                    break;
                 case 0x4952:
                     files.put(i + ".wav", fileBuffer);
                     break;
                 case 0x0a0d:
                     // Nothing here - removed file.
+                    break;
+                default:
+                    files.put(i + ".PAL", fileBuffer);
                     break;
             }
         }

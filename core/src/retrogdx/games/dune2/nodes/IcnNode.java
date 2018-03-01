@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.Dune2;
 import retrogdx.games.dune2.readers.Icn;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.ImagePreview;
+import retrogdx.ui.ImageSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class IcnNode extends AssetFileNode {
@@ -44,6 +44,6 @@ public class IcnNode extends AssetFileNode {
             }
         }
 
-        this.previewArea.add(new ImagePreview(pixmap));
+        this.previewArea.add(new ImageSetPreview(pixmap));
     }
 }

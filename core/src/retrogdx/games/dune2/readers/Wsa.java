@@ -11,7 +11,6 @@ public class Wsa {
     public byte[][] frames;
     public int width;
     public int height;
-    public int animationSpeed;
 
     public Wsa(SmartByteBuffer buffer) {
         this(buffer, null);
@@ -24,7 +23,7 @@ public class Wsa {
         int numFrames = buffer.readUShort() + 1;
         this.width = buffer.readUShort();
         this.height = buffer.readUShort();
-        this.animationSpeed = buffer.readInt();
+        int unk = buffer.readInt(); // This could have been the animation speed, unsure...
 
         List<byte[]> frames = new ArrayList<>();
 

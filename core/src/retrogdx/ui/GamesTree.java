@@ -5,13 +5,16 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTree;
 import org.reflections.Reflections;
-import retrogdx.Game;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import static com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 
@@ -41,6 +44,7 @@ public class GamesTree extends VisScrollPane {
         });
 
         Set<Class<? extends Game>> gameClasses = new Reflections("retrogdx.games").getSubTypesOf(Game.class);
+        Map<String, Game> games = new HashMap<>();
 
         for (FileHandle file : Gdx.files.internal("games").list()) {
             for (Class<? extends Game> gameClass : gameClasses) {
@@ -48,12 +52,18 @@ public class GamesTree extends VisScrollPane {
                     Game game = gameClass.getConstructor(Table.class).newInstance(this.previewArea);
 
                     if (game.parse(file)) {
-                        ((VisTree) this.getActor()).add((Node) game);
+                        games.put(((VisLabel) game.getActor()).getText().toString(), game);
                     }
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             }
+        }
+
+        Map<String, Node> sorted = new TreeMap<>(games);
+
+        for (String game : sorted.keySet()) {
+            ((VisTree) this.getActor()).add(sorted.get(game));
         }
 
         this.showPreview();

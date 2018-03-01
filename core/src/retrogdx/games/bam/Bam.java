@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import retrogdx.Game;
+import retrogdx.ui.Game;
 import retrogdx.games.bam.nodes.StfNode;
 import retrogdx.ui.AssetFolderNode;
 
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Bam extends AssetFolderNode implements Game {
+public class Bam extends Game{
     private FileHandle folder;
 
     public Bam(Table previewArea) {
@@ -21,9 +21,11 @@ public class Bam extends AssetFolderNode implements Game {
     }
 
     public boolean parse(FileHandle folder) {
-        if (folder.child("BAMMAIN.EXE").exists()) {
-            this.folder = folder;
-            return true;
+        for (FileHandle file : folder.list()) {
+            if (file.name().equalsIgnoreCase("BAMMAIN.EXE")) {
+                this.folder = folder;
+                return true;
+            }
         }
 
         return false;
@@ -33,7 +35,7 @@ public class Bam extends AssetFolderNode implements Game {
         Map<String, Node> files = new HashMap<>();
 
         for (FileHandle file : this.folder.list()) {
-            if (file.extension().equals("STF")) {
+            if (file.extension().equalsIgnoreCase("STF")) {
                 files.put(file.name(), new StfNode(this.previewArea, file));
             }
         }

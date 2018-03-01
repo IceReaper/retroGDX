@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
-import retrogdx.Game;
+import retrogdx.ui.Game;
 import retrogdx.games.earth2140.nodes.WdNode;
 import retrogdx.ui.AssetFolderNode;
 
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Earth2140 extends AssetFolderNode implements Game {
+public class Earth2140 extends Game {
     private FileHandle folder;
 
     public Earth2140(Table previewArea) {
@@ -21,9 +21,11 @@ public class Earth2140 extends AssetFolderNode implements Game {
     }
 
     public boolean parse(FileHandle folder) {
-        if (folder.child("E2140.exe").exists()) {
-            this.folder = folder;
-            return true;
+        for (FileHandle file : folder.list()) {
+            if (file.name().equalsIgnoreCase("E2140.EXE")) {
+                this.folder = folder;
+                return true;
+            }
         }
 
         return false;
@@ -33,12 +35,10 @@ public class Earth2140 extends AssetFolderNode implements Game {
         Map<String, Node> files = new HashMap<>();
 
         for (FileHandle file : this.folder.list()) {
-            if (file.extension().equals("WD")) {
+            if (file.extension().equalsIgnoreCase("WD")) {
                 files.put(file.name(), new WdNode(this.previewArea, file));
             }
         }
-
-        // TODO add movie and music directories too!
 
         Map<String, Node> sorted = new TreeMap<>(files);
         Array<Node> result = new Array<>();
