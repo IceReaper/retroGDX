@@ -3,7 +3,7 @@ package retrogdx.games.earth2140.nodes;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.Smp;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.AudioPreview;
+import retrogdx.ui.previews.AudioPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class SmpNode extends AssetFileNode {

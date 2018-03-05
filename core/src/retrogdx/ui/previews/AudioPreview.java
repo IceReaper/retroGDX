@@ -1,4 +1,4 @@
-package retrogdx.ui;
+package retrogdx.ui.previews;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -19,10 +19,8 @@ public class AudioPreview extends VisTable implements Disposable {
         action.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 if (clip.isRunning()) {
-                    System.out.println("stop");
                     clip.stop();
                 } else {
-                    System.out.println("start");
                     clip.stop();
                     clip.setFramePosition(0);
                     clip.start();

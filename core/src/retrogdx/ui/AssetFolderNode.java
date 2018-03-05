@@ -9,6 +9,7 @@ public abstract class AssetFolderNode extends AssetFileNode {
     public AssetFolderNode(Table previewArea, String name) {
         super(previewArea, name);
 
+        // Prevent tree not rendering "+" while children not loaded yet.
         this.add(new Node(new VisLabel("...")));
     }
 
@@ -18,6 +19,7 @@ public abstract class AssetFolderNode extends AssetFileNode {
             this.addAll(this.populate());
         } else {
             this.removeAll();
+            // Prevent tree not rendering "+" while children not loaded yet.
             this.add(new Node(new VisLabel("...")));
         }
 

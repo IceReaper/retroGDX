@@ -22,7 +22,7 @@ public class StateOfWar extends Game {
         super(previewArea, game);
     }
 
-    public boolean parse(FileHandle folder) {
+    public boolean verify(FileHandle folder) {
         for (FileHandle file : folder.list()) {
             if (file.name().equalsIgnoreCase("State of War.exe")) {
                 this.folder = folder;

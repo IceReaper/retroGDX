@@ -3,7 +3,7 @@ package retrogdx.games.bam.nodes;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.bam.readers.Sqb;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.TextPreview;
+import retrogdx.ui.previews.TextPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class SqbNode extends AssetFileNode {

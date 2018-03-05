@@ -3,10 +3,11 @@ package retrogdx.generic.nodes;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.generic.readers.AutodeskFlic;
-import retrogdx.ui.AnimationPreview;
 import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.previews.AnimationPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class AutodeskFlicNode extends AssetFileNode {
@@ -21,7 +22,7 @@ public class AutodeskFlicNode extends AssetFileNode {
     protected void showPreview() {
         AutodeskFlic flic = new AutodeskFlic(this.smartByteBuffer);
 
-        Texture[] frames = new Texture[flic.frames.length];
+        Sprite[] sprites = new Sprite[flic.frames.length];
 
         for (int i = 0; i < flic.frames.length; i++) {
             Pixmap pixmap = new Pixmap(flic.width, flic.height, Pixmap.Format.RGBA8888);
@@ -32,10 +33,11 @@ public class AutodeskFlicNode extends AssetFileNode {
                 }
             }
 
-            frames[i] = new Texture(pixmap);
+            sprites[i] = new Sprite(new Texture(pixmap));
+            sprites[i].setOrigin(flic.width / 2, flic.height / 2);
         }
 
-        Animation<Texture> animation = new Animation<>(flic.speed / 1000f, frames);
+        Animation<Sprite> animation = new Animation<>(flic.speed / 1000f, sprites);
 
         this.previewArea.add(new AnimationPreview(animation));
     }

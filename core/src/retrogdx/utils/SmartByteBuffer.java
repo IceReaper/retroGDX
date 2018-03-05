@@ -1,7 +1,6 @@
 package retrogdx.utils;
 
 import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;
 
 public class SmartByteBuffer {

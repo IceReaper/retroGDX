@@ -57,7 +57,7 @@ public class GamesTree extends VisScrollPane {
                 try {
                     Game game = gameClass.getConstructor(Table.class).newInstance(this.previewArea);
 
-                    if (game.parse(file)) {
+                    if (game.verify(file)) {
                         games.put(((VisLabel) game.getActor()).getText().toString(), game);
                     }
                 } catch (Exception exception) {

@@ -1,4 +1,4 @@
-package retrogdx.ui;
+package retrogdx.ui.previews;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,18 +11,17 @@ import com.kotcrab.vis.ui.widget.*;
 public class ImageSetPreview extends VisTable implements Disposable {
     private Pixmap[] images;
 
-    public ImageSetPreview(Pixmap[] images) {
-        if (images.length == 0) {
+    public ImageSetPreview(Pixmap[] imagesParam) {
+        if (imagesParam.length == 0) {
             this.images = new Pixmap[]{new Pixmap(1, 1, Pixmap.Format.RGBA8888)};
         } else {
-            this.images = images;
+            this.images = imagesParam;
         }
 
         VisImage image = new VisImage(new Texture(this.images[0]));
         image.setScaling(Scaling.none);
         VisScrollPane scrollPane = new VisScrollPane(image);
         scrollPane.setFadeScrollBars(false);
-        scrollPane.setOverscroll(false, false);
         this.add(scrollPane).colspan(2).expand().fill().row();
 
         VisLabel current = new VisLabel();
@@ -39,6 +38,7 @@ public class ImageSetPreview extends VisTable implements Disposable {
         this.add(slider).expandX().fill();
 
         // TODO implement zooming
+        // TODO implement origin
     }
 
     public void dispose() {

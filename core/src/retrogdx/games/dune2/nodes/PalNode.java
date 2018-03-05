@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.readers.Pal;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.ImagePreview;
+import retrogdx.ui.previews.ImagePreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class PalNode extends AssetFileNode {

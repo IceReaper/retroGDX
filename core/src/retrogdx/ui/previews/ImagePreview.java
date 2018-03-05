@@ -1,4 +1,4 @@
-package retrogdx.ui;
+package retrogdx.ui.previews;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,7 +12,6 @@ public class ImagePreview extends VisScrollPane implements Disposable {
     public ImagePreview(Pixmap image) {
         super(new VisImage(new Texture(image)));
         this.setFadeScrollBars(false);
-        this.setOverscroll(false, false);
         ((VisImage) this.getActor()).setScaling(Scaling.none);
 
         // TODO implement zooming

@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.VisTable;
 import retrogdx.ui.GamesTree;
+import retrogdx.ui.PreviewArea;
 
 public class RetroGdx extends ApplicationAdapter {
     private Stage stage;

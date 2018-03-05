@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.generic.readers.Palette;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.ImagePreview;
+import retrogdx.ui.previews.ImagePreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class PaletteNode extends AssetFileNode {

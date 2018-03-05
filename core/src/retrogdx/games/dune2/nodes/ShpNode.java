@@ -6,7 +6,7 @@ import retrogdx.games.dune2.Dune2;
 import retrogdx.games.dune2.readers.Shp;
 import retrogdx.games.dune2.readers.Shp.ShpImage;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.ImageSetPreview;
+import retrogdx.ui.previews.ImageSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class ShpNode extends AssetFileNode {

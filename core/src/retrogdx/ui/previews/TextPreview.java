@@ -1,4 +1,4 @@
-package retrogdx.ui;
+package retrogdx.ui.previews;
 
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.widget.VisLabel;

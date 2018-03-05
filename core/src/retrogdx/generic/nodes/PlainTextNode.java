@@ -3,7 +3,7 @@ package retrogdx.generic.nodes;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.generic.readers.PlainText;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.TextPreview;
+import retrogdx.ui.previews.TextPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class PlainTextNode extends AssetFileNode {

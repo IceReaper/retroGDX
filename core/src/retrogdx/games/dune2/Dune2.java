@@ -24,7 +24,7 @@ public class Dune2 extends Game {
         super(previewArea, "Dune II: The Building of a Dynasty");
     }
 
-    public boolean parse(FileHandle folder) {
+    public boolean verify(FileHandle folder) {
         for (FileHandle file : folder.list()) {
             if (file.name().equalsIgnoreCase("DUNE2.EXE")) {
                 this.folder = folder;

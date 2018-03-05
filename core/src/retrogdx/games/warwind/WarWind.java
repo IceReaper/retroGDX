@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
+import retrogdx.games.warwind.nodes.DatNode;
 import retrogdx.games.warwind.nodes.ResNode;
 import retrogdx.ui.Game;
 
@@ -23,10 +24,12 @@ public class WarWind extends Game {
         super(previewArea, game);
     }
 
-    public boolean parse(FileHandle folder) {
-        if (folder.child("WW.EXE").exists()) {
-            this.folder = folder;
-            return true;
+    public boolean verify(FileHandle folder) {
+        for (FileHandle file : folder.list()) {
+            if (file.name().equalsIgnoreCase("WW.EXE")) {
+                this.folder = folder;
+                return true;
+            }
         }
 
         return false;
@@ -36,9 +39,11 @@ public class WarWind extends Game {
         Map<String, Node> files = new HashMap<>();
 
         for (FileHandle file : this.folder.child("DATA").list()) {
-            // .000 includes strings only, but breaks all the further reading.
-            if (file.name().startsWith("RES.") && !file.extension().equals("000")) {
+            // TODO .000 includes strings only, but breaks all the further reading.
+            if (file.name().toUpperCase().startsWith("RES.") && !file.extension().equals("000")) {
                 files.put(file.name(), new ResNode(this.previewArea, file));
+            } else if (file.name().equalsIgnoreCase("LEVELS.DAT")) {
+                files.put(file.name(), new DatNode(this.previewArea, file));
             }
         }
 

@@ -19,7 +19,7 @@ public class Earth2140 extends Game {
         super(previewArea, "Earth 2140");
     }
 
-    public boolean parse(FileHandle folder) {
+    public boolean verify(FileHandle folder) {
         for (FileHandle file : folder.list()) {
             if (file.name().equalsIgnoreCase("E2140.EXE")) {
                 this.folder = folder;

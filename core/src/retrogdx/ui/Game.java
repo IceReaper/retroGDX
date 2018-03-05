@@ -8,5 +8,5 @@ public abstract class Game extends AssetFolderNode {
         super(previewArea, name);
     }
 
-    public abstract boolean parse(FileHandle folder);
+    public abstract boolean verify(FileHandle folder);
 }

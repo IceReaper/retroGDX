@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.DatImage;
 import retrogdx.generic.readers.Palette;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.ImagePreview;
+import retrogdx.ui.previews.ImagePreview;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.util.Map;

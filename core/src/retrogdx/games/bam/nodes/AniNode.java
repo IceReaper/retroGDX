@@ -3,10 +3,11 @@ package retrogdx.games.bam.nodes;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.bam.readers.Ani;
-import retrogdx.ui.AnimationPreview;
 import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.previews.AnimationPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class AniNode extends AssetFileNode {
@@ -20,7 +21,7 @@ public class AniNode extends AssetFileNode {
     protected void showPreview() {
         Ani ani = new Ani(this.smartByteBuffer);
 
-        Texture[] textures = new Texture[ani.images.length];
+        Sprite[] sprites = new Sprite[ani.images.length];
 
         for (int i = 0; i < ani.images.length; i++) {
             Ani.AniImage image = ani.images[i];
@@ -33,10 +34,11 @@ public class AniNode extends AssetFileNode {
                 }
             }
 
-            textures[i] = new Texture(pixmap);
+            sprites[i] = new Sprite(new Texture(pixmap));
+            sprites[i].setOrigin(image.originX, image.originY);
         }
 
-        Animation<Texture> animation = new Animation<>(0.15f, textures);
+        Animation<Sprite> animation = new Animation<>(0.15f, sprites);
 
         this.previewArea.add(new AnimationPreview(animation));
     }

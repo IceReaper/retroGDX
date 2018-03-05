@@ -12,7 +12,7 @@ public class StateOfWarWarmonger extends StateOfWar {
         super(previewArea, "State of War: Warmonger");
     }
 
-    public boolean parse(FileHandle folder) {
+    public boolean verify(FileHandle folder) {
         if (folder.child("Warmonger.exe").exists()) {
             this.folder = folder;
             return true;

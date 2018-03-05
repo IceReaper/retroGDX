@@ -4,16 +4,19 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.Mix;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.ImageSetPreview;
+import retrogdx.ui.previews.ImageSetPreview;
+import retrogdx.ui.previews.TileSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class MixNode extends AssetFileNode {
     private SmartByteBuffer smartByteBuffer;
+    private String name;
 
     public MixNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
         super(previewArea, name);
 
         this.smartByteBuffer = smartByteBuffer;
+        this.name = name;
     }
 
     protected void showPreview() {
@@ -40,6 +43,10 @@ public class MixNode extends AssetFileNode {
             }
         }
 
-        this.previewArea.add(new ImageSetPreview(pixmaps));
+        if (this.name.startsWith("SPRT")) {
+            this.previewArea.add(new TileSetPreview(pixmaps));
+        } else {
+            this.previewArea.add(new ImageSetPreview(pixmaps));
+        }
     }
 }

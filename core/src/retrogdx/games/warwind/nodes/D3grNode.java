@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.warwind.readers.D3gr;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.ImageSetPreview;
+import retrogdx.ui.previews.ImageSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class D3grNode extends AssetFileNode {

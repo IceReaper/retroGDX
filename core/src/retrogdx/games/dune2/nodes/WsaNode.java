@@ -3,12 +3,13 @@ package retrogdx.games.dune2.nodes;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.Dune2;
 import retrogdx.games.dune2.readers.Pal;
 import retrogdx.games.dune2.readers.Wsa;
-import retrogdx.ui.AnimationPreview;
 import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.previews.AnimationPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.util.Map;
@@ -47,7 +48,7 @@ public class WsaNode extends AssetFileNode {
 
         Wsa wsa = new Wsa(this.smartByteBuffer, lastWsa == null ? null : lastWsa.frames[lastWsa.frames.length - 1]);
 
-        Texture[] frames = new Texture[wsa.frames.length];
+        Sprite[] sprites = new Sprite[wsa.frames.length];
 
         for (int i = 0; i < wsa.frames.length; i++) {
             Pixmap pixmap = new Pixmap(wsa.width, wsa.height, Pixmap.Format.RGBA8888);
@@ -66,10 +67,11 @@ public class WsaNode extends AssetFileNode {
                 }
             }
 
-            frames[i] = new Texture(pixmap);
+            sprites[i] = new Sprite(new Texture(pixmap));
+            sprites[i].setOrigin(wsa.width / 2, wsa.height / 2);
         }
 
-        Animation<Texture> animation = new Animation<>(0.15f, frames);
+        Animation<Sprite> animation = new Animation<>(0.15f, sprites);
 
         this.previewArea.add(new AnimationPreview(animation));
     }

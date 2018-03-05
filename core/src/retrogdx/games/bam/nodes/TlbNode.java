@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.bam.readers.Tlb;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.ImageSetPreview;
+import retrogdx.ui.previews.TileSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class TlbNode extends AssetFileNode {
@@ -32,6 +32,6 @@ public class TlbNode extends AssetFileNode {
             }
         }
 
-        this.previewArea.add(new ImageSetPreview(pixmaps));
+        this.previewArea.add(new TileSetPreview(pixmaps));
     }
 }

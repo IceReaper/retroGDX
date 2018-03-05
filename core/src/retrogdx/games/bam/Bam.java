@@ -19,7 +19,7 @@ public class Bam extends Game {
         super(previewArea, "Blood & Magic");
     }
 
-    public boolean parse(FileHandle folder) {
+    public boolean verify(FileHandle folder) {
         for (FileHandle file : folder.list()) {
             if (file.name().equalsIgnoreCase("BAMMAIN.EXE")) {
                 this.folder = folder;

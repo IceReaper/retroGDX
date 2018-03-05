@@ -10,10 +10,12 @@ public class WarWind2 extends WarWind {
         super(previewArea, "War Wind 2");
     }
 
-    public boolean parse(FileHandle folder) {
-        if (folder.child("WARWIND2.EXE").exists()) {
-            this.folder = folder;
-            return true;
+    public boolean verify(FileHandle folder) {
+        for (FileHandle file : folder.list()) {
+            if (file.name().equalsIgnoreCase("WARWIND2.EXE")) {
+                this.folder = folder;
+                return true;
+            }
         }
 
         return false;

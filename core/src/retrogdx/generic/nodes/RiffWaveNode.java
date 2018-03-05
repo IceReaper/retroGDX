@@ -3,7 +3,7 @@ package retrogdx.generic.nodes;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.generic.readers.RiffWave;
 import retrogdx.ui.AssetFileNode;
-import retrogdx.ui.AudioPreview;
+import retrogdx.ui.previews.AudioPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class RiffWaveNode extends AssetFileNode {
