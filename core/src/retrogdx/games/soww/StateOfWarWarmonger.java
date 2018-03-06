@@ -6,16 +6,16 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import retrogdx.games.sow.StateOfWar;
 
 public class StateOfWarWarmonger extends StateOfWar {
-    private FileHandle folder;
-
     public StateOfWarWarmonger(Table previewArea) {
         super(previewArea, "State of War: Warmonger");
     }
 
     public boolean verify(FileHandle folder) {
-        if (folder.child("Warmonger.exe").exists()) {
-            this.folder = folder;
-            return true;
+        for (FileHandle file : folder.list()) {
+            if (file.name().equalsIgnoreCase("WARMONGER.EXE")) {
+                this.folder = folder;
+                return true;
+            }
         }
 
         return false;

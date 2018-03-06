@@ -1,7 +1,7 @@
 package retrogdx.ui.previews;
 
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Scaling;
 import com.kotcrab.vis.ui.widget.VisImage;
@@ -9,21 +9,21 @@ import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTable;
 
 public class TileSetPreview extends VisScrollPane implements Disposable {
-    private Pixmap[] images;
+    private Sprite[] sprites;
 
-    public TileSetPreview(Pixmap[] images) {
+    public TileSetPreview(Sprite[] sprites) {
         super(new VisTable());
 
-        this.images = images;
+        this.sprites = sprites;
         this.setFadeScrollBars(false);
         VisTable table = (VisTable) this.getActor();
 
-        for (int i = 0; i < this.images.length; i++) {
+        for (int i = 0; i < this.sprites.length; i++) {
             if (i > 0 && i % 16 == 0) {
                 table.row();
             }
 
-            VisImage image = new VisImage(new Texture(this.images[i]));
+            VisImage image = new VisImage(new SpriteDrawable(this.sprites[i]));
             image.setScaling(Scaling.none);
             table.add(image);
         }
@@ -32,8 +32,8 @@ public class TileSetPreview extends VisScrollPane implements Disposable {
     }
 
     public void dispose() {
-        for (Pixmap image : this.images) {
-            image.dispose();
+        for (Sprite image : this.sprites) {
+            image.getTexture().dispose();
         }
     }
 }

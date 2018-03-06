@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Bam extends Game {
+public class BloodAndMagic extends Game {
     private FileHandle folder;
 
-    public Bam(Table previewArea) {
+    public BloodAndMagic(Table previewArea) {
         super(previewArea, "Blood & Magic");
     }
 

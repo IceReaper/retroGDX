@@ -1,6 +1,8 @@
 package retrogdx.games.earth2140.nodes;
 
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.Mix;
 import retrogdx.ui.AssetFileNode;
@@ -22,11 +24,11 @@ public class MixNode extends AssetFileNode {
     protected void showPreview() {
         Mix mix = new Mix(this.smartByteBuffer);
 
-        Pixmap[] pixmaps = new Pixmap[mix.images.length];
+        Sprite[] sprites = new Sprite[mix.images.length];
 
         for (int i = 0; i < mix.images.length; i++) {
             Mix.MixImage image = mix.images[i];
-            pixmaps[i] = new Pixmap(image.width, image.height, Pixmap.Format.RGBA8888);
+            Pixmap pixmap = new Pixmap(image.width, image.height, Pixmap.Format.RGBA8888);
 
             for (int y = 0; y < image.height; y++) {
                 for (int x = 0; x < image.width; x++) {
@@ -38,15 +40,18 @@ public class MixNode extends AssetFileNode {
                         color = mix.palettes[image.paletteIndex][image.pixelsIndexed[x + y * image.width] & 0xff];
                     }
 
-                    pixmaps[i].drawPixel(x, y, color);
+                    pixmap.drawPixel(x, y, color);
                 }
             }
+
+            sprites[i] = new Sprite(new Texture(pixmap));
+            sprites[i].setOrigin(image.width / 2, image.height / 2);
         }
 
         if (this.name.startsWith("SPRT")) {
-            this.previewArea.add(new TileSetPreview(pixmaps));
+            this.previewArea.add(new TileSetPreview(sprites));
         } else {
-            this.previewArea.add(new ImageSetPreview(pixmaps));
+            this.previewArea.add(new ImageSetPreview(sprites));
         }
     }
 }

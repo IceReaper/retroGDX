@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
+import retrogdx.games.sow.nodes.DataNode;
 import retrogdx.ui.Game;
 
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class StateOfWar extends Game {
-    private FileHandle folder;
+    protected FileHandle folder;
 
     public StateOfWar(Table previewArea) {
         super(previewArea, "State of War");
@@ -37,6 +38,10 @@ public class StateOfWar extends Game {
         Map<String, Node> files = new HashMap<>();
 
         for (FileHandle file : this.folder.list()) {
+            if (file.extension().equalsIgnoreCase("DATA")) {
+                // TODO case insensitive .info
+                files.put(file.name(), new DataNode(this.previewArea, file, file.sibling(file.nameWithoutExtension() + ".info")));
+            }
         }
 
         Map<String, Node> sorted = new TreeMap<>(files);

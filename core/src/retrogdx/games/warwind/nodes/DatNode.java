@@ -6,8 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import retrogdx.games.warwind.readers.Dat;
-import retrogdx.games.warwind.readers.Res;
-import retrogdx.generic.nodes.RiffWaveNode;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
 

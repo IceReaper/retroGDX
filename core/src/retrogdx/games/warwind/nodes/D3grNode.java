@@ -1,6 +1,8 @@
 package retrogdx.games.warwind.nodes;
 
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.warwind.readers.D3gr;
 import retrogdx.ui.AssetFileNode;
@@ -19,20 +21,23 @@ public class D3grNode extends AssetFileNode {
     protected void showPreview() {
         D3gr d3gr = new D3gr(this.smartByteBuffer);
 
-        Pixmap[] pixmaps = new Pixmap[d3gr.images.length];
+        Sprite[] sprites = new Sprite[d3gr.images.length];
 
         for (int i = 0; i < d3gr.images.length; i++) {
             D3gr.D3grImage image = d3gr.images[i];
-            pixmaps[i] = new Pixmap(image.width, image.height, Pixmap.Format.RGBA8888);
+            Pixmap pixmap = new Pixmap(image.width, image.height, Pixmap.Format.RGBA8888);
 
             for (int y = 0; y < image.height; y++) {
                 for (int x = 0; x < image.width; x++) {
                     int index = image.pixels[x + y * image.width] & 0xff;
-                    pixmaps[i].drawPixel(x, y, (index << 24) | (index << 16) | (index << 8) | 0xff);
+                    pixmap.drawPixel(x, y, (index << 24) | (index << 16) | (index << 8) | 0xff);
                 }
             }
+
+            sprites[i] = new Sprite(new Texture(pixmap));
+            sprites[i].setOrigin(image.width / 2, image.height / 2);
         }
 
-        this.previewArea.add(new ImageSetPreview(pixmaps));
+        this.previewArea.add(new ImageSetPreview(sprites));
     }
 }
