@@ -5,15 +5,15 @@ import retrogdx.utils.SmartByteBuffer;
 import java.nio.ByteOrder;
 
 public class Ani {
-    public class AniImage {
-        public int originX;
-        public int originY;
+    public class AniFrame {
+        public byte[] pixels;
         public int width;
         public int height;
-        public byte[] pixels;
+        public int originX;
+        public int originY;
     }
 
-    public AniImage[] images;
+    public AniFrame[] frames;
 
     public Ani(SmartByteBuffer buffer) {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -22,53 +22,48 @@ public class Ani {
         int frameControl = 0;
 
         while (true) {
-            buffer.position(buffer.position() + 8);
+            buffer.readInt(); // originX
+            buffer.readInt(); // originY
             int width = buffer.readShort();
             int height = buffer.readShort();
-            buffer.position(buffer.position() + 2);
+            int unk1 = buffer.readShort(); // TODO
             int frameOffset = buffer.readInt();
 
             if (frameControl == frameOffset) {
                 frameControl += width * height;
             } else {
-                buffer.position(buffer.position() - 18);
                 break;
             }
         }
 
-        int numFrames = buffer.position() / 18;
+        int numFrames = buffer.position() / 18 - 1;
         buffer.position(0);
 
-        this.images = new AniImage[numFrames];
+        this.frames = new AniFrame[numFrames];
 
         for (int i = 0; i < numFrames; i++) {
-            this.images[i] = this.parseImage(buffer, numFrames * 18);
+            this.frames[i] = this.parseFrame(buffer, numFrames * 18);
         }
     }
 
-    private AniImage parseImage(SmartByteBuffer buffer, int pixelsStart) {
-        AniImage frame = new AniImage();
+    private AniFrame parseFrame(SmartByteBuffer buffer, int pixelsStart) {
+        AniFrame frame = new AniFrame();
 
         frame.originX = buffer.readInt();
         frame.originY = buffer.readInt();
-
         frame.width = buffer.readShort() * 2;
         frame.height = buffer.readShort();
-        frame.pixels = new byte[frame.width * frame.height];
-
         int unk1 = buffer.readShort(); // TODO
-
         int frameOffset = buffer.readInt();
 
-        int pos = buffer.position();
-        buffer.position(pixelsStart + frameOffset);
+        frame.pixels = new byte[frame.width * frame.height];
 
-        for (int i = 0; i < frame.width * frame.height; i += 2) {
-            frame.pixels[i] = buffer.readByte();
-            frame.pixels[i + 1] = frame.pixels[i];
-        }
-
-        buffer.position(pos);
+        buffer.block(pixelsStart + frameOffset, (SmartByteBuffer blockBuffer) -> {
+            for (int i = 0; i < frame.width * frame.height; i += 2) {
+                frame.pixels[i] = blockBuffer.readByte();
+                frame.pixels[i + 1] = frame.pixels[i];
+            }
+        });
 
         return frame;
     }

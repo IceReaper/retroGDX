@@ -2,6 +2,8 @@ package retrogdx.games.bam.readers;
 
 import retrogdx.utils.SmartByteBuffer;
 
+import java.nio.ByteOrder;
+
 public class Tlb {
     public class TlbTile {
         public byte[] pixels;
@@ -12,6 +14,9 @@ public class Tlb {
     public TlbTile[] tiles;
 
     public Tlb(SmartByteBuffer buffer) {
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
+        buffer.position(0);
+
         buffer.readInt(); // id
         this.tiles = new TlbTile[buffer.readInt()];
         int numObjects = buffer.readInt();

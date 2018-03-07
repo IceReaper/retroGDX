@@ -8,16 +8,12 @@ import retrogdx.ui.previews.ImagePreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class PalNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
-
-    public PalNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public PalNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
     }
 
     protected void showPreview() {
-        Pal pal = new Pal(this.smartByteBuffer);
+        Pal pal = new Pal(this.buffer);
 
         Pixmap pixmap = new Pixmap(256, 256, Pixmap.Format.RGBA8888);
 

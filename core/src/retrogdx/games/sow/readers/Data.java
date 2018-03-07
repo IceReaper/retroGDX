@@ -16,13 +16,13 @@ public class Data {
     }
 
     public Map<String, SmartByteBuffer> getFiles() {
-        Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
-
         this.dataBuffer.order(ByteOrder.LITTLE_ENDIAN);
         this.infoBuffer.order(ByteOrder.LITTLE_ENDIAN);
         this.infoBuffer.position(0);
 
-        int magic = this.infoBuffer.readInt(); // 0x01010101
+        Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
+
+        this.infoBuffer.readInt(); // 0x01010101
         int entries = this.infoBuffer.readInt();
 
         for (int i = 0; i < entries; i++) {

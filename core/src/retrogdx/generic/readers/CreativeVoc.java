@@ -4,18 +4,20 @@ import retrogdx.utils.SmartByteBuffer;
 
 import javax.sound.sampled.*;
 import java.io.ByteArrayInputStream;
+import java.nio.ByteOrder;
 
 public class CreativeVoc {
     public Clip clip;
 
     public CreativeVoc(SmartByteBuffer buffer) {
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
-        String signature = buffer.readString(19);
-        byte magic = buffer.readByte();
-        int headerSize = buffer.readUShort();
-        int version = buffer.readUShort();
-        int checksum = buffer.readUShort();
+        buffer.readString(19); // signature
+        buffer.readByte(); // magic
+        buffer.readUShort(); // headerSize
+        buffer.readUShort(); // version
+        buffer.readUShort(); // checksum
 
         while (buffer.position() < buffer.capacity()) {
             byte blockType = buffer.readByte();

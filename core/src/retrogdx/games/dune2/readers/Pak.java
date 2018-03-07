@@ -14,10 +14,10 @@ public class Pak {
     }
 
     public Map<String, SmartByteBuffer> getFiles() {
-        Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
-
         this.buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.buffer.position(0);
+
+        Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
 
         while (true) {
             int offset = this.buffer.readInt();

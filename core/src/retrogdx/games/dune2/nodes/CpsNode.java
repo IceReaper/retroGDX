@@ -9,18 +9,15 @@ import retrogdx.ui.previews.ImagePreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class CpsNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
     private String name;
 
-    public CpsNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public CpsNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
         this.name = name;
     }
 
     protected void showPreview() {
-        Cps cps = new Cps(this.smartByteBuffer);
+        Cps cps = new Cps(this.buffer);
 
         Pixmap pixmap = new Pixmap(320, 200, Pixmap.Format.RGBA8888);
         int[] palette = cps.palette != null ? cps.palette.colors : Dune2.PALETTE;

@@ -11,16 +11,12 @@ import retrogdx.ui.previews.AnimationPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class AutodeskFlicNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
-
-    public AutodeskFlicNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public AutodeskFlicNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
     }
 
     protected void showPreview() {
-        AutodeskFlic flic = new AutodeskFlic(this.smartByteBuffer);
+        AutodeskFlic flic = new AutodeskFlic(this.buffer);
 
         Sprite[] sprites = new Sprite[flic.frames.length];
 

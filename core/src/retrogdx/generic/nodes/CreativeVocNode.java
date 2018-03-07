@@ -7,12 +7,8 @@ import retrogdx.ui.previews.AudioPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class CreativeVocNode extends AssetFileNode {
-    private SmartByteBuffer buffer;
-
     public CreativeVocNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name);
-
-        this.buffer = buffer;
+        super(previewArea, name, buffer);
     }
 
     protected void showPreview() {

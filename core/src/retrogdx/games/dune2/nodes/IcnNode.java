@@ -11,18 +11,15 @@ import retrogdx.ui.previews.TileSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class IcnNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
     private String name;
 
-    public IcnNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public IcnNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
         this.name = name;
     }
 
     protected void showPreview() {
-        Icn icn = new Icn(this.smartByteBuffer);
+        Icn icn = new Icn(this.buffer);
 
         Sprite[] sprites = new Sprite[icn.tiles.length];
         int[] palette = Dune2.PALETTE;

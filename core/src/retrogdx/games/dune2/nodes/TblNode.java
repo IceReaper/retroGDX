@@ -8,16 +8,12 @@ import retrogdx.ui.previews.ImagePreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class TblNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
-
-    public TblNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public TblNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
     }
 
     protected void showPreview() {
-        Tbl tbl = new Tbl(this.smartByteBuffer);
+        Tbl tbl = new Tbl(this.buffer);
 
         Pixmap pixmap = new Pixmap(16, 16, Pixmap.Format.RGBA8888);
 

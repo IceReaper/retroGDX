@@ -4,7 +4,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
-import com.kotcrab.vis.ui.widget.VisLabel;
 import retrogdx.games.dune2.readers.Pak;
 import retrogdx.generic.nodes.CreativeVocNode;
 import retrogdx.generic.nodes.PlainTextNode;
@@ -16,13 +15,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class PakNode extends AssetFolderNode {
-    private FileHandle file;
     private Map<String, SmartByteBuffer> palettes = new HashMap<>();
     private Map<String, SmartByteBuffer> animations = new HashMap<>();
 
     public PakNode(Table previewArea, FileHandle file) {
-        super(previewArea, file.name());
-        this.file = file;
+        super(previewArea, file);
     }
 
     protected Array<Node> populate() {
@@ -77,9 +74,5 @@ public class PakNode extends AssetFolderNode {
         }
 
         return nodes;
-    }
-
-    protected void showPreview() {
-        this.previewArea.add(new VisLabel("Preview..."));
     }
 }

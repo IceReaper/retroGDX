@@ -6,16 +6,12 @@ import retrogdx.ui.AssetFileNode;
 import retrogdx.utils.SmartByteBuffer;
 
 public class DatMapNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
-
-    public DatMapNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public DatMapNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
     }
 
     protected void showPreview() {
-        DatMap dat = new DatMap(this.smartByteBuffer);
+        DatMap dat = new DatMap(this.buffer);
 
         // TODO render the terrain as preview.
         // TODO do we want to show anything else? Map Objects, Layers, Entities, Regions, ...?

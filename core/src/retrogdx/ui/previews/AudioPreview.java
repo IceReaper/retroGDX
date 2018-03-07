@@ -16,7 +16,7 @@ public class AudioPreview extends VisTable implements Disposable {
         this.clip.start();
 
         VisTextButton action = new VisTextButton("Start / Stop");
-        action.addListener(new ClickListener(){
+        action.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 if (clip.isRunning()) {
                     clip.stop();
@@ -34,7 +34,6 @@ public class AudioPreview extends VisTable implements Disposable {
 
     public void dispose() {
         if (this.clip.isRunning()) {
-            System.out.println("dispose");
             this.clip.stop();
         }
     }

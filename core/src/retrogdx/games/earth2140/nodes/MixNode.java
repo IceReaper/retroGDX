@@ -11,33 +11,30 @@ import retrogdx.ui.previews.TileSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class MixNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
     private String name;
 
-    public MixNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public MixNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
         this.name = name;
     }
 
     protected void showPreview() {
-        Mix mix = new Mix(this.smartByteBuffer);
+        Mix mix = new Mix(this.buffer);
 
-        Sprite[] sprites = new Sprite[mix.images.length];
+        Sprite[] sprites = new Sprite[mix.frames.length];
 
-        for (int i = 0; i < mix.images.length; i++) {
-            Mix.MixImage image = mix.images[i];
-            Pixmap pixmap = new Pixmap(image.width, image.height, Pixmap.Format.RGBA8888);
+        for (int i = 0; i < mix.frames.length; i++) {
+            Mix.MixFrame frame = mix.frames[i];
+            Pixmap pixmap = new Pixmap(frame.width, frame.height, Pixmap.Format.RGBA8888);
 
-            for (int y = 0; y < image.height; y++) {
-                for (int x = 0; x < image.width; x++) {
+            for (int y = 0; y < frame.height; y++) {
+                for (int x = 0; x < frame.width; x++) {
                     int color;
 
-                    if (image.paletteIndex == -1) {
-                        color = image.pixelsRgb[x + y * image.width];
+                    if (frame.paletteIndex == -1) {
+                        color = frame.pixelsRgb[x + y * frame.width];
                     } else {
-                        color = mix.palettes[image.paletteIndex][image.pixelsIndexed[x + y * image.width] & 0xff];
+                        color = mix.palettes[frame.paletteIndex][frame.pixelsIndexed[x + y * frame.width] & 0xff];
                     }
 
                     pixmap.drawPixel(x, y, color);
@@ -45,7 +42,7 @@ public class MixNode extends AssetFileNode {
             }
 
             sprites[i] = new Sprite(new Texture(pixmap));
-            sprites[i].setOrigin(image.width / 2, image.height / 2);
+            sprites[i].setOrigin(frame.width / 2, frame.height / 2);
         }
 
         if (this.name.startsWith("SPRT")) {

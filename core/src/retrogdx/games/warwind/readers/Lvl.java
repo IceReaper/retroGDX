@@ -6,8 +6,8 @@ import java.nio.ByteOrder;
 
 public class Lvl {
     public Lvl(SmartByteBuffer buffer) {
-        buffer.position(0);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
+        buffer.position(0);
 
         String magic = buffer.readString(6); // WARMAP or EMPTY.
 

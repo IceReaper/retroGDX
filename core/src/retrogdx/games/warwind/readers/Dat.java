@@ -14,10 +14,10 @@ public class Dat {
     }
 
     public Map<String, SmartByteBuffer> getFiles() {
-        Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
-
-        this.buffer.position(0);
         this.buffer.order(ByteOrder.LITTLE_ENDIAN);
+        this.buffer.position(0);
+
+        Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
 
         int numFiles = this.buffer.readInt();
 

@@ -7,16 +7,12 @@ import retrogdx.ui.previews.AudioPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class SmpNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
-
-    public SmpNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public SmpNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
     }
 
     protected void showPreview() {
-        Smp smp = new Smp(this.smartByteBuffer);
+        Smp smp = new Smp(this.buffer);
 
         this.previewArea.add(new AudioPreview(smp.clip));
     }

@@ -14,26 +14,26 @@ public class AutodeskFlic {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
-        int size = buffer.readInt();
-        int magic = buffer.readUShort();
+        buffer.readInt(); // size
+        buffer.readUShort(); // magic
         int frames = buffer.readUShort();
         this.width = buffer.readUShort();
         this.height = buffer.readUShort();
-        int depth = buffer.readUShort();
-        int flags = buffer.readUShort();
+        buffer.readUShort(); // septh
+        buffer.readUShort(); // flags
         this.speed = buffer.readUShort();
-        int next = buffer.readInt();
-        int frit = buffer.readInt();
-        byte[] expand = buffer.readBytes(102);
+        buffer.readInt(); // next
+        buffer.readInt(); // frit
+        buffer.readBytes(102); // expand
 
         this.frames = new int[frames][this.width * this.height];
         int[] palette = new int[256];
 
         for (int i = 0; i < frames; i++) {
-            int frameSize = buffer.readInt();
-            int frameMagic = buffer.readUShort();
+            buffer.readInt(); // frameSize
+            buffer.readUShort(); // frameMagic
             int frameChunks = buffer.readUShort();
-            byte[] frameExpand = buffer.readBytes(8);
+            buffer.readBytes(8); // frameExpand
 
             for (int j = 0; j < frameChunks; j++) {
                 int chunkSize = buffer.readInt();
@@ -58,14 +58,17 @@ public class AutodeskFlic {
                         }
 
                         break;
+
                     case 7:
                         // FLI_DELTA
                         this.frames[i] = this.modifyFrame(buffer.slice(chunkSize - 6), palette, this.frames[i - 1]);
                         break;
+
                     case 15:
                         // FLI_BRUN
                         this.frames[i] = this.decompressFrame(buffer.slice(chunkSize - 6), palette);
                         break;
+
                     case 18:
                         // FLI_MINI
                         // We can safely skip this chunk, as its a smaller thumbnail of the first frame.

@@ -7,22 +7,19 @@ import retrogdx.ui.previews.TextPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class PlainTextNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
     private String encoding;
 
-    public PlainTextNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        this(previewArea, name, smartByteBuffer, "UTF-8");
+    public PlainTextNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        this(previewArea, name, buffer, "UTF-8");
     }
 
-    public PlainTextNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer, String encoding) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public PlainTextNode(Table previewArea, String name, SmartByteBuffer buffer, String encoding) {
+        super(previewArea, name, buffer);
         this.encoding = encoding;
     }
 
     protected void showPreview() {
-        PlainText ini = new PlainText(this.smartByteBuffer, this.encoding);
+        PlainText ini = new PlainText(this.buffer, this.encoding);
 
         this.previewArea.add(new TextPreview(ini.text));
     }

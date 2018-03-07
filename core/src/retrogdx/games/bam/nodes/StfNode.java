@@ -14,11 +14,8 @@ import java.util.Map.Entry;
 import static com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 
 public class StfNode extends AssetFolderNode {
-    private FileHandle file;
-
     public StfNode(Table previewArea, FileHandle file) {
-        super(previewArea, file.name());
-        this.file = file;
+        super(previewArea, file);
     }
 
     protected Array<Node> populate() {
@@ -48,8 +45,5 @@ public class StfNode extends AssetFolderNode {
         }
 
         return nodes;
-    }
-
-    protected void showPreview() {
     }
 }

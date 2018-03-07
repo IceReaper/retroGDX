@@ -15,7 +15,7 @@ public class DataNode extends AssetFolderNode {
     private FileHandle infoFile;
 
     public DataNode(Table previewArea, FileHandle dataFile, FileHandle infoFile) {
-        super(previewArea, dataFile.name());
+        super(previewArea, dataFile);
 
         this.dataFile = dataFile;
         this.infoFile = infoFile;
@@ -23,6 +23,7 @@ public class DataNode extends AssetFolderNode {
 
     protected Array<Tree.Node> populate() {
         Data data = new Data(SmartByteBuffer.wrap(this.dataFile.readBytes()), SmartByteBuffer.wrap(this.infoFile.readBytes()));
+
         Array<Tree.Node> nodes = new Array<>();
 
         for (Map.Entry<String, SmartByteBuffer> file : data.getFiles().entrySet()) {
@@ -40,9 +41,5 @@ public class DataNode extends AssetFolderNode {
         }
 
         return nodes;
-    }
-
-    protected void showPreview() {
-
     }
 }

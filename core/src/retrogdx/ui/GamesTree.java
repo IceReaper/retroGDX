@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTree;
@@ -77,5 +79,10 @@ public class GamesTree extends VisScrollPane {
 
     private void showPreview() {
         this.previewArea.add(new VisLabel("Readme..."));
+    }
+
+    public static Array<Node> sort(Array<Tree.Node> nodes) {
+        nodes.sort((a, b) -> ((VisLabel) a.getActor()).getText().toString().compareToIgnoreCase(((VisLabel) b.getActor()).getText().toString()));
+        return nodes;
     }
 }

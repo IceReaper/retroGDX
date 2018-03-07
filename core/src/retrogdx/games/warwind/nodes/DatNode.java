@@ -4,7 +4,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import com.badlogic.gdx.utils.Array;
-import com.kotcrab.vis.ui.widget.VisLabel;
 import retrogdx.games.warwind.readers.Dat;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
@@ -12,11 +11,8 @@ import retrogdx.utils.SmartByteBuffer;
 import java.util.Map.Entry;
 
 public class DatNode extends AssetFolderNode {
-    private FileHandle file;
-
     public DatNode(Table previewArea, FileHandle file) {
-        super(previewArea, file.name());
-        this.file = file;
+        super(previewArea, file);
     }
 
     protected Array<Tree.Node> populate() {
@@ -28,9 +24,5 @@ public class DatNode extends AssetFolderNode {
         }
 
         return nodes;
-    }
-
-    protected void showPreview() {
-        this.previewArea.add(new VisLabel("Preview..."));
     }
 }

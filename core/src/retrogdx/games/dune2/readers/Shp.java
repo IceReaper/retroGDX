@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Shp {
-    public class ShpImage {
+    public class ShpFrame {
+        public byte[] pixels;
         public int width;
         public int height;
-        public byte[] pixels;
     }
 
-    public ShpImage[] images;
+    public ShpFrame[] frames;
 
     public Shp(SmartByteBuffer buffer) {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -25,7 +25,7 @@ public class Shp {
         boolean useInt = (buffer.readInt() >> 16) == 0x00;
         buffer.position(buffer.position() - 4);
 
-        List<ShpImage> images = new ArrayList<>();
+        List<ShpFrame> frames = new ArrayList<>();
 
         for (int i = 0; i < numFrames; i++) {
             int offset = (useInt ? buffer.readInt() + 2 : buffer.readShort());
@@ -34,21 +34,20 @@ public class Shp {
                 continue;
             }
 
-            int position = buffer.position();
-            buffer.position(offset);
-            images.add(this.readImage(buffer));
-            buffer.position(position);
+            buffer.block(offset, (blockBuffer) -> {
+                frames.add(this.readImage(blockBuffer));
+            });
         }
 
-        this.images = new ShpImage[images.size()];
+        this.frames = new ShpFrame[frames.size()];
 
-        for (int i = 0; i < images.size(); i++) {
-            this.images[i] = images.get(i);
+        for (int i = 0; i < frames.size(); i++) {
+            this.frames[i] = frames.get(i);
         }
     }
 
-    private ShpImage readImage(SmartByteBuffer buffer) {
-        ShpImage image = new ShpImage();
+    private ShpFrame readImage(SmartByteBuffer buffer) {
+        ShpFrame image = new ShpFrame();
 
         int flags = buffer.readShort();
         buffer.readUByte(); // slices

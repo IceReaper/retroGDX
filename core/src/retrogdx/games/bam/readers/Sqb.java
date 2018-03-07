@@ -3,35 +3,25 @@ package retrogdx.games.bam.readers;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.nio.ByteOrder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Sqb {
-    public String text = "";
+    public Map<Integer, String> texts = new HashMap<>();
 
     public Sqb(SmartByteBuffer buffer) {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
         int texts = buffer.readInt();
-        int start = buffer.position();
-
-        StringBuilder text = new StringBuilder();
 
         for (int i = 0; i < texts; i++) {
             int textOffset = buffer.readInt();
             int id = buffer.readInt();
 
-            int position = buffer.position();
-            buffer.position(start + texts * 8 + textOffset);
-
-            try {
-                text.append(id + " :: " + buffer.readString("CP850") + "\n");
-            } catch (Exception ignored) {
-            }
-
-            buffer.position(position);
+            buffer.block(4 + texts * 8 + textOffset, (SmartByteBuffer blockBuffer) -> {
+                this.texts.put(id, blockBuffer.readString("CP850"));
+            });
         }
-
-        this.text = text.toString();
-        this.text = text.substring(0, this.text.length() - 1);
     }
 }

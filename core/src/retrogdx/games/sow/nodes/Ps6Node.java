@@ -11,16 +11,12 @@ import retrogdx.ui.previews.AnimationPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class Ps6Node extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
-
-    public Ps6Node(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public Ps6Node(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
     }
 
     protected void showPreview() {
-        Ps6 ps6 = new Ps6(this.smartByteBuffer);
+        Ps6 ps6 = new Ps6(this.buffer);
 
         Sprite[] sprites = new Sprite[ps6.frames.length];
 

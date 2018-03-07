@@ -4,11 +4,13 @@ import retrogdx.utils.SmartByteBuffer;
 
 import javax.sound.sampled.*;
 import java.io.ByteArrayInputStream;
+import java.nio.ByteOrder;
 
 public class Smp {
     public Clip clip;
 
     public Smp(SmartByteBuffer buffer) {
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
         byte[] audioData = buffer.readBytes(buffer.capacity());

@@ -10,16 +10,12 @@ import retrogdx.ui.previews.TileSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class TlbNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
-
-    public TlbNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public TlbNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
     }
 
     protected void showPreview() {
-        Tlb tlb = new Tlb(this.smartByteBuffer);
+        Tlb tlb = new Tlb(this.buffer);
 
         Sprite[] sprites = new Sprite[tlb.tiles.length];
 

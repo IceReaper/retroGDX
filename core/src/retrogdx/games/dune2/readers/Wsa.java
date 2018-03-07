@@ -11,12 +11,13 @@ public class Wsa {
     public byte[][] frames;
     public int width;
     public int height;
+    private byte[] prevFrame;
 
     public Wsa(SmartByteBuffer buffer) {
         this(buffer, null);
     }
 
-    public Wsa(SmartByteBuffer buffer, byte[] prevFrame) {
+    public Wsa(SmartByteBuffer buffer, byte[] prevFrameParam) {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
@@ -27,8 +28,10 @@ public class Wsa {
 
         List<byte[]> frames = new ArrayList<>();
 
-        if (prevFrame == null) {
-            prevFrame = new byte[this.width * this.height];
+        if (prevFrameParam == null) {
+            this.prevFrame = new byte[this.width * this.height];
+        } else {
+            this.prevFrame = prevFrameParam;
         }
 
         for (int i = 0; i < numFrames; i++) {
@@ -44,11 +47,10 @@ public class Wsa {
                 continue;
             }
 
-            int position = buffer.position();
-            buffer.position(offset);
-            prevFrame = this.readFrame(buffer.readBytes(buffer.capacity() - offset), prevFrame);
-            frames.add(prevFrame);
-            buffer.position(position);
+            buffer.block(offset, (blockBuffer) -> {
+                prevFrame = Algorythms.xor(prevFrame, Algorythms.decompress(blockBuffer.readBytes(blockBuffer.capacity() - offset)));
+                frames.add(prevFrame);
+            });
         }
 
         this.frames = new byte[frames.size()][this.width * this.height];
@@ -56,10 +58,5 @@ public class Wsa {
         for (int i = 0; i < frames.size(); i++) {
             this.frames[i] = frames.get(i);
         }
-    }
-
-    private byte[] readFrame(byte[] compressed80, byte[] prevFrame) {
-        byte[] compressed40 = Algorythms.decompress(compressed80);
-        return Algorythms.xor(prevFrame, compressed40);
     }
 }

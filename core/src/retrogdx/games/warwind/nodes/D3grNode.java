@@ -10,32 +10,28 @@ import retrogdx.ui.previews.ImageSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class D3grNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
-
-    public D3grNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public D3grNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
     }
 
     protected void showPreview() {
-        D3gr d3gr = new D3gr(this.smartByteBuffer);
+        D3gr d3gr = new D3gr(this.buffer);
 
-        Sprite[] sprites = new Sprite[d3gr.images.length];
+        Sprite[] sprites = new Sprite[d3gr.frames.length];
 
-        for (int i = 0; i < d3gr.images.length; i++) {
-            D3gr.D3grImage image = d3gr.images[i];
-            Pixmap pixmap = new Pixmap(image.width, image.height, Pixmap.Format.RGBA8888);
+        for (int i = 0; i < d3gr.frames.length; i++) {
+            D3gr.D3grFrame frame = d3gr.frames[i];
+            Pixmap pixmap = new Pixmap(frame.width, frame.height, Pixmap.Format.RGBA8888);
 
-            for (int y = 0; y < image.height; y++) {
-                for (int x = 0; x < image.width; x++) {
-                    int index = image.pixels[x + y * image.width] & 0xff;
+            for (int y = 0; y < frame.height; y++) {
+                for (int x = 0; x < frame.width; x++) {
+                    int index = frame.pixels[x + y * frame.width] & 0xff;
                     pixmap.drawPixel(x, y, (index << 24) | (index << 16) | (index << 8) | 0xff);
                 }
             }
 
             sprites[i] = new Sprite(new Texture(pixmap));
-            sprites[i].setOrigin(image.width / 2, image.height / 2);
+            sprites[i].setOrigin(frame.width / 2, frame.height / 2);
         }
 
         this.previewArea.add(new ImageSetPreview(sprites));

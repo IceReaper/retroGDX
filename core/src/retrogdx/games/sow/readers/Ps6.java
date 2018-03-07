@@ -43,11 +43,11 @@ public class Ps6 {
             frame.originX = buffer.readShort();
             frame.originY = buffer.readShort();
 
-            short unk1 = buffer.readShort();
-            short unk2 = buffer.readShort();
+            short unk1 = buffer.readShort(); // TODO
+            short unk2 = buffer.readShort(); // TODO
 
-            short unk3 = buffer.readShort();
-            short unk4 = buffer.readShort();
+            short unk3 = buffer.readShort(); // TODO
+            short unk4 = buffer.readShort(); // TODO
 
             if (frame.width > 0 && frame.height > 0) {
                 frame.pixels = new int[frame.width * frame.height];

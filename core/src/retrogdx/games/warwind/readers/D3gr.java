@@ -5,47 +5,48 @@ import retrogdx.utils.SmartByteBuffer;
 import java.nio.ByteOrder;
 
 public class D3gr {
-    public class D3grImage {
+    public class D3grFrame {
+        public byte[] pixels;
         public int width;
         public int height;
-        public byte[] pixels;
     }
 
-    public D3grImage[] images;
+    public D3grFrame[] frames;
+    private int i;
 
     public D3gr(SmartByteBuffer buffer) {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
         buffer.readString(4); // D3GR
-        int unk1 = buffer.readInt(); // maybe flags
+        int unk1 = buffer.readInt(); // TODO maybe flags
         int framesStart = buffer.readInt();
-        int unk3 = buffer.readInt(); // 0, rare 28
-        int unk4 = buffer.readInt(); // 0, rare 32, 44
-        int unk5 = buffer.readInt(); // 0
-        this.images = new D3grImage[buffer.readShort()];
-        int unk6 = buffer.readShort();
+        int unk2 = buffer.readInt(); // TODO
+        int unk3 = buffer.readInt(); // TODO
+        int unk4 = buffer.readInt(); // TODO
+        this.frames = new D3grFrame[buffer.readShort()];
+        int unk5 = buffer.readShort(); // TODO
 
-        for (int i = 0; i < this.images.length; i++) {
+        for (this.i = 0; this.i < this.frames.length; this.i++) {
             int frameOffset = buffer.readInt();
-            int position = buffer.position();
-            buffer.position(framesStart + frameOffset);
-            this.images[i] = this.readFrame(buffer);
-            buffer.position(position);
+
+            buffer.block(framesStart + frameOffset, (blockBuffer) -> {
+                this.frames[this.i] = this.readFrame(blockBuffer);
+            });
         }
     }
 
-    private D3grImage readFrame(SmartByteBuffer buffer) {
-        D3grImage image = new D3grImage();
+    private D3grFrame readFrame(SmartByteBuffer buffer) {
+        D3grFrame frame = new D3grFrame();
 
-        int unk1 = buffer.readInt(); // TODO palette related?
-        int unk2 = buffer.readInt(); // TODO mostly (or always?) 2
-        int unk3 = buffer.readShort(); // TODO origin x?
-        int unk4 = buffer.readShort(); // TODO origin y?
-        image.height = buffer.readShort();
-        image.width = buffer.readShort();
-        image.pixels = buffer.readBytes(image.width * image.height);
+        buffer.readInt(); // frameSize
+        int unk1 = buffer.readInt(); // TODO paletteId ?
+        int unk2 = buffer.readShort(); // TODO origin x?
+        int unk3 = buffer.readShort(); // TODO origin y?
+        frame.height = buffer.readShort();
+        frame.width = buffer.readShort();
+        frame.pixels = buffer.readBytes(frame.width * frame.height);
 
-        return image;
+        return frame;
     }
 }

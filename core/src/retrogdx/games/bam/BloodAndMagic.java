@@ -4,52 +4,28 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
-import com.kotcrab.vis.ui.widget.VisLabel;
 import retrogdx.games.bam.nodes.StfNode;
 import retrogdx.ui.Game;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import retrogdx.ui.GamesTree;
 
 public class BloodAndMagic extends Game {
-    private FileHandle folder;
-
     public BloodAndMagic(Table previewArea) {
         super(previewArea, "Blood & Magic");
     }
 
     public boolean verify(FileHandle folder) {
-        for (FileHandle file : folder.list()) {
-            if (file.name().equalsIgnoreCase("BAMMAIN.EXE")) {
-                this.folder = folder;
-                return true;
-            }
-        }
-
-        return false;
+        return this.verify(folder, "BAMMAIN.EXE");
     }
 
     protected Array<Node> populate() {
-        Map<String, Node> files = new HashMap<>();
+        Array<Node> files = new Array<>();
 
         for (FileHandle file : this.folder.list()) {
             if (file.extension().equalsIgnoreCase("STF")) {
-                files.put(file.name(), new StfNode(this.previewArea, file));
+                files.add(new StfNode(this.previewArea, file));
             }
         }
 
-        Map<String, Node> sorted = new TreeMap<>(files);
-        Array<Node> result = new Array<>();
-
-        for (String key : sorted.keySet()) {
-            result.add(files.get(key));
-        }
-
-        return result;
-    }
-
-    protected void showPreview() {
-        this.previewArea.add(new VisLabel("Preview..."));
+        return GamesTree.sort(files);
     }
 }

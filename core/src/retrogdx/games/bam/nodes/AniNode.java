@@ -11,31 +11,29 @@ import retrogdx.ui.previews.AnimationPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class AniNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
-
-    public AniNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer) {
-        super(previewArea, name);
-        this.smartByteBuffer = smartByteBuffer;
+    public AniNode(Table previewArea, String name, SmartByteBuffer buffer) {
+        super(previewArea, name, buffer);
     }
 
     protected void showPreview() {
-        Ani ani = new Ani(this.smartByteBuffer);
+        Ani ani = new Ani(this.buffer);
 
-        Sprite[] sprites = new Sprite[ani.images.length];
+        Sprite[] sprites = new Sprite[ani.frames.length];
 
-        for (int i = 0; i < ani.images.length; i++) {
-            Ani.AniImage image = ani.images[i];
-            Pixmap pixmap = new Pixmap(image.width, image.height, Pixmap.Format.RGBA8888);
+        for (int i = 0; i < ani.frames.length; i++) {
+            Ani.AniFrame frame = ani.frames[i];
+            Pixmap pixmap = new Pixmap(frame.width, frame.height, Pixmap.Format.RGBA8888);
 
-            for (int y = 0; y < image.height; y++) {
-                for (int x = 0; x < image.width; x++) {
-                    int index = image.pixels[x + y * image.width] & 0xff;
+            for (int y = 0; y < frame.height; y++) {
+                for (int x = 0; x < frame.width; x++) {
+                    int index = frame.pixels[x + y * frame.width] & 0xff;
+                    // TODO implement palette
                     pixmap.drawPixel(x, y, (index << 24) | (index << 16) | (index << 8) | 0xff);
                 }
             }
 
             sprites[i] = new Sprite(new Texture(pixmap));
-            sprites[i].setOrigin(image.originX, image.originY);
+            sprites[i].setOrigin(frame.originX, frame.originY);
         }
 
         Animation<Sprite> animation = new Animation<>(0.15f, sprites);

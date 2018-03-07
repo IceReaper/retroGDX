@@ -2,10 +2,13 @@ package retrogdx.games.earth2140.readers;
 
 import retrogdx.utils.SmartByteBuffer;
 
+import java.nio.ByteOrder;
+
 public class DatMap {
     private String name;
 
     public DatMap(SmartByteBuffer buffer) {
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
         // TODO we are still missing meta data: map size, starting money, objectives?, etc...

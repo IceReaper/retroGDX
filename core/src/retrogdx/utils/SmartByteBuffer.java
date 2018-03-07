@@ -4,6 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.nio.ByteOrder;
 
 public class SmartByteBuffer {
+    public interface Block {
+        void body(SmartByteBuffer buffer);
+    }
+
     private byte[] bytes;
     private int position = 0;
     private int capacity;
@@ -150,5 +154,11 @@ public class SmartByteBuffer {
         slice.parent = this;
         slice.parentPosition = position;
         return slice;
+    }
+
+    public void block(int position, Block block) {
+        SmartByteBuffer buffer = this.slice(0, this.capacity);
+        buffer.position(position);
+        block.body(buffer);
     }
 }

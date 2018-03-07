@@ -11,22 +11,19 @@ import retrogdx.utils.SmartByteBuffer;
 import java.util.Map;
 
 public class DatImageNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
     private String name;
     private Map<String, SmartByteBuffer> palettes;
 
-    public DatImageNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer, Map<String, SmartByteBuffer> palettes) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public DatImageNode(Table previewArea, String name, SmartByteBuffer buffer, Map<String, SmartByteBuffer> palettes) {
+        super(previewArea, name, buffer);
         this.name = name;
         this.palettes = palettes;
     }
 
     protected void showPreview() {
-        DatImage dat = new DatImage(this.smartByteBuffer);
-        Palette palette = new Palette(this.palettes.get(this.name.substring(0, this.name.length() - 3) + "PAL"));
+        DatImage dat = new DatImage(this.buffer);
 
+        Palette palette = new Palette(this.palettes.get(this.name.substring(0, this.name.length() - 3) + "PAL"));
         Pixmap pixmap = new Pixmap(dat.width, dat.height, Pixmap.Format.RGBA8888);
 
         for (int y = 0; y < dat.height; y++) {

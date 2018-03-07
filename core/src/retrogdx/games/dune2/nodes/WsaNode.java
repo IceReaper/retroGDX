@@ -15,15 +15,12 @@ import retrogdx.utils.SmartByteBuffer;
 import java.util.Map;
 
 public class WsaNode extends AssetFileNode {
-    private SmartByteBuffer smartByteBuffer;
     private String name;
     private Map<String, SmartByteBuffer> palettes;
     private Map<String, SmartByteBuffer> animations;
 
-    public WsaNode(Table previewArea, String name, SmartByteBuffer smartByteBuffer, Map<String, SmartByteBuffer> palettes, Map<String, SmartByteBuffer> animations) {
-        super(previewArea, name);
-
-        this.smartByteBuffer = smartByteBuffer;
+    public WsaNode(Table previewArea, String name, SmartByteBuffer buffer, Map<String, SmartByteBuffer> palettes, Map<String, SmartByteBuffer> animations) {
+        super(previewArea, name, buffer);
         this.name = name;
         this.palettes = palettes;
         this.animations = animations;
@@ -46,7 +43,7 @@ public class WsaNode extends AssetFileNode {
             lastWsa = new Wsa(this.animations.get("OFINALA.WSA"));
         }
 
-        Wsa wsa = new Wsa(this.smartByteBuffer, lastWsa == null ? null : lastWsa.frames[lastWsa.frames.length - 1]);
+        Wsa wsa = new Wsa(this.buffer, lastWsa == null ? null : lastWsa.frames[lastWsa.frames.length - 1]);
 
         Sprite[] sprites = new Sprite[wsa.frames.length];
 

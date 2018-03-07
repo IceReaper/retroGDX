@@ -14,10 +14,10 @@ public class Wd {
     }
 
     public Map<String, SmartByteBuffer> getFiles() {
-        Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
-
         this.buffer.order(ByteOrder.LITTLE_ENDIAN);
         this.buffer.position(0);
+
+        Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
 
         int numFiles = this.buffer.readInt();
 
@@ -44,12 +44,10 @@ public class Wd {
                 int unk = this.buffer.readInt(); // TODO this contains a value or can be 0
                 int fileNameOffset = this.buffer.readInt();
 
-                int position = this.buffer.position();
-                this.buffer.position(fileNamesOffset + fileNameOffset);
-                String fileName = this.buffer.readString().toUpperCase();
-                this.buffer.position(position);
+                this.buffer.block(fileNamesOffset + fileNameOffset, (blockBuffer) -> {
+                    files.put(blockBuffer.readString().toUpperCase(), this.buffer.slice(offset, length));
+                });
 
-                files.put(fileName, this.buffer.slice(offset, length));
             }
         }
 

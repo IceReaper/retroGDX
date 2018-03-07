@@ -5,15 +5,15 @@ import retrogdx.utils.SmartByteBuffer;
 import java.nio.ByteOrder;
 
 public class Mix {
-    public class MixImage {
+    public class MixFrame {
+        public int[] pixelsRgb;
+        public byte[] pixelsIndexed;
         public int width;
         public int height;
         public int paletteIndex;
-        public byte[] pixelsIndexed;
-        public int[] pixelsRgb;
     }
 
-    public MixImage[] images;
+    public MixFrame[] frames;
     public int[][] palettes;
 
     public Mix(SmartByteBuffer buffer) {
@@ -45,41 +45,42 @@ public class Mix {
         }
 
         buffer.readString(5); // "DATA "
-        this.images = new MixImage[dataCount];
+        this.frames = new MixFrame[dataCount];
 
         for (int i = 0; i < dataCount; i++) {
             buffer.position(dataOffsets[i]);
-            this.images[i] = this.readImage(buffer, paletteStartIndex);
+            this.frames[i] = this.readFrame(buffer, paletteStartIndex);
         }
     }
 
-    private MixImage readImage(SmartByteBuffer buffer, int paletteStartIndex) {
-        MixImage image = new MixImage();
-        image.width = buffer.readUShort();
-        image.height = buffer.readUShort();
+    private MixFrame readFrame(SmartByteBuffer buffer, int paletteStartIndex) {
+        MixFrame frame = new MixFrame();
+
+        frame.width = buffer.readUShort();
+        frame.height = buffer.readUShort();
         int format = buffer.readUByte();
-        image.paletteIndex = buffer.readUByte() - paletteStartIndex;
+        frame.paletteIndex = buffer.readUByte() - paletteStartIndex;
 
         if (format == 1) {
             // Uncompressed, indexed
-            image.pixelsIndexed = buffer.readBytes(image.width * image.height);
+            frame.pixelsIndexed = buffer.readBytes(frame.width * frame.height);
         } else if (format == 2) {
             // Uncompressed, 16bpp
-            image.paletteIndex = -1;
-            image.pixelsRgb = new int[image.width * image.height];
+            frame.paletteIndex = -1;
+            frame.pixelsRgb = new int[frame.width * frame.height];
 
-            for (int y = 0; y < image.height; y++) {
-                for (int x = 0; x < image.width; x++) {
+            for (int y = 0; y < frame.height; y++) {
+                for (int x = 0; x < frame.width; x++) {
                     short pixel = buffer.readShort();
                     int r = ((pixel & 0b1111100000000000) >> 8) & 0xff;
                     int g = ((pixel & 0b0000011111100000) >> 3) & 0xff;
                     int b = ((pixel & 0b0000000000011111) << 3) & 0xff;
-                    image.pixelsRgb[y * image.width + x] = (r << 24) | (g << 16) | (b << 8) | 0xff;
+                    frame.pixelsRgb[y * frame.width + x] = (r << 24) | (g << 16) | (b << 8) | 0xff;
                 }
             }
         } else if (format == 9) {
             // Compressed, indexed
-            image.pixelsIndexed = new byte[image.width * image.height];
+            frame.pixelsIndexed = new byte[frame.width * frame.height];
 
             buffer.readInt(); // width duplicate
             buffer.readInt(); // height duplicate
@@ -127,18 +128,18 @@ public class Mix {
                         int pixels = segments[segmentIndex * 2 + 1];
 
                         for (int j = 0; j < pixels; j++) {
-                            image.pixelsIndexed[writePosition] = buffer.readByte();
+                            frame.pixelsIndexed[writePosition] = buffer.readByte();
                             writePosition++;
                         }
 
                         lineSize += skip + pixels;
                     }
 
-                    writePosition += image.width - lineSize;
+                    writePosition += frame.width - lineSize;
                 }
             }
         }
 
-        return image;
+        return frame;
     }
 }

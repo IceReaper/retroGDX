@@ -16,16 +16,15 @@ import java.util.Map.Entry;
 import static com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 
 public class WdNode extends AssetFolderNode {
-    private FileHandle file;
     private Map<String, SmartByteBuffer> palettes = new HashMap<>();
 
     public WdNode(Table previewArea, FileHandle file) {
-        super(previewArea, file.name());
-        this.file = file;
+        super(previewArea, file);
     }
 
     protected Array<Node> populate() {
         Wd wd = new Wd(SmartByteBuffer.wrap(this.file.readBytes()));
+
         Array<Node> nodes = new Array<>();
 
         for (Entry<String, SmartByteBuffer> file : wd.getFiles().entrySet()) {
@@ -55,14 +54,9 @@ public class WdNode extends AssetFolderNode {
                 } else {
                     nodes.add(new MixNode(this.previewArea, file.getKey(), file.getValue()));
                 }
-            } else {
-                System.out.println(file.getKey());
             }
         }
 
         return nodes;
-    }
-
-    protected void showPreview() {
     }
 }
