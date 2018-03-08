@@ -10,7 +10,7 @@ import retrogdx.ui.GamesTree;
 
 public class Mayday extends Game {
     public Mayday(Table previewArea) {
-        super(previewArea, "Dominion: Conflict Earth");
+        super(previewArea, "Mayday: Conflict Earth");
     }
 
     protected Mayday(Table previewArea, String game) {
