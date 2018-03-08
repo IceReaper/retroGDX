@@ -12,17 +12,17 @@ import java.util.Map;
 
 public class DataNode extends AssetFolderNode {
     private FileHandle dataFile;
-    private FileHandle infoFile;
+    private FileHandle indexFile;
 
-    public DataNode(Table previewArea, FileHandle dataFile, FileHandle infoFile) {
+    public DataNode(Table previewArea, FileHandle dataFile, FileHandle indexFile) {
         super(previewArea, dataFile);
 
         this.dataFile = dataFile;
-        this.infoFile = infoFile;
+        this.indexFile = indexFile;
     }
 
     protected Array<Tree.Node> populate() {
-        Data data = new Data(SmartByteBuffer.wrap(this.dataFile.readBytes()), SmartByteBuffer.wrap(this.infoFile.readBytes()));
+        Data data = new Data(SmartByteBuffer.wrap(this.dataFile.readBytes()), SmartByteBuffer.wrap(this.indexFile.readBytes()));
 
         Array<Tree.Node> nodes = new Array<>();
 

@@ -1,33 +1,32 @@
-package retrogdx.games.sow;
+package retrogdx.games.mayday;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
-import retrogdx.games.sow.nodes.DataNode;
+import retrogdx.games.mayday.nodes.ArtNode;
 import retrogdx.ui.Game;
 import retrogdx.ui.GamesTree;
 
-public class StateOfWar extends Game {
-    public StateOfWar(Table previewArea) {
-        super(previewArea, "State of War");
+public class Mayday extends Game {
+    public Mayday(Table previewArea) {
+        super(previewArea, "Dominion: Conflict Earth");
     }
 
-    protected StateOfWar(Table previewArea, String game) {
+    protected Mayday(Table previewArea, String game) {
         super(previewArea, game);
     }
 
     public boolean verify(FileHandle folder) {
-        return this.verify(folder, "STATE OF WAR.EXE");
+        return this.verify(folder, "MAYDAY.EXE");
     }
 
     protected Array<Node> populate() {
         Array<Node> files = new Array<>();
 
         for (FileHandle file : this.folder.list()) {
-            if (file.extension().equalsIgnoreCase("DATA")) {
-                // TODO case insensitive .info
-                files.add(new DataNode(this.previewArea, file, file.sibling(file.nameWithoutExtension() + ".INFO")));
+            if (file.name().equalsIgnoreCase("MAYDAY.ART")) {
+                files.add(new ArtNode(this.previewArea, file));
             }
         }
 
