@@ -8,33 +8,33 @@ import java.util.Map;
 
 public class Data {
     private SmartByteBuffer dataBuffer;
-    private SmartByteBuffer infoBuffer;
+    private SmartByteBuffer indexBuffer;
 
-    public Data(SmartByteBuffer dataBuffer, SmartByteBuffer infoBuffer) {
+    public Data(SmartByteBuffer dataBuffer, SmartByteBuffer indexBuffer) {
         this.dataBuffer = dataBuffer;
-        this.infoBuffer = infoBuffer;
+        this.indexBuffer = indexBuffer;
     }
 
     public Map<String, SmartByteBuffer> getFiles() {
         this.dataBuffer.order(ByteOrder.LITTLE_ENDIAN);
-        this.infoBuffer.order(ByteOrder.LITTLE_ENDIAN);
-        this.infoBuffer.position(0);
+        this.indexBuffer.order(ByteOrder.LITTLE_ENDIAN);
+        this.indexBuffer.position(0);
 
         Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
 
-        this.infoBuffer.readInt(); // 0x01010101
-        int entries = this.infoBuffer.readInt();
+        this.indexBuffer.readInt(); // 0x01010101
+        int entries = this.indexBuffer.readInt();
 
         for (int i = 0; i < entries; i++) {
             int temp;
             String name = "";
 
-            while ((temp = this.infoBuffer.readUByte()) != 0x00) {
+            while ((temp = this.indexBuffer.readUByte()) != 0x00) {
                 name += (char) (temp - 0xa);
             }
 
-            int offset = this.infoBuffer.readInt();
-            int length = this.infoBuffer.readInt();
+            int offset = this.indexBuffer.readInt();
+            int length = this.indexBuffer.readInt();
             files.put(name, this.dataBuffer.slice(offset, length));
         }
 

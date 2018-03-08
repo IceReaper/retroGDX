@@ -22,12 +22,16 @@ public class ZeroNode extends AssetFolderNode {
     }
 
     protected Array<Tree.Node> populate() {
-        Zero zero = new Zero(SmartByteBuffer.wrap(this.file.readBytes()));
+        Zero zero = new Zero(SmartByteBuffer.wrap(this.dataFile.readBytes()), SmartByteBuffer.wrap(this.indexFile.readBytes()));
 
         Array<Tree.Node> nodes = new Array<>();
 
         for (Map.Entry<String, SmartByteBuffer> file : zero.getFiles().entrySet()) {
-            System.out.println(file.getKey());
+            if (file.getKey().endsWith(".spr")) {
+                nodes.add(new SprNode(this.previewArea, file.getKey(), file.getValue()));
+            } else if (file.getKey().endsWith(".UNK")) {
+                // TODO find out what this stuff is.
+            }
         }
 
         return nodes;
