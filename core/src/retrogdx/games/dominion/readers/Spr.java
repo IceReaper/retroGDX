@@ -15,83 +15,59 @@ public class Spr {
 
         this.width = buffer.readInt();
         this.height = buffer.readInt();
-        int unk1 = buffer.readInt(); // TODO 0, 128 flipped?
+        int unk1 = buffer.readInt(); // TODO
         int unk2 = buffer.readInt(); // TODO origin x?
         int unk3 = buffer.readInt(); // TODO origin y?
-        int unk4 = buffer.readInt(); // TODO id? Starts with 246, may skip some numbers
+        buffer.readInt(); // id
 
-        this.pixels = new byte[this.width * this.height];
+        if (unk1 == 0) {
+            // TODO CRASHES!
+        } else {
+            this.pixels = new byte[this.width * this.height];
 
+            for (int y = 0; y < this.height; y++) {
+                short numChunks = buffer.readUByte();
+                byte unk5 = buffer.readByte(); // TODO
 
-        // TODO this is not right yet. a lot of bytes are not read correctly and some images are messed up.
-        for (int y = 0; y < this.height; y++) {
-            short numChunks = buffer.readUByte();
-            byte unk5 = buffer.readByte();
+                int x = 0;
 
-            int x = 0;
+                for (int j = 0; j < numChunks; j++) {
+                    int bitmask = buffer.readUShort();
+                    int length = bitmask & 0b11111111111;
+                    int alpha = bitmask >> 11 & 0b11111;
 
-            for (int j = 0; j < numChunks; j++) {
-                int bitmask = buffer.readUShort();
+                    if (alpha == 0b00000) {
+                        for (int p = 0; p < length; p++) {
+                            this.pixels[(this.height - y - 1) * this.width + x] = (byte) 0x00;
+                            x++;
+                        }
+                    } else if (alpha == 0b00001) {
+                        for (int p = 0; p < length; p++) {
+                            this.pixels[(this.height - y - 1) * this.width + x] = (byte) 0x01;
+                            x++;
+                        }
+                    } else if (alpha == 0b00010) {
+                        for (int p = 0; p < length; p++) {
+                            this.pixels[(this.height - y - 1) * this.width + x] = (byte) 0x02;
+                            x++;
+                        }
+                    } else if (alpha == 0b00011) {
+                        for (int p = 0; p < length; p++) {
+                            if ((this.height - y - 1) * this.width + x < this.pixels.length) {
+                                this.pixels[(this.height - y - 1) * this.width + x] = buffer.readByte();
 
-                int writeLength = bitmask & 0b1111111111;
-                int flags = bitmask >> 10 & 0b111111;
+                            } else {
+                                buffer.readByte();
+                            }
 
-                if ((flags & 0b111111) == 0b000000) {
-                    x += writeLength;
-                } else if ((flags & 0b000110) == 0b000110) {
-                    // Color
-                    writeLength += writeLength & 1; // TODO verify this!
+                            x++;
+                        }
 
-                    for (int p = 0; p < writeLength; p++) {
-                        if ((this.height - y - 1) * this.width + x < this.pixels.length) {
-                            this.pixels[(this.height - y - 1) * this.width + x] = buffer.readByte();
-                        } else {
+                        if (length % 2 != 0) {
+                            // TODO what is this byte?
                             buffer.readByte();
                         }
-                        x++;
                     }
-                } else if ((flags & 0b000010) == 0b000010) {
-                    // Shadow
-                    for (int p = 0; p < writeLength; p++) {
-                        // TODO is there any reserved color we can use for here?
-                        x++;
-                    }
-
-                } else if ((flags & 0b000001) == 0b000001) {
-                    // TODO UNK 1
-                    buffer.position(buffer.position() + 16);
-
-                    if (x < this.width) {
-                        x++;
-                    }
-                } else if ((flags & 0b000010) == 0b000010) {
-                    // TODO isnt this shadow copy? should never be called!
-                    // TODO UNK 2
-                    for (int p = 0; p < writeLength; p++) {
-                        x++;
-                    }
-                } else if ((flags & 0b000100) == 0b000100) {
-                    // TODO UNK 3
-                    for (int p = 0; p < writeLength; p++) {
-                        x++;
-                    }
-                } else if ((flags & 0b001000) == 0b001000) {
-                    // TODO UNK 4
-                    for (int p = 0; p < writeLength; p++) {
-                        x++;
-                    }
-                } else if ((flags & 0b010000) == 0b010000) {
-                    // TODO UNK 5
-                    for (int p = 0; p < writeLength; p++) {
-                        x++;
-                    }
-                } else if ((flags & 0b100000) == 0b100000) {
-                    // TODO UNK 6
-                    for (int p = 0; p < writeLength; p++) {
-                        x++;
-                    }
-                } else {
-                    System.out.println("UNK FLAGS!");
                 }
             }
         }
