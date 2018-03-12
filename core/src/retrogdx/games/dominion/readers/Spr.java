@@ -8,6 +8,8 @@ public class Spr {
     public byte[] pixels;
     public int width;
     public int height;
+    public int originX;
+    public int originY;
 
     public Spr(SmartByteBuffer buffer) {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -16,8 +18,8 @@ public class Spr {
         this.width = buffer.readInt();
         this.height = buffer.readInt();
         int unk1 = buffer.readInt(); // TODO
-        int unk2 = buffer.readInt(); // TODO origin x?
-        int unk3 = buffer.readInt(); // TODO origin y?
+        this.originX = buffer.readInt();
+        this.originY = buffer.readInt();
         buffer.readInt(); // id
 
         if (unk1 == 0) {

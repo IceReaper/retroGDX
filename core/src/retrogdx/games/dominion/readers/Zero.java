@@ -109,13 +109,10 @@ public class Zero {
         this.indexBuffer.position(offsets[5]);
         this.indexBuffer.readBytes(lengths[5]);
 
-        // 6: palette
+        // 6: unknown - maybe palette?
         this.indexBuffer.position(offsets[6]);
-
-        // TODO 20 reserved colors - possibly faction, shadow, ... ?
         for (int i = 0; i < 236; i++) {
-            // TODO this seems to be a palette?
-            this.indexBuffer.readInt();
+            this.indexBuffer.readInt(); // TODO
         }
 
         // 7: unused

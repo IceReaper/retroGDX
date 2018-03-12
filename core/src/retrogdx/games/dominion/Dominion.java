@@ -32,6 +32,7 @@ public class Dominion extends Game {
                 // TODO case insensitive .BIN
                 files.add(new ZeroNode(this.previewArea, file, file.sibling(file.nameWithoutExtension() + ".BIN")));
             }
+            // TODO .TL2 (tileset)
         }
 
         return GamesTree.sort(files);
