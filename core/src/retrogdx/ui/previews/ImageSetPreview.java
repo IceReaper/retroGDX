@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Scaling;
@@ -24,11 +26,8 @@ public class ImageSetPreview extends VisTable implements Disposable {
         image.setScaling(Scaling.none);
         VisScrollPane scrollPane = new VisScrollPane(image);
         scrollPane.setFadeScrollBars(false);
-        this.add(scrollPane).colspan(2).expand().fill().row();
 
-        VisLabel current = new VisLabel();
-        current.setText("1 / " + this.sprites.length);
-        this.add(current).expandX().row();
+        VisLabel current = new VisLabel("1 / " + this.sprites.length);
 
         VisSlider slider = new VisSlider(1, this.sprites.length, 1, false);
         slider.addListener(new ChangeListener() {
@@ -37,7 +36,31 @@ public class ImageSetPreview extends VisTable implements Disposable {
                 image.setDrawable(new SpriteDrawable(sprites[(int) (slider.getValue() - 1)]));
             }
         });
-        this.add(slider).expandX().fill();
+
+        VisTextButton prev = new VisTextButton("<");
+        prev.addListener(new ClickListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                prev.focusLost();
+                slider.setValue(Math.max(slider.getMinValue(), slider.getValue() - 1));
+                return true;
+            }
+        });
+
+        VisTextButton next = new VisTextButton(">");
+        next.addListener(new ClickListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                next.focusLost();
+                slider.setValue(Math.min(slider.getMaxValue(), slider.getValue() + 1));
+                return true;
+            }
+        });
+
+        this.add(scrollPane).colspan(3).expand().fill().row();
+        this.add(prev);
+        this.add(current);
+        this.add(next);
+        this.row();
+        this.add(slider).colspan(3).expandX().fill();
 
         // TODO implement zooming
     }
