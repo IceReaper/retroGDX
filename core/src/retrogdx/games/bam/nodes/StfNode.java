@@ -4,7 +4,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import retrogdx.games.bam.readers.Stf;
-import retrogdx.generic.nodes.PaletteNode;
 import retrogdx.generic.nodes.RiffWaveNode;
 import retrogdx.ui.AssetFolderNode;
 import retrogdx.utils.SmartByteBuffer;
@@ -28,7 +27,7 @@ public class StfNode extends AssetFolderNode {
             } else if (file.getKey().endsWith(".HMP")) {
                 // TODO music
             } else if (file.getKey().endsWith(".PAL")) {
-                nodes.add(new PaletteNode(this.previewArea, file.getKey(), file.getValue()));
+                nodes.add(new PalNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".ANI")) {
                 nodes.add(new AniNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".MIF")) {

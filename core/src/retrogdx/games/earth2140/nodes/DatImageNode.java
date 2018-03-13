@@ -3,7 +3,7 @@ package retrogdx.games.earth2140.nodes;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.DatImage;
-import retrogdx.generic.readers.Palette;
+import retrogdx.games.earth2140.readers.Pal;
 import retrogdx.ui.AssetFileNode;
 import retrogdx.ui.previews.ImagePreview;
 import retrogdx.utils.SmartByteBuffer;
@@ -23,13 +23,13 @@ public class DatImageNode extends AssetFileNode {
     protected void showPreview() {
         DatImage dat = new DatImage(this.buffer);
 
-        Palette palette = new Palette(this.palettes.get(this.name.substring(0, this.name.length() - 3) + "PAL"));
+        Pal pal = new Pal(this.palettes.get(this.name.substring(0, this.name.length() - 3) + "PAL"));
         Pixmap pixmap = new Pixmap(dat.width, dat.height, Pixmap.Format.RGBA8888);
 
         for (int y = 0; y < dat.height; y++) {
             for (int x = 0; x < dat.width; x++) {
                 int index = dat.pixels[x + y * dat.width] & 0xff;
-                pixmap.drawPixel(x, y, palette.colors[index]);
+                pixmap.drawPixel(x, y, pal.colors[index]);
             }
         }
 

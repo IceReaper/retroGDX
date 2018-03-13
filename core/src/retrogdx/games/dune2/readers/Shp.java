@@ -35,7 +35,7 @@ public class Shp {
             }
 
             buffer.block(offset, (blockBuffer) -> {
-                frames.add(this.readImage(blockBuffer));
+                frames.add(this.readFrame(blockBuffer));
             });
         }
 
@@ -46,7 +46,7 @@ public class Shp {
         }
     }
 
-    private ShpFrame readImage(SmartByteBuffer buffer) {
+    private ShpFrame readFrame(SmartByteBuffer buffer) {
         ShpFrame image = new ShpFrame();
 
         int flags = buffer.readShort();
