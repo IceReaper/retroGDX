@@ -95,7 +95,7 @@ Upon that the default retroGDX application core consists of a simple tree contai
 - IMG image - done
 - CUR cursor - done
 - SPR spritesheet - done
+- TILE/TILEPART tileset - done
 - XMI music - completely missing
 - MAP map - completely missing
 - GUI gui - completely missing
-- TILE/TILEPART tileset - completely missing

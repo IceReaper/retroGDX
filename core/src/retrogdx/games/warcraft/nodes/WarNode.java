@@ -27,8 +27,9 @@ public class WarNode extends AssetFolderNode {
     protected Array<Node> populate() {
         War war = new War(SmartByteBuffer.wrap(this.file.readBytes()));
         Array<Node> nodes = new Array<>();
+        Map<String, SmartByteBuffer> files = war.getFiles();
 
-        for (Entry<String, SmartByteBuffer> file : war.getFiles().entrySet()) {
+        for (Entry<String, SmartByteBuffer> file : files.entrySet()) {
             if (file.getKey().endsWith(".WAV")) {
                 nodes.add(new RiffWaveNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".VOC")) {
@@ -47,12 +48,9 @@ public class WarNode extends AssetFolderNode {
                 nodes.add(new SprNode(this.previewArea, file.getKey(), file.getValue(), this.palettes));
             } else if (file.getKey().endsWith(".FLC")) {
                 nodes.add(new AutodeskFlicNode(this.previewArea, file.getKey(), file.getValue()));
-
-                // TODO .TILE is followed by its .TILEPART and its .PAL
             } else if (file.getKey().endsWith(".TILE")) {
-                // TODO tileset
-            } else if (file.getKey().endsWith(".TILEPART")) {
-                // TODO tileset 1/4 tiles
+                int id = Integer.parseInt(file.getKey().replace(".TILE", ""));
+                nodes.add(new TileNode(this.previewArea, file.getKey(), file.getValue(), files.get((id + 1) + ".TILEPART"), files.get((id + 2) + ".PAL")));
 
             } else if (file.getKey().endsWith(".TXT")) {
                 nodes.add(new PlainTextNode(this.previewArea, file.getKey(), file.getValue(), "CP850"));
