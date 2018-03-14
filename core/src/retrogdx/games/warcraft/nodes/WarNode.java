@@ -48,6 +48,7 @@ public class WarNode extends AssetFolderNode {
             } else if (file.getKey().endsWith(".FLC")) {
                 nodes.add(new AutodeskFlicNode(this.previewArea, file.getKey(), file.getValue()));
 
+                // TODO .TILE is followed by its .TILEPART and its .PAL
             } else if (file.getKey().endsWith(".TILE")) {
                 // TODO tileset
             } else if (file.getKey().endsWith(".TILEPART")) {
@@ -59,8 +60,6 @@ public class WarNode extends AssetFolderNode {
                 // TODO map preview
             } else if (file.getKey().endsWith(".GUI")) {
                 // TODO gui setups
-            } else {
-                System.out.println(file.getKey());
             }
         }
 

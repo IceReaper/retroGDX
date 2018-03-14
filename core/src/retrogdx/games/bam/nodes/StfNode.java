@@ -22,7 +22,7 @@ public class StfNode extends AssetFolderNode {
         Array<Node> nodes = new Array<>();
 
         for (Entry<String, SmartByteBuffer> file : stf.getFiles().entrySet()) {
-            if (file.getKey().endsWith(".wav")) {
+            if (file.getKey().endsWith(".WAV")) {
                 nodes.add(new RiffWaveNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".HMP")) {
                 // TODO music

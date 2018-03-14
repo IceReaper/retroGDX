@@ -92,9 +92,9 @@ Upon that the default retroGDX application core consists of a simple tree contai
 - VOC sound - done
 - PAL palette - done
 - TXT text - done
-- IMG image - palette missing
-- CUR cursor - palette missing
-- SPR spritesheet - palette missing
+- IMG image - done
+- CUR cursor - done
+- SPR spritesheet - done
 - XMI music - completely missing
 - MAP map - completely missing
 - GUI gui - completely missing

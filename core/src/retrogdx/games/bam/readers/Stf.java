@@ -19,7 +19,7 @@ public class Stf {
 
         Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
 
-        String[] fileTypes = new String[]{null, "ANI", null, "HMP", "wav", "PAL", null, "FNT", "SQB", null, null, null, "BNK", null, null, null, null, null, "TLB", "MIF"};
+        String[] fileTypes = new String[]{null, "ANI", null, "HMP", "WAV", "PAL", null, "FNT", "SQB", null, null, null, "BNK", null, null, null, null, null, "TLB", "MIF"};
 
         while (this.buffer.position() < this.buffer.capacity()) {
             int id = this.buffer.readUShort();

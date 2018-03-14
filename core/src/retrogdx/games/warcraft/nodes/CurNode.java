@@ -26,8 +26,7 @@ public class CurNode extends AssetFileNode {
         for (int y = 0; y < cur.height; y++) {
             for (int x = 0; x < cur.width; x++) {
                 int index = cur.pixels[x + y * cur.width] & 0xff;
-                // TODO how to determine the correct palette?! - possibly the last one before?
-                pixmap.drawPixel(x, y, this.palettes.get("255.PAL").colors[index]);
+                pixmap.drawPixel(x, y, this.palettes.get("262.PAL").colors[index]);
             }
         }
 
