@@ -83,3 +83,19 @@ Upon that the default retroGDX application core consists of a simple tree contai
 - PAL pal - implementation wrong
 - DAT map - completely missing
 - LVL map - completely missing
+
+
+## Warcraft: Orcs & Humans
+- WAR container - done
+- FLC animation - done
+- WAV sound - done
+- VOC sound - done
+- PAL palette - done
+- TXT text - done
+- IMG image - palette missing
+- CUR cursor - palette missing
+- SPR spritesheet - palette missing
+- XMI music - completely missing
+- MAP map - completely missing
+- GUI gui - completely missing
+- TILE/TILEPART tileset - completely missing
