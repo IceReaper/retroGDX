@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import retrogdx.games.warcraft.readers.Pal;
 import retrogdx.games.warcraft.readers.War;
+import retrogdx.generic.nodes.AutodeskFlicNode;
 import retrogdx.generic.nodes.CreativeVocNode;
 import retrogdx.generic.nodes.PlainTextNode;
 import retrogdx.generic.nodes.RiffWaveNode;
@@ -44,6 +45,8 @@ public class WarNode extends AssetFolderNode {
                 nodes.add(new CurNode(this.previewArea, file.getKey(), file.getValue(), this.palettes));
             } else if (file.getKey().endsWith(".SPR")) {
                 nodes.add(new SprNode(this.previewArea, file.getKey(), file.getValue(), this.palettes));
+            } else if (file.getKey().endsWith(".FLC")) {
+                nodes.add(new AutodeskFlicNode(this.previewArea, file.getKey(), file.getValue()));
 
             } else if (file.getKey().endsWith(".TILE")) {
                 // TODO tileset

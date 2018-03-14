@@ -21,111 +21,117 @@ public class War {
 
         Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
 
-        this.buffer.readInt(); // version
-        int numFiles = this.buffer.readInt();
+        int version = this.buffer.readInt();
 
-        for (this.i = 0; this.i < numFiles; this.i++) {
-            int offset = this.buffer.readInt();
+        if (version == 0x18) {
+            int numFiles = this.buffer.readInt();
 
-            this.buffer.block(offset, blockBuffer -> {
-                int rawData = blockBuffer.readInt();
-                boolean isCompressed = (rawData >> 24) != 0;
-                int fileSize = rawData & 0xFFFFFF;
+            for (this.i = 0; this.i < numFiles; this.i++) {
+                int offset = this.buffer.readInt();
 
-                SmartByteBuffer fileBuffer = SmartByteBuffer.wrap(isCompressed ? this.decompress(blockBuffer, fileSize) : blockBuffer.readBytes(fileSize));
-                fileBuffer.order(ByteOrder.LITTLE_ENDIAN);
+                this.buffer.block(offset, blockBuffer -> {
+                    int rawData = blockBuffer.readInt();
+                    boolean isCompressed = (rawData >> 24) != 0;
+                    int fileSize = rawData & 0xFFFFFF;
 
-                String magic = fileBuffer.readString(4);
-                fileBuffer.position(0);
+                    SmartByteBuffer fileBuffer = SmartByteBuffer.wrap(isCompressed ? this.decompress(blockBuffer, fileSize) : blockBuffer.readBytes(fileSize));
+                    fileBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-                if (magic.equals("RIFF")) {
-                    files.put(this.i + ".WAV", fileBuffer);
-                    return;
-                } else if (magic.equals("FORM")) {
-                    files.put(this.i + ".XMI", fileBuffer);
-                    return;
-                } else if (magic.equals("Crea")) {
-                    files.put(this.i + ".VOC", fileBuffer);
-                    return;
-                } else {
+                    String magic = fileBuffer.readString(4);
                     fileBuffer.position(0);
 
-                    while (true) {
-                        byte temp = fileBuffer.readByte();
+                    if (magic.equals("RIFF")) {
+                        files.put(this.i + ".WAV", fileBuffer);
+                        return;
+                    } else if (magic.equals("FORM")) {
+                        files.put(this.i + ".XMI", fileBuffer);
+                        return;
+                    } else if (magic.equals("Crea")) {
+                        files.put(this.i + ".VOC", fileBuffer);
+                        return;
+                    } else {
+                        fileBuffer.position(0);
 
-                        if (temp == 0x00 || fileBuffer.position() == fileBuffer.capacity()) {
-                            if (fileBuffer.position() == fileBuffer.capacity()) {
-                                fileBuffer.position(0);
-                                files.put(this.i + ".TXT", fileBuffer);
-                                return;
-                            } else {
-                                break;
+                        while (true) {
+                            byte temp = fileBuffer.readByte();
+
+                            if (temp == 0x00 || fileBuffer.position() == fileBuffer.capacity()) {
+                                if (fileBuffer.position() == fileBuffer.capacity()) {
+                                    fileBuffer.position(0);
+                                    files.put(this.i + ".TXT", fileBuffer);
+                                    return;
+                                } else {
+                                    break;
+                                }
                             }
                         }
                     }
-                }
 
-                fileBuffer.position(0);
-
-                if (fileSize == 256 * 3 || fileSize == 128 * 3) {
-                    files.put(this.i + ".PAL", fileBuffer);
-
-                    return;
-                } else if (fileSize == 64 * 64 * 2) {
-                    files.put(this.i + ".MAP", fileBuffer);
-                    return;
-                }
-
-                fileBuffer.position(8);
-
-                if (fileBuffer.readShort() == 0x20 && fileBuffer.readShort() == 0x40 && fileBuffer.readShort() == 0x60) {
                     fileBuffer.position(0);
-                    files.put(this.i + ".TILE", fileBuffer);
-                    return;
-                }
 
-                fileBuffer.position(0);
+                    if (fileSize == 256 * 3 || fileSize == 128 * 3) {
+                        files.put(this.i + ".PAL", fileBuffer);
 
-                if (fileBuffer.capacity() > 8 * 8 && Arrays.equals(fileBuffer.readBytes(8 * 8), new byte[8 * 8])) {
+                        return;
+                    } else if (fileSize == 64 * 64 * 2) {
+                        files.put(this.i + ".MAP", fileBuffer);
+                        return;
+                    }
+
+                    fileBuffer.position(8);
+
+                    if (fileBuffer.readShort() == 0x20 && fileBuffer.readShort() == 0x40 && fileBuffer.readShort() == 0x60) {
+                        fileBuffer.position(0);
+                        files.put(this.i + ".TILE", fileBuffer);
+                        return;
+                    }
+
                     fileBuffer.position(0);
-                    files.put(this.i + ".TILEPART", fileBuffer);
-                    return;
-                }
 
-                fileBuffer.position(0);
+                    if (fileBuffer.capacity() > 8 * 8 && Arrays.equals(fileBuffer.readBytes(8 * 8), new byte[8 * 8])) {
+                        fileBuffer.position(0);
+                        files.put(this.i + ".TILEPART", fileBuffer);
+                        return;
+                    }
 
-                if (fileBuffer.readShort() * fileBuffer.readShort() + 4 == fileBuffer.capacity()) {
                     fileBuffer.position(0);
-                    files.put(this.i + ".IMG", fileBuffer);
-                    return;
-                }
 
-                fileBuffer.position(4);
+                    if (fileBuffer.readShort() * fileBuffer.readShort() + 4 == fileBuffer.capacity()) {
+                        fileBuffer.position(0);
+                        files.put(this.i + ".IMG", fileBuffer);
+                        return;
+                    }
 
-                if (fileBuffer.readShort() * fileBuffer.readShort() + 8 == fileBuffer.capacity()) {
-                    fileBuffer.position(0);
-                    files.put(this.i + ".CUR", fileBuffer);
-                    return;
-                }
-
-                fileBuffer.position(0);
-                int numFrames = fileBuffer.readUShort();
-
-                if (numFrames > 0 && fileBuffer.capacity() > 4 + numFrames * 8) {
                     fileBuffer.position(4);
-                    for (int j = 0; j < numFrames; j++) {
-                        fileBuffer.position(fileBuffer.position() + 2);
-                        if (fileBuffer.readUByte() * fileBuffer.readUByte() + fileBuffer.readInt() == fileBuffer.capacity()) {
-                            fileBuffer.position(0);
-                            files.put(this.i + ".SPR", fileBuffer);
-                            return;
+
+                    if (fileBuffer.readShort() * fileBuffer.readShort() + 8 == fileBuffer.capacity()) {
+                        fileBuffer.position(0);
+                        files.put(this.i + ".CUR", fileBuffer);
+                        return;
+                    }
+
+                    fileBuffer.position(0);
+                    int numFrames = fileBuffer.readUShort();
+
+                    if (numFrames > 0 && fileBuffer.capacity() > 4 + numFrames * 8) {
+                        fileBuffer.position(4);
+                        for (int j = 0; j < numFrames; j++) {
+                            fileBuffer.position(fileBuffer.position() + 2);
+                            if (fileBuffer.readUByte() * fileBuffer.readUByte() + fileBuffer.readInt() == fileBuffer.capacity()) {
+                                fileBuffer.position(0);
+                                files.put(this.i + ".SPR", fileBuffer);
+                                return;
+                            }
                         }
                     }
-                }
 
-                fileBuffer.position(0);
-                files.put(this.i + ".GUI", fileBuffer);
-            });
+                    fileBuffer.position(0);
+                    files.put(this.i + ".GUI", fileBuffer);
+                });
+            }
+        } else {
+            buffer.position(0);
+            files.put(this.i + ".FLC", buffer);
         }
 
         return files;
