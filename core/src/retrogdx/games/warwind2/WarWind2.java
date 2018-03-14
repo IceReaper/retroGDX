@@ -6,7 +6,7 @@ import retrogdx.games.warwind.WarWind;
 
 public class WarWind2 extends WarWind {
     public WarWind2(Table previewArea) {
-        super(previewArea, "War Wind 2");
+        super(previewArea, "War Wind II: Human Onslaught");
     }
 
     public boolean verify(FileHandle folder) {

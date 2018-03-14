@@ -38,7 +38,7 @@ public class Res {
                     files.put(i + ".D3GR", fileBuffer);
                     break;
                 case 0x4952:
-                    files.put(i + ".wav", fileBuffer);
+                    files.put(i + ".WAV", fileBuffer);
                     break;
                 case 0x0a0d:
                     // Nothing here - removed file.

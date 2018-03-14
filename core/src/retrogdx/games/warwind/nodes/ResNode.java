@@ -22,7 +22,7 @@ public class ResNode extends AssetFolderNode {
         Array<Tree.Node> nodes = new Array<>();
 
         for (Entry<String, SmartByteBuffer> file : res.getFiles().entrySet()) {
-            if (file.getKey().endsWith(".wav")) {
+            if (file.getKey().endsWith(".WAV")) {
                 nodes.add(new RiffWaveNode(this.previewArea, file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".D3GR")) {
                 nodes.add(new D3grNode(this.previewArea, file.getKey(), file.getValue()));
