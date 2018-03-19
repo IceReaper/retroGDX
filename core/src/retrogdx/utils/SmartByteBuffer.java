@@ -16,6 +16,13 @@ public class SmartByteBuffer {
     private SmartByteBuffer parent;
     private int parentPosition;
 
+    public static SmartByteBuffer allocate(int capacity) {
+        SmartByteBuffer instance = new SmartByteBuffer();
+        instance.bytes = new byte[capacity];
+        instance.capacity = capacity;
+        return instance;
+    }
+
     public static SmartByteBuffer wrap(byte[] bytes) {
         SmartByteBuffer instance = new SmartByteBuffer();
         instance.bytes = bytes;
@@ -35,12 +42,28 @@ public class SmartByteBuffer {
         }
     }
 
+    private void writeByte(byte value, int position) {
+        if (position < 0 || position >= this.capacity) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (this.parent != null) {
+            this.parent.writeByte(value, this.parentPosition + position);
+        } else {
+            this.bytes[position] = value;
+        }
+    }
+
     public byte readByte() {
         return this.readByte(this.position++);
     }
 
     public short readUByte() {
         return (short) (this.readByte() & 0xff);
+    }
+
+    public void writeByte(byte value) {
+        this.writeByte(value, this.position++);
     }
 
     public short readShort() {
@@ -53,6 +76,11 @@ public class SmartByteBuffer {
         return this.readShort() & 0xffff;
     }
 
+    public void writeShort(short value) {
+        this.writeByte((byte) (this.order == ByteOrder.LITTLE_ENDIAN ? value & 0xff : value >> 8));
+        this.writeByte((byte) (this.order == ByteOrder.LITTLE_ENDIAN ? value >> 8 : value & 0xff));
+    }
+
     public int readInt() {
         int first = this.readUShort();
         int second = this.readUShort();
@@ -63,6 +91,11 @@ public class SmartByteBuffer {
         return this.readInt() & 0xffffffffL;
     }
 
+    public void writeInt(int value) {
+        this.writeShort((short) (this.order == ByteOrder.LITTLE_ENDIAN ? value & 0xffff : value >> 16));
+        this.writeShort((short) (this.order == ByteOrder.LITTLE_ENDIAN ? value >> 16 : value & 0xffff));
+    }
+
     public byte[] readBytes(int length) {
         byte[] target = new byte[length];
 
@@ -71,6 +104,12 @@ public class SmartByteBuffer {
         }
 
         return target;
+    }
+
+    public void writeBytes(byte[] values) {
+        for (byte value : values) {
+            this.writeByte(value);
+        }
     }
 
     public String readString() {
