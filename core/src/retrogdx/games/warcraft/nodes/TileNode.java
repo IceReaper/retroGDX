@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.warcraft.readers.Pal;
 import retrogdx.games.warcraft.readers.Tile;
 import retrogdx.games.warcraft.readers.Tilepart;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.TileSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
@@ -16,15 +16,15 @@ public class TileNode extends AssetFileNode {
     private SmartByteBuffer tilepartBuffer;
     private SmartByteBuffer paletteBuffer;
 
-    public TileNode(Table previewArea, String name, SmartByteBuffer tileBuffer, SmartByteBuffer tilepartBuffer, SmartByteBuffer paletteBuffer) {
-        super(previewArea, name, null);
+    public TileNode(String name, SmartByteBuffer tileBuffer, SmartByteBuffer tilepartBuffer, SmartByteBuffer paletteBuffer) {
+        super(name, null);
 
         this.tileBuffer = tileBuffer;
         this.tilepartBuffer = tilepartBuffer;
         this.paletteBuffer = paletteBuffer;
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Pal pal = new Pal(this.paletteBuffer);
         Tilepart tilepart = new Tilepart(this.tilepartBuffer);
         Tile tile = new Tile(this.tileBuffer);
@@ -53,6 +53,6 @@ public class TileNode extends AssetFileNode {
             sprites[i].setOrigin(8, 8);
         }
 
-        this.previewArea.add(new TileSetPreview(sprites));
+        previewArea.add(new TileSetPreview(sprites));
     }
 }

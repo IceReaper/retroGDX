@@ -1,40 +1,29 @@
 package retrogdx.games.dominion;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
-import com.badlogic.gdx.utils.Array;
+import retrogdx.games.dominion.nodes.BinNode;
 import retrogdx.games.dominion.nodes.RdfNode;
-import retrogdx.games.dominion.nodes.ZeroNode;
-import retrogdx.ui.Game;
-import retrogdx.ui.GamesTree;
+import retrogdx.ui.nodes.AssetFileNode;
+import retrogdx.ui.nodes.GameNode;
 
-public class Dominion extends Game {
-    public Dominion(Table previewArea) {
-        super(previewArea, "Dominion: Storm over Gift 3");
+public class Dominion extends GameNode {
+    public Dominion() {
+        super("Dominion: Storm over Gift 3");
     }
 
-    protected Dominion(Table previewArea, String game) {
-        super(previewArea, game);
+    public boolean verifyExecutableExists(FileHandle folder) {
+        return this.verifyExecutableExists(folder, "DOMINION.EXE");
     }
 
-    public boolean verify(FileHandle folder) {
-        return this.verify(folder, "DOMINION.EXE");
-    }
-
-    protected Array<Node> populate() {
-        Array<Node> files = new Array<>();
-
-        for (FileHandle file : this.folder.list()) {
-            if (file.name().equalsIgnoreCase("AUDIO.RDF")) {
-                files.add(new RdfNode(this.previewArea, file));
-            } else if (file.extension().equals("000")) {
-                // TODO case insensitive .BIN
-                files.add(new ZeroNode(this.previewArea, file, file.sibling(file.nameWithoutExtension() + ".BIN")));
-            }
-            // TODO .TL2 (tileset)
+    public AssetFileNode resolve(FileHandle file) {
+        if (file.extension().equalsIgnoreCase("RDF")) {
+            return new RdfNode(file, this);
+        } else if (file.extension().equalsIgnoreCase("BIN")) {
+            return new BinNode(file, file.sibling(file.nameWithoutExtension() + ".000"), this);
+        } else if (file.extension().equalsIgnoreCase("000")) {
+            return null;
         }
 
-        return GamesTree.sort(files);
+        return super.resolve(file);
     }
 }

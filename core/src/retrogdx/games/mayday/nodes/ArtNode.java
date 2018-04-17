@@ -6,19 +6,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.mayday.readers.Art;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
+import retrogdx.ui.nodes.GameNode;
 import retrogdx.ui.previews.ImageSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.nio.ByteOrder;
 
+// TODO this should be a VitualFolderNode
 public class ArtNode extends AssetFileNode {
-    public ArtNode(Table previewArea, FileHandle file) {
-        super(previewArea, file);
+    private FileHandle file;
+
+    public ArtNode(FileHandle file, GameNode gameNode) {
+        super(file.name(), SmartByteBuffer.wrap(file.readBytes()));
+        this.file = file;
     }
 
-    protected void showPreview() {
-        Art art = new Art(SmartByteBuffer.wrap(this.file.readBytes()));
+    public void showPreview(Table previewArea) {
+        Art art = new Art(this.buffer);
 
         Sprite[] sprites = new Sprite[art.frames.length];
 
@@ -48,6 +53,6 @@ public class ArtNode extends AssetFileNode {
             sprites[i].setOrigin(frame.width / 2, frame.height / 2);
         }
 
-        this.previewArea.add(new ImageSetPreview(sprites));
+        previewArea.add(new ImageSetPreview(sprites));
     }
 }

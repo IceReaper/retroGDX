@@ -4,19 +4,16 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.Dune2;
 import retrogdx.games.dune2.readers.Cps;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.ImagePreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class CpsNode extends AssetFileNode {
-    private String name;
-
-    public CpsNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
-        this.name = name;
+    public CpsNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Cps cps = new Cps(this.buffer);
 
         Pixmap pixmap = new Pixmap(320, 200, Pixmap.Format.RGBA8888);
@@ -32,6 +29,6 @@ public class CpsNode extends AssetFileNode {
             }
         }
 
-        this.previewArea.add(new ImagePreview(pixmap));
+        previewArea.add(new ImagePreview(pixmap));
     }
 }

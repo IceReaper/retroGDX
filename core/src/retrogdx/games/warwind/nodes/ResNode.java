@@ -1,33 +1,35 @@
 package retrogdx.games.warwind.nodes;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import com.badlogic.gdx.utils.Array;
 import retrogdx.games.warwind.readers.Res;
 import retrogdx.generic.nodes.RiffWaveNode;
-import retrogdx.ui.AssetFolderNode;
+import retrogdx.ui.nodes.GameNode;
+import retrogdx.ui.nodes.FolderVirtualNode;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.util.Map.Entry;
 
-public class ResNode extends AssetFolderNode {
-    public ResNode(Table previewArea, FileHandle file) {
-        super(previewArea, file);
+public class ResNode extends FolderVirtualNode {
+    public ResNode(FileHandle file, GameNode gameNode) {
+        super(file, gameNode);
     }
 
     protected Array<Tree.Node> populate() {
-        Res res = new Res(SmartByteBuffer.wrap(this.file.readBytes()));
+        Res res = new Res(this.buffer);
 
         Array<Tree.Node> nodes = new Array<>();
 
         for (Entry<String, SmartByteBuffer> file : res.getFiles().entrySet()) {
             if (file.getKey().endsWith(".WAV")) {
-                nodes.add(new RiffWaveNode(this.previewArea, file.getKey(), file.getValue()));
+                nodes.add(new RiffWaveNode(file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".D3GR")) {
-                nodes.add(new D3grNode(this.previewArea, file.getKey(), file.getValue()));
+                nodes.add(new D3grNode(file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".PAL")) {
-                nodes.add(new PalNode(this.previewArea, file.getKey(), file.getValue()));
+                nodes.add(new PalNode(file.getKey(), file.getValue()));
+            } else {
+                System.out.println("Unknown file format: " + file.getKey());
             }
         }
 

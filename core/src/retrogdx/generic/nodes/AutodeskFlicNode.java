@@ -6,16 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.generic.readers.AutodeskFlic;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.AnimationPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class AutodeskFlicNode extends AssetFileNode {
-    public AutodeskFlicNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
+    public AutodeskFlicNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         AutodeskFlic flic = new AutodeskFlic(this.buffer);
 
         Sprite[] sprites = new Sprite[flic.frames.length];
@@ -35,6 +35,6 @@ public class AutodeskFlicNode extends AssetFileNode {
 
         Animation<Sprite> animation = new Animation<>(flic.speed / 1000f, sprites);
 
-        this.previewArea.add(new AnimationPreview(animation));
+        previewArea.add(new AnimationPreview(animation));
     }
 }

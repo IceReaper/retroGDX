@@ -5,16 +5,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.bam.readers.Tlb;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.TileSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class TlbNode extends AssetFileNode {
-    public TlbNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
+    public TlbNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Tlb tlb = new Tlb(this.buffer);
 
         Sprite[] sprites = new Sprite[tlb.tiles.length];
@@ -33,6 +33,6 @@ public class TlbNode extends AssetFileNode {
             sprites[i].setOrigin(tlb.width / 2, tlb.height / 2);
         }
 
-        this.previewArea.add(new TileSetPreview(sprites));
+        previewArea.add(new TileSetPreview(sprites));
     }
 }

@@ -6,16 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.bam.readers.Ani;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.AnimationPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class AniNode extends AssetFileNode {
-    public AniNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
+    public AniNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Ani ani = new Ani(this.buffer);
 
         Sprite[] sprites = new Sprite[ani.frames.length];
@@ -38,6 +38,6 @@ public class AniNode extends AssetFileNode {
 
         Animation<Sprite> animation = new Animation<>(0.15f, sprites);
 
-        this.previewArea.add(new AnimationPreview(animation));
+        previewArea.add(new AnimationPreview(animation));
     }
 }

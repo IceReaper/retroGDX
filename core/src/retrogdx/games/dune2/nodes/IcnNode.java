@@ -6,19 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.Dune2;
 import retrogdx.games.dune2.readers.Icn;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.TileSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class IcnNode extends AssetFileNode {
-    private String name;
-
-    public IcnNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
-        this.name = name;
+    public IcnNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Icn icn = new Icn(this.buffer);
 
         Sprite[] sprites = new Sprite[icn.tiles.length];
@@ -38,6 +35,6 @@ public class IcnNode extends AssetFileNode {
             sprites[i].setOrigin(icn.width / 2, icn.height / 2);
         }
 
-        this.previewArea.add(new TileSetPreview(sprites));
+        previewArea.add(new TileSetPreview(sprites));
     }
 }

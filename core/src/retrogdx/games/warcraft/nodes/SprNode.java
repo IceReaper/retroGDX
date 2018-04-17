@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.warcraft.readers.Pal;
 import retrogdx.games.warcraft.readers.Spr;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.AnimationPreview;
 import retrogdx.utils.SmartByteBuffer;
 
@@ -17,19 +17,19 @@ public class SprNode extends AssetFileNode {
     private Map<String, Pal> palettes;
     private String name;
 
-    public SprNode(Table previewArea, String name, SmartByteBuffer buffer, Map<String, Pal> palettes) {
-        super(previewArea, name, buffer);
+    public SprNode(String name, SmartByteBuffer buffer, Map<String, Pal> palettes) {
+        super(name, buffer);
         this.palettes = palettes;
         this.name = name;
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Spr spr = new Spr(this.buffer);
 
         Sprite[] sprites = new Sprite[spr.frames.length];
 
         int[] palette = new int[256];
-        // TODO verify if we do not need variant 2: 194 + 211
+        // TODO verifyExecutableExists if we do not need variant 2: 194 + 211
         System.arraycopy(this.palettes.get("191.PAL").colors, 0, palette, 0, 128);
         System.arraycopy(this.palettes.get("210.PAL").colors, 0, palette, 128, 128);
         int imageId = Integer.parseInt(this.name.replace(".SPR", ""));
@@ -59,6 +59,6 @@ public class SprNode extends AssetFileNode {
 
         Animation<Sprite> animation = new Animation<>(0.15f, sprites);
 
-        this.previewArea.add(new AnimationPreview(animation));
+        previewArea.add(new AnimationPreview(animation));
     }
 }

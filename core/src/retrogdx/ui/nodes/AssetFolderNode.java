@@ -1,23 +1,15 @@
-package retrogdx.ui;
+package retrogdx.ui.nodes;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 
 public abstract class AssetFolderNode extends AssetFileNode {
-    public AssetFolderNode(Table previewArea, FileHandle file) {
-        super(previewArea, file);
+    public AssetFolderNode(String name) {
+        super(name, null);
 
-        // Prevent tree not rendering "+" while children not loaded yet.
-        this.add(new Node(new VisLabel("...")));
-    }
-
-    public AssetFolderNode(Table previewArea, String name) {
-        super(previewArea, name, null);
-
-        // Prevent tree not rendering "+" while children not loaded yet.
+        // Prevent hiding "+" while not populated.
         this.add(new Node(new VisLabel("...")));
     }
 
@@ -27,7 +19,7 @@ public abstract class AssetFolderNode extends AssetFileNode {
             this.addAll(this.populate());
         } else {
             this.removeAll();
-            // Prevent tree not rendering "+" while children not loaded yet.
+            // Prevent hiding "+" while not populated.
             this.add(new Node(new VisLabel("...")));
         }
 
@@ -36,6 +28,6 @@ public abstract class AssetFolderNode extends AssetFileNode {
 
     protected abstract Array<Node> populate();
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
     }
 }

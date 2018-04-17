@@ -5,32 +5,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.utils.Array;
 import retrogdx.games.warcraft.nodes.WarNode;
-import retrogdx.ui.Game;
+import retrogdx.ui.nodes.AssetFileNode;
+import retrogdx.ui.nodes.GameNode;
 import retrogdx.ui.GamesTree;
 
-public class Warcraft extends Game {
-    public Warcraft(Table previewArea) {
-        super(previewArea, "Warcraft: Orcs & Humans");
+public class Warcraft extends GameNode {
+    public Warcraft() {
+        super("Warcraft: Orcs & Humans");
     }
 
-    protected Warcraft(Table previewArea, String game) {
-        super(previewArea, game);
+    public boolean verifyExecutableExists(FileHandle folder) {
+        return this.verifyExecutableExists(folder, "WAR.EXE");
     }
 
-    public boolean verify(FileHandle folder) {
-        return this.verify(folder, "WAR.EXE");
-    }
-
-    protected Array<Node> populate() {
-        Array<Node> files = new Array<>();
-
-        // TODO case insensitive
-        for (FileHandle file : this.folder.child("DATA").list()) {
-            if (file.extension().equalsIgnoreCase("WAR")) {
-                files.add(new WarNode(this.previewArea, file));
-            }
+    public AssetFileNode resolve(FileHandle file) {
+        if (file.extension().equalsIgnoreCase("WAR")) {
+            return new WarNode(file, this);
         }
 
-        return GamesTree.sort(files);
+        return super.resolve(file);
     }
 }

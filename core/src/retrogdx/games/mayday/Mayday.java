@@ -1,35 +1,24 @@
 package retrogdx.games.mayday;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
-import com.badlogic.gdx.utils.Array;
 import retrogdx.games.mayday.nodes.ArtNode;
-import retrogdx.ui.Game;
-import retrogdx.ui.GamesTree;
+import retrogdx.ui.nodes.AssetFileNode;
+import retrogdx.ui.nodes.GameNode;
 
-public class Mayday extends Game {
-    public Mayday(Table previewArea) {
-        super(previewArea, "Mayday: Conflict Earth");
+public class Mayday extends GameNode {
+    public Mayday() {
+        super("Mayday: Conflict Earth");
     }
 
-    protected Mayday(Table previewArea, String game) {
-        super(previewArea, game);
+    public boolean verifyExecutableExists(FileHandle folder) {
+        return this.verifyExecutableExists(folder, "MAYDAY.EXE");
     }
 
-    public boolean verify(FileHandle folder) {
-        return this.verify(folder, "MAYDAY.EXE");
-    }
-
-    protected Array<Node> populate() {
-        Array<Node> files = new Array<>();
-
-        for (FileHandle file : this.folder.list()) {
-            if (file.name().equalsIgnoreCase("MAYDAY.ART")) {
-                files.add(new ArtNode(this.previewArea, file));
-            }
+    public AssetFileNode resolve(FileHandle file) {
+        if (file.extension().equalsIgnoreCase("ART")) {
+            return new ArtNode(file, this);
         }
 
-        return GamesTree.sort(files);
+        return super.resolve(file);
     }
 }

@@ -15,7 +15,7 @@ public class Smp {
 
         byte[] audioData = buffer.readBytes(buffer.capacity());
 
-        // TODO values are guessed! Find real values, or verify that they are correct!
+        // TODO values are guessed! Find real values, or verifyExecutableExists that they are correct!
         AudioFormat format = new AudioFormat(16000, 8, 1, false, false);
         AudioInputStream input = new AudioInputStream(new ByteArrayInputStream(audioData), format, audioData.length);
 

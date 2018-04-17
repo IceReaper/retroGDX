@@ -3,16 +3,16 @@ package retrogdx.games.dune2.nodes;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.readers.Tbl;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.ImagePreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class TblNode extends AssetFileNode {
-    public TblNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
+    public TblNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Tbl tbl = new Tbl(this.buffer);
 
         Pixmap pixmap = new Pixmap(16, 16, Pixmap.Format.RGBA8888);
@@ -24,6 +24,6 @@ public class TblNode extends AssetFileNode {
             }
         }
 
-        this.previewArea.add(new ImagePreview(pixmap));
+        previewArea.add(new ImagePreview(pixmap));
     }
 }

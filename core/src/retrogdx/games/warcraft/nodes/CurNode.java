@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.warcraft.readers.Cur;
 import retrogdx.games.warcraft.readers.Pal;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.ImagePreview;
 import retrogdx.utils.SmartByteBuffer;
 
@@ -13,12 +13,12 @@ import java.util.Map;
 public class CurNode extends AssetFileNode {
     private Map<String, Pal> palettes;
 
-    public CurNode(Table previewArea, String name, SmartByteBuffer buffer, Map<String, Pal> palettes) {
-        super(previewArea, name, buffer);
+    public CurNode(String name, SmartByteBuffer buffer, Map<String, Pal> palettes) {
+        super(name, buffer);
         this.palettes = palettes;
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Cur cur = new Cur(this.buffer);
 
         Pixmap pixmap = new Pixmap(cur.width, cur.height, Pixmap.Format.RGBA8888);
@@ -30,6 +30,6 @@ public class CurNode extends AssetFileNode {
             }
         }
 
-        this.previewArea.add(new ImagePreview(pixmap));
+        previewArea.add(new ImagePreview(pixmap));
     }
 }

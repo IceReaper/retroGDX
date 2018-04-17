@@ -4,23 +4,21 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.DatImage;
 import retrogdx.games.earth2140.readers.Pal;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.ImagePreview;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.util.Map;
 
 public class DatImageNode extends AssetFileNode {
-    private String name;
     private Map<String, SmartByteBuffer> palettes;
 
-    public DatImageNode(Table previewArea, String name, SmartByteBuffer buffer, Map<String, SmartByteBuffer> palettes) {
-        super(previewArea, name, buffer);
-        this.name = name;
+    public DatImageNode(String name, SmartByteBuffer buffer, Map<String, SmartByteBuffer> palettes) {
+        super(name, buffer);
         this.palettes = palettes;
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         DatImage dat = new DatImage(this.buffer);
 
         Pal pal = new Pal(this.palettes.get(this.name.substring(0, this.name.length() - 3) + "PAL"));
@@ -33,6 +31,6 @@ public class DatImageNode extends AssetFileNode {
             }
         }
 
-        this.previewArea.add(new ImagePreview(pixmap));
+        previewArea.add(new ImagePreview(pixmap));
     }
 }

@@ -2,18 +2,18 @@ package retrogdx.games.bam.nodes;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.bam.readers.Sqb;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.TextPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.util.Map;
 
 public class SqbNode extends AssetFileNode {
-    public SqbNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
+    public SqbNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Sqb sqb = new Sqb(this.buffer);
 
         String text = "";
@@ -22,6 +22,6 @@ public class SqbNode extends AssetFileNode {
             text += entry.getKey() + " :: " + entry.getValue() + "\n";
         }
 
-        this.previewArea.add(new TextPreview(text.substring(0, text.length() - 1)));
+        previewArea.add(new TextPreview(text.substring(0, text.length() - 1)));
     }
 }

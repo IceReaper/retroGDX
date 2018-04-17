@@ -7,46 +7,46 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Zero {
-    private SmartByteBuffer dataBuffer;
-    private SmartByteBuffer indexBuffer;
+    private SmartByteBuffer imagesBuffer;
+    private SmartByteBuffer buffer;
 
-    public Zero(SmartByteBuffer dataBuffer, SmartByteBuffer indexBuffer) {
-        this.dataBuffer = dataBuffer;
-        this.indexBuffer = indexBuffer;
+    public Zero(SmartByteBuffer buffer, SmartByteBuffer imagesBuffer) {
+        this.buffer = buffer;
+        this.imagesBuffer = imagesBuffer;
     }
 
     public Map<String, SmartByteBuffer> getFiles() {
-        this.dataBuffer.order(ByteOrder.LITTLE_ENDIAN);
-        this.indexBuffer.order(ByteOrder.LITTLE_ENDIAN);
-        this.indexBuffer.position(0);
+        this.imagesBuffer.order(ByteOrder.LITTLE_ENDIAN);
+        this.buffer.order(ByteOrder.LITTLE_ENDIAN);
+        this.buffer.position(0);
 
         Map<String, SmartByteBuffer> files = new LinkedHashMap<>();
 
         // TODO find out how to read the header part.
-        this.indexBuffer.position(0x164);
+        this.buffer.position(0x164);
 
         int[] offsets = new int[15];
         int[] lengths = new int[15];
 
         for (int i = 0; i < 15; i++) {
-            offsets[i] = this.indexBuffer.readInt();
-            lengths[i] = this.indexBuffer.readInt();
+            offsets[i] = this.buffer.readInt();
+            lengths[i] = this.buffer.readInt();
         }
 
         // 0: file offsets
-        this.indexBuffer.position(offsets[0]);
+        this.buffer.position(offsets[0]);
         for (int i = 0; i < lengths[0] / 10; i++) {
-            int type = this.indexBuffer.readShort();
-            int offset = this.indexBuffer.readInt();
-            int length = this.indexBuffer.readInt();
+            int type = this.buffer.readShort();
+            int offset = this.buffer.readInt();
+            int length = this.buffer.readInt();
 
             switch (type) {
                 case 1:
-                    files.put(i + ".spr", this.dataBuffer.slice(offset, length));
+                    files.put(i + ".spr", this.imagesBuffer.slice(offset, length));
                     break;
 
                 case 11:
-                    files.put(i + ".UNK", this.dataBuffer.slice(offset, length));
+                    files.put(i + ".UNK", this.imagesBuffer.slice(offset, length));
                     break;
 
                 case 14:
@@ -91,28 +91,28 @@ public class Zero {
         // 2: unused
 
         // 3: unknown
-        this.indexBuffer.position(offsets[3]);
+        this.buffer.position(offsets[3]);
         // TODO identify me (171 entries)
         for (int i = 0; i < lengths[3] / 8; i++) {
-            int unk1 = this.indexBuffer.readInt(); // ascending - offset?
-            int unk2 = this.indexBuffer.readInt(); // may be -1
+            int unk1 = this.buffer.readInt(); // ascending - offset?
+            int unk2 = this.buffer.readInt(); // may be -1
         }
 
         // 4: game core messages strings
-        this.indexBuffer.position(offsets[4]);
-        while (this.indexBuffer.position() < offsets[4] + lengths[4]) {
-            this.indexBuffer.readString(); // gameMessage
+        this.buffer.position(offsets[4]);
+        while (this.buffer.position() < offsets[4] + lengths[4]) {
+            this.buffer.readString(); // gameMessage
         }
 
         // 5: unknown - maybe unit or animation tables?
         // TODO read me
-        this.indexBuffer.position(offsets[5]);
-        this.indexBuffer.readBytes(lengths[5]);
+        this.buffer.position(offsets[5]);
+        this.buffer.readBytes(lengths[5]);
 
         // 6: unknown - maybe palette?
-        this.indexBuffer.position(offsets[6]);
+        this.buffer.position(offsets[6]);
         for (int i = 0; i < 236; i++) {
-            this.indexBuffer.readInt(); // TODO
+            this.buffer.readInt(); // TODO
         }
 
         // 7: unused
@@ -122,29 +122,29 @@ public class Zero {
         // 9: unused
 
         // 10: plugin files strings
-        this.indexBuffer.position(offsets[10]);
-        while (this.indexBuffer.position() < offsets[10] + lengths[10]) {
-            this.indexBuffer.readString(); // pluginFile
+        this.buffer.position(offsets[10]);
+        while (this.buffer.position() < offsets[10] + lengths[10]) {
+            this.buffer.readString(); // pluginFile
         }
 
         // 11: plugin function names strings
-        this.indexBuffer.position(offsets[11]);
-        while (this.indexBuffer.position() < offsets[11] + lengths[11]) {
-            this.indexBuffer.readString(); // pluginFunction
+        this.buffer.position(offsets[11]);
+        while (this.buffer.position() < offsets[11] + lengths[11]) {
+            this.buffer.readString(); // pluginFunction
         }
 
         // 12: unknown - looks like flags 0,1,2,3,4
-        this.indexBuffer.position(offsets[12]);
+        this.buffer.position(offsets[12]);
         // TODO identify me! (423 entries)
         for (int i = 0; i < lengths[12] / 4; i++) {
-            int unk1 = this.indexBuffer.readInt();
+            int unk1 = this.buffer.readInt();
         }
 
         // 13: unused
 
         // 14: game sources path string
-        this.indexBuffer.position(offsets[14]);
-        this.indexBuffer.readString(lengths[14]); // sourcePath
+        this.buffer.position(offsets[14]);
+        this.buffer.readString(lengths[14]); // sourcePath
 
         return files;
     }

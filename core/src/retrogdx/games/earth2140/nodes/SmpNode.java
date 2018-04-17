@@ -2,18 +2,18 @@ package retrogdx.games.earth2140.nodes;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.Smp;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.AudioPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class SmpNode extends AssetFileNode {
-    public SmpNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
+    public SmpNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Smp smp = new Smp(this.buffer);
 
-        this.previewArea.add(new AudioPreview(smp.clip));
+        previewArea.add(new AudioPreview(smp.clip));
     }
 }

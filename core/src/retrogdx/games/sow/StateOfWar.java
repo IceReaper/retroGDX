@@ -1,36 +1,30 @@
 package retrogdx.games.sow;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
-import com.badlogic.gdx.utils.Array;
 import retrogdx.games.sow.nodes.DataNode;
-import retrogdx.ui.Game;
-import retrogdx.ui.GamesTree;
+import retrogdx.ui.nodes.AssetFileNode;
+import retrogdx.ui.nodes.GameNode;
 
-public class StateOfWar extends Game {
-    public StateOfWar(Table previewArea) {
-        super(previewArea, "State of War");
+public class StateOfWar extends GameNode {
+    public StateOfWar() {
+        super("State of War");
     }
 
-    protected StateOfWar(Table previewArea, String game) {
-        super(previewArea, game);
+    protected StateOfWar(String game) {
+        super(game);
     }
 
-    public boolean verify(FileHandle folder) {
-        return this.verify(folder, "STATE OF WAR.EXE");
+    public boolean verifyExecutableExists(FileHandle folder) {
+        return this.verifyExecutableExists(folder, "STATE OF WAR.EXE");
     }
 
-    protected Array<Node> populate() {
-        Array<Node> files = new Array<>();
-
-        for (FileHandle file : this.folder.list()) {
-            if (file.extension().equalsIgnoreCase("DATA")) {
-                // TODO case insensitive .info
-                files.add(new DataNode(this.previewArea, file, file.sibling(file.nameWithoutExtension() + ".INFO")));
-            }
+    public AssetFileNode resolve(FileHandle file) {
+        if (file.extension().equalsIgnoreCase("DATA")) {
+            return new DataNode(file, file.sibling(file.nameWithoutExtension() + ".INFO"), this);
+        } else if (file.extension().equalsIgnoreCase("INFO")) {
+            return null;
         }
 
-        return GamesTree.sort(files);
+        return super.resolve(file);
     }
 }

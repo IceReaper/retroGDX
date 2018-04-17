@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.earth2140.readers.Mix;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.ImageSetPreview;
 import retrogdx.ui.previews.TileSetPreview;
 import retrogdx.utils.SmartByteBuffer;
@@ -13,12 +13,12 @@ import retrogdx.utils.SmartByteBuffer;
 public class MixNode extends AssetFileNode {
     private String name;
 
-    public MixNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
+    public MixNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
         this.name = name;
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Mix mix = new Mix(this.buffer);
 
         Sprite[] sprites = new Sprite[mix.frames.length];
@@ -46,9 +46,9 @@ public class MixNode extends AssetFileNode {
         }
 
         if (this.name.startsWith("SPRT")) {
-            this.previewArea.add(new TileSetPreview(sprites));
+            previewArea.add(new TileSetPreview(sprites));
         } else {
-            this.previewArea.add(new ImageSetPreview(sprites));
+            previewArea.add(new ImageSetPreview(sprites));
         }
     }
 }

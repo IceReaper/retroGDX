@@ -8,25 +8,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.Dune2;
 import retrogdx.games.dune2.readers.Pal;
 import retrogdx.games.dune2.readers.Wsa;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.AnimationPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 import java.util.Map;
 
 public class WsaNode extends AssetFileNode {
-    private String name;
+    // TODO find a better way to implement this!
     private Map<String, SmartByteBuffer> palettes;
+    // TODO find a better way to implement this!
     private Map<String, SmartByteBuffer> animations;
 
-    public WsaNode(Table previewArea, String name, SmartByteBuffer buffer, Map<String, SmartByteBuffer> palettes, Map<String, SmartByteBuffer> animations) {
-        super(previewArea, name, buffer);
-        this.name = name;
+    public WsaNode(String name, SmartByteBuffer buffer, Map<String, SmartByteBuffer> palettes, Map<String, SmartByteBuffer> animations) {
+        super(name, buffer);
         this.palettes = palettes;
         this.animations = animations;
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Wsa lastWsa = null;
 
         if (this.name.equals("INTRO7B.WSA")) {
@@ -70,6 +70,6 @@ public class WsaNode extends AssetFileNode {
 
         Animation<Sprite> animation = new Animation<>(0.15f, sprites);
 
-        this.previewArea.add(new AnimationPreview(animation));
+        previewArea.add(new AnimationPreview(animation));
     }
 }

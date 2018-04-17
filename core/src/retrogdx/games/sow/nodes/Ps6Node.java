@@ -6,16 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.sow.readers.Ps6;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.AnimationPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class Ps6Node extends AssetFileNode {
-    public Ps6Node(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
+    public Ps6Node(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Ps6 ps6 = new Ps6(this.buffer);
 
         Sprite[] sprites = new Sprite[ps6.frames.length];
@@ -36,6 +36,6 @@ public class Ps6Node extends AssetFileNode {
 
         Animation<Sprite> animation = new Animation<>(0.15f, sprites);
 
-        this.previewArea.add(new AnimationPreview(animation));
+        previewArea.add(new AnimationPreview(animation));
     }
 }

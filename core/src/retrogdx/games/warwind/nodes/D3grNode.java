@@ -5,16 +5,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.warwind.readers.D3gr;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.ImageSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class D3grNode extends AssetFileNode {
-    public D3grNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
+    public D3grNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         D3gr d3gr = new D3gr(this.buffer);
 
         Sprite[] sprites = new Sprite[d3gr.frames.length];
@@ -34,6 +34,6 @@ public class D3grNode extends AssetFileNode {
             sprites[i].setOrigin(frame.width / 2, frame.height / 2);
         }
 
-        this.previewArea.add(new ImageSetPreview(sprites));
+        previewArea.add(new ImageSetPreview(sprites));
     }
 }

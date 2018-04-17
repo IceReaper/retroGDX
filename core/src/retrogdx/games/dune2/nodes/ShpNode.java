@@ -7,19 +7,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.dune2.Dune2;
 import retrogdx.games.dune2.readers.Shp;
 import retrogdx.games.dune2.readers.Shp.ShpFrame;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.ImageSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class ShpNode extends AssetFileNode {
-    private String name;
-
-    public ShpNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
-        this.name = name;
+    public ShpNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         Shp shp = new Shp(this.buffer);
 
         Sprite[] sprites = new Sprite[shp.frames.length];
@@ -44,6 +41,6 @@ public class ShpNode extends AssetFileNode {
             sprites[i].setOrigin(frame.width / 2, frame.height / 2);
         }
 
-        this.previewArea.add(new ImageSetPreview(sprites));
+        previewArea.add(new ImageSetPreview(sprites));
     }
 }

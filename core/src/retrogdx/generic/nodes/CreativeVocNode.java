@@ -2,18 +2,18 @@ package retrogdx.generic.nodes;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.generic.readers.CreativeVoc;
-import retrogdx.ui.AssetFileNode;
+import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.AudioPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class CreativeVocNode extends AssetFileNode {
-    public CreativeVocNode(Table previewArea, String name, SmartByteBuffer buffer) {
-        super(previewArea, name, buffer);
+    public CreativeVocNode(String name, SmartByteBuffer buffer) {
+        super(name, buffer);
     }
 
-    protected void showPreview() {
+    public void showPreview(Table previewArea) {
         CreativeVoc voc = new CreativeVoc(this.buffer);
 
-        this.previewArea.add(new AudioPreview(voc.clip));
+        previewArea.add(new AudioPreview(voc.clip));
     }
 }

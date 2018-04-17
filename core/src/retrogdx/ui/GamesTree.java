@@ -11,6 +11,8 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTree;
 import org.reflections.Reflections;
+import retrogdx.ui.nodes.AssetFileNode;
+import retrogdx.ui.nodes.GameNode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,21 +48,21 @@ public class GamesTree extends VisScrollPane {
                 if (!(selected instanceof AssetFileNode)) {
                     showPreview();
                 } else {
-                    ((AssetFileNode) selected).showPreview();
+                    ((AssetFileNode) selected).showPreview(previewArea);
                 }
             }
         });
 
-        Set<Class<? extends Game>> gameClasses = new Reflections("retrogdx.games").getSubTypesOf(Game.class);
-        Map<String, Game> games = new HashMap<>();
+        Set<Class<? extends GameNode>> gameClasses = new Reflections("retrogdx.games").getSubTypesOf(GameNode.class);
+        Map<String, GameNode> games = new HashMap<>();
 
         for (FileHandle file : Gdx.files.internal("games").list()) {
-            for (Class<? extends Game> gameClass : gameClasses) {
+            for (Class<? extends GameNode> gameClass : gameClasses) {
                 try {
-                    Game game = gameClass.getConstructor(Table.class).newInstance(this.previewArea);
+                    GameNode gameNode = gameClass.newInstance();
 
-                    if (game.verify(file)) {
-                        games.put(((VisLabel) game.getActor()).getText().toString(), game);
+                    if (gameNode.verifyExecutableExists(file)) {
+                        games.put(((VisLabel) gameNode.getActor()).getText().toString(), gameNode);
                     }
                 } catch (Exception exception) {
                     exception.printStackTrace();

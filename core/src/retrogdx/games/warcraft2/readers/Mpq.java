@@ -80,13 +80,13 @@ public class Mpq {
                 continue;
             }
 
-            try {
+            /*try {
                 this.buffer.position(blockOffset);
                 byte[] bytes = this.buffer.readBytes(fileSize);
                 java.nio.file.Files.write(new java.io.File("_mpq/" + filename).toPath(), bytes);
             } catch (Exception exception) {
                 exception.printStackTrace();
-            }
+            }*/
         }
 
         return new HashMap<>();
