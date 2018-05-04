@@ -5,7 +5,7 @@ import retrogdx.utils.SmartByteBuffer;
 
 public abstract class FolderVirtualNode extends AssetFolderNode {
     protected SmartByteBuffer buffer;
-    private GameNode gameNode;
+    protected GameNode gameNode;
 
     public FolderVirtualNode(FileHandle file, GameNode gameNode) {
         this(file.name(), SmartByteBuffer.wrap(file.readBytes()), gameNode);

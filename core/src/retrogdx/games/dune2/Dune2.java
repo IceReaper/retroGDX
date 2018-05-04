@@ -26,13 +26,15 @@ public class Dune2 extends GameNode {
         }
 
         // TODO find a better way to implement this!
-        Pak pak = new Pak(SmartByteBuffer.wrap(file.readBytes()));
+        if (file.name().equalsIgnoreCase("DUNE.PAK")) {
+            Pak pak = new Pak(SmartByteBuffer.wrap(file.readBytes()));
 
-        for (Map.Entry<String, SmartByteBuffer> entry : pak.getFiles().entrySet()) {
-            if (entry.getKey().equalsIgnoreCase("IBM.PAL")) {
-                Dune2.PALETTE = new Pal(entry.getValue()).colors;
-            } else if (entry.getKey().equalsIgnoreCase("BENE.PAL")) {
-                Dune2.PALETTE_ALT = new Pal(entry.getValue()).colors;
+            for (Map.Entry<String, SmartByteBuffer> entry : pak.getFiles().entrySet()) {
+                if (entry.getKey().equalsIgnoreCase("IBM.PAL")) {
+                    Dune2.PALETTE = new Pal(entry.getValue()).colors;
+                } else if (entry.getKey().equalsIgnoreCase("BENE.PAL")) {
+                    Dune2.PALETTE_ALT = new Pal(entry.getValue()).colors;
+                }
             }
         }
 

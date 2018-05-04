@@ -200,4 +200,8 @@ public class SmartByteBuffer {
         buffer.position(position);
         block.body(buffer);
     }
+
+    public int getParentPosition() {
+        return parentPosition;
+    }
 }
