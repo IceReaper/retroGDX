@@ -62,7 +62,7 @@ Upon that the default retroGDX application core consists of a simple tree contai
 - DAT map - completely missing (may not contain useful assets)
 
 ## Future Cop: LAPD
-- * container - done
+- container - done
 - bmp image - done
 - wav sound - done
 - msx sound - AudioFormat must be verified (guessed values)
