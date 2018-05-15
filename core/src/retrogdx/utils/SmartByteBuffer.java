@@ -202,6 +202,10 @@ public class SmartByteBuffer {
     }
 
     public int getParentPosition() {
-        return parentPosition;
+        return this.parentPosition;
+    }
+
+    public byte[] unwrap() {
+        return this.slice(0, this.capacity).readBytes(this.capacity);
     }
 }

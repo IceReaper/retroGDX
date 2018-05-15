@@ -12,67 +12,90 @@ Upon that the default retroGDX application core consists of a simple tree contai
 
 ## Blood & Magic
 - STF container - done
-- WAV sound - done
 - PAL palette - done
 - SQB text - done
+- WAV sound - done
 - ANI animation - palette mapping missing
 - TLB tileset - palette mapping missing
-- HMP music - completely missing
-- MIF map - completely missing
-- BNK soundbank - completely missing
 - FNT font - completely missing
+- HMP music - completely missing
+- BNK soundbank - completely missing (may not contain useful assets)
+- MIF map - completely missing (may not contain useful assets)
 
 ## Dominion: Storm over Gift 3
+- BIN/000 container - the BIN file has some unidentified chunks left
 - RDF container - done
 - WAV sound - done
-- 000/BIN container - the BIN file has some unidentified chunks left
 - SPR sprite - palette missing
 - TL2 tileset - completely missing
-- WXM/SDC map - completely missing
 - ??? unk - completely missing (the unk format in BIN)
 - ??? unk - completely missing (filetype 14-20 in 000)
+- WXM/SDC map - completely missing (may not contain useful assets)
 
 ## Dune II: The Building of a Dynasty
 - PAK container - done
-- INI scenario - done
-- SHP spritesheet - done
-- WSA animation - done
-- VOC sound - done
-- PAL palette - done
-- ICN tileset - done
 - CPS image - done
-- TLB unk - usage needs to be determined before being verified as done
-- MAP unk - completely missing (related to the tileset)
-- FNT font - completely missing
-- EMC script - completely missing
-- ENG/FRE/GET translations - completely missing
+- ICN tileset - done
+- INI scenario - done
+- PAL palette - done
+- SHP spritesheet - done
+- VOC sound - done
+- WSA animation - done
+- TLB unk - incomplete (usage unknown)
 - ADL/C55/XMI/PCS/TAN/DRV/ADV music - completely missing
+- FNT font - completely missing
+- MAP unk - completely missing (related to the tileset)
+- EMC script - completely missing (may not contain useful assets)
+- ENG/FRE/GET translations - completely missing (may not contain useful assets)
 
 ## Earth 2140
 - WD container - done
-- TXT text - done
-- INI text - done
-- FLC animation - done
-- PAL palette - done
 - DAT image - done
+- FLC animation - done
+- INI text - done
 - MIX spritesheet - done
-- SMP sound - AudioFormat must be verified
-- DAT map - completely missing
+- PAL palette - done
+- TXT text - done
+- SMP sound - AudioFormat must be verified (guessed values)
 - KER/PCX font - completely missing
 - MIX unk - completely missing (MIXMAX)
+- DAT map - completely missing (may not contain useful assets)
+
+## Future Cop: LAPD
+- * container - done
+- bmp image - done
+- wav sound - done
+- msx sound - AudioFormat must be verified (guessed values)
+- snds sound - AudioFormat must be verified (guessed values)
+- act UNK - completely missing
+- canm UNK - completely missing
+- ctr UNK - completely missing
+- dcs UNK - completely missing
+- fnt UNK - completely missing
+- fun UNK - completely missing
+- net UNK - completely missing
+- obj UNK - completely missing
+- ptc UNK - completely missing
+- pyr UNK - completely missing
+- sac UNK - completely missing
+- sfx UNK - completely missing
+- shd UNK - completely missing
+- til UNK - completely missing
+- tos UNK - completely missing
+- RPNS UNK - completely missing (may not be a file at all)
 
 ## Mayday: Conflict Earth
-- SPR sprite - done
 - PAL palette - done
+- SPR sprite - done
 - ART container - missing chunk at the beginning
-- MAP map - completely missing
+- MAP map - completely missing (may not contain useful assets)
 
 ## State of War + State of War: Warmonger
 - DATA/INFO container - done
 - PS6 spritesheet - done
+- MSK unk - completely missing
 - PO1 unk - completely missing
 - PO2 unk - completely missing
-- MSK unk - completely missing
 - SHA unk - completely missing
 - EDT/MAP/SRF/SRFS/TIL/TMI map - completely missing
 
@@ -81,23 +104,23 @@ Upon that the default retroGDX application core consists of a simple tree contai
 - RES container - almost done, 000 which contains the gameNode strings, crashes
 - D3GR spritesheet - palette missing
 - PAL pal - implementation wrong
-- DAT map - completely missing
-- LVL map - completely missing
+- DAT map - completely missing (may not contain useful assets)
+- LVL map - completely missing (may not contain useful assets)
 
 ## Warcraft: Orcs & Humans
 - WAR container - done
-- FLC animation - done
-- WAV sound - done
-- VOC sound - done
-- PAL palette - done
-- TXT text - done
-- IMG image - done
 - CUR cursor - done
+- FLC animation - done
+- IMG image - done
+- PAL palette - done
 - SPR spritesheet - done
 - TILE/TILEPART tileset - done
+- TXT text - done
+- VOC sound - done
+- WAV sound - done
 - XMI music - completely missing
-- MAP map - completely missing
-- GUI gui - completely missing
+- GUI gui - completely missing (may not contain useful assets)
+- MAP map - completely missing (may not contain useful assets)
 
 ## Warcraft II: Battle.net Edition
 - MPQ container - parsing done, file decryption missing
