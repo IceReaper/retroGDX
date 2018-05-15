@@ -1,6 +1,7 @@
 package retrogdx.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -10,9 +11,12 @@ import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTree;
+import com.kotcrab.vis.ui.widget.file.FileChooser;
+import com.kotcrab.vis.ui.widget.file.FileChooserAdapter;
 import org.reflections.Reflections;
 import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.nodes.GameNode;
+import retrogdx.utils.SmartByteBuffer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +38,15 @@ public class GamesTree extends VisScrollPane {
         VisTree tree = ((VisTree) this.getActor());
         tree.getSelection().setMultiple(false);
 
+        FileChooser fileChooser = new FileChooser(FileChooser.Mode.SAVE);
+        fileChooser.setListener(new FileChooserAdapter() {
+            public void selected (Array<FileHandle> file) {
+                SmartByteBuffer buffer = ((AssetFileNode) tree.getSelection().first()).getBuffer();
+                buffer.position(0);
+                file.first().writeBytes(buffer.readBytes(buffer.capacity()), false);
+            }
+        });
+
         tree.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 Node selected = tree.getSelection().first();
@@ -49,6 +62,10 @@ public class GamesTree extends VisScrollPane {
                     showPreview();
                 } else {
                     ((AssetFileNode) selected).showPreview(previewArea);
+
+                    if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+                        getStage().addActor(fileChooser);
+                    }
                 }
             }
         });

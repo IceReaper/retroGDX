@@ -16,4 +16,8 @@ public abstract class AssetFileNode extends Node {
     }
 
     public abstract void showPreview(Table previewArea);
+
+    public SmartByteBuffer getBuffer() {
+        return this.buffer;
+    }
 }
