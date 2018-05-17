@@ -40,7 +40,7 @@ public class GamesTree extends VisScrollPane {
 
         FileChooser fileChooser = new FileChooser(FileChooser.Mode.SAVE);
         fileChooser.setListener(new FileChooserAdapter() {
-            public void selected (Array<FileHandle> file) {
+            public void selected(Array<FileHandle> file) {
                 SmartByteBuffer buffer = ((AssetFileNode) tree.getSelection().first()).getBuffer();
                 buffer.position(0);
                 file.first().writeBytes(buffer.readBytes(buffer.capacity()), false);
@@ -61,10 +61,10 @@ public class GamesTree extends VisScrollPane {
                 if (!(selected instanceof AssetFileNode)) {
                     showPreview();
                 } else {
-                    ((AssetFileNode) selected).showPreview(previewArea);
-
                     if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
                         getStage().addActor(fileChooser);
+                    } else {
+                        ((AssetFileNode) selected).showPreview(previewArea);
                     }
                 }
             }

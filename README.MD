@@ -67,6 +67,7 @@ Upon that the default retroGDX application core consists of a simple tree contai
 - wav sound - done
 - msx sound - AudioFormat must be verified (guessed values)
 - snds sound - AudioFormat must be verified (guessed values)
+- obj models - partialy working
 - act UNK - completely missing
 - canm UNK - completely missing
 - ctr UNK - completely missing
@@ -74,13 +75,12 @@ Upon that the default retroGDX application core consists of a simple tree contai
 - fnt UNK - completely missing
 - fun UNK - completely missing
 - net UNK - completely missing
-- obj UNK - completely missing
-- ptc UNK - completely missing
+- ptc map chunk setup - completely missing
 - pyr UNK - completely missing
 - sac UNK - completely missing
 - sfx UNK - completely missing
 - shd UNK - completely missing
-- til UNK - completely missing
+- til map chunk - completely missing
 - tos UNK - completely missing
 - RPNS UNK - completely missing (may not be a file at all)
 

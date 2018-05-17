@@ -3,16 +3,22 @@ package retrogdx.games.futurecop.nodes;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import com.badlogic.gdx.utils.Array;
+import retrogdx.games.futurecop.readers.Bmp;
 import retrogdx.games.futurecop.readers.Container;
 import retrogdx.generic.nodes.RiffWaveNode;
+import retrogdx.ui.PreviewArea;
 import retrogdx.ui.nodes.AssetUnsupportedNode;
 import retrogdx.ui.nodes.FolderVirtualNode;
 import retrogdx.ui.nodes.GameNode;
 import retrogdx.utils.SmartByteBuffer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 public class ContainerNode extends FolderVirtualNode {
+    private List<Bmp> textures = new ArrayList<>();
+
     public ContainerNode(FileHandle file, GameNode gameNode) {
         super(file, gameNode);
     }
@@ -32,6 +38,10 @@ public class ContainerNode extends FolderVirtualNode {
 
             } else if (file.getKey().endsWith(".bmp")) {
                 nodes.add(new BmpNode(file.getKey(), file.getValue()));
+                this.textures.add(new Bmp(file.getValue()));
+
+            } else if (file.getKey().endsWith(".obj")) {
+                nodes.add(new ObjNode(file.getKey(), file.getValue(), this.textures));
 
             } else if (file.getKey().endsWith(".tos")) {
                 nodes.add(new AssetUnsupportedNode(file.getKey(), file.getValue()));
@@ -58,8 +68,6 @@ public class ContainerNode extends FolderVirtualNode {
             } else if (file.getKey().endsWith(".act")) {
                 nodes.add(new AssetUnsupportedNode(file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".sac")) {
-                nodes.add(new AssetUnsupportedNode(file.getKey(), file.getValue()));
-            } else if (file.getKey().endsWith(".obj")) {
                 nodes.add(new AssetUnsupportedNode(file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".canm")) {
                 nodes.add(new AssetUnsupportedNode(file.getKey(), file.getValue()));
