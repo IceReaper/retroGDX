@@ -100,6 +100,6 @@ public class Icn extends Iff {
     }
 
     private void readRtbl(SmartByteBuffer buffer) {
-        this.rtbl = buffer.readBytes(buffer.capacity());
+        this.rtbl = buffer.unwrap();
     }
 }

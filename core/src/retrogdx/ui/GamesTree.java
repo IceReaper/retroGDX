@@ -43,7 +43,7 @@ public class GamesTree extends VisScrollPane {
             public void selected(Array<FileHandle> file) {
                 SmartByteBuffer buffer = ((AssetFileNode) tree.getSelection().first()).getBuffer();
                 buffer.position(0);
-                file.first().writeBytes(buffer.readBytes(buffer.capacity()), false);
+                file.first().writeBytes(buffer.unwrap(), false);
             }
         });
 

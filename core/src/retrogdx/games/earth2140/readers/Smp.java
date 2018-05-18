@@ -13,7 +13,7 @@ public class Smp {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
-        byte[] audioData = buffer.readBytes(buffer.capacity());
+        byte[] audioData = buffer.unwrap();
 
         // TODO values are guessed! Find real values, or verifyExecutableExists that they are correct!
         AudioFormat format = new AudioFormat(16000, 8, 1, false, false);

@@ -13,7 +13,7 @@ public class RiffWave {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
         buffer.position(0);
 
-        byte[] bytes = buffer.readBytes(buffer.capacity());
+        byte[] bytes = buffer.unwrap();
 
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(new ByteArrayInputStream(bytes));
