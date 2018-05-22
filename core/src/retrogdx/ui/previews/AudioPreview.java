@@ -13,17 +13,22 @@ public class AudioPreview extends VisTable implements Disposable {
 
     public AudioPreview(Clip clip) {
         this.clip = clip;
-        this.clip.start();
+
+        if (this.clip != null) {
+            this.clip.start();
+        }
 
         VisTextButton action = new VisTextButton("Start / Stop");
         action.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                if (clip.isRunning()) {
-                    clip.stop();
-                } else {
-                    clip.stop();
-                    clip.setFramePosition(0);
-                    clip.start();
+                if (clip != null) {
+                    if (clip.isRunning()) {
+                        clip.stop();
+                    } else {
+                        clip.stop();
+                        clip.setFramePosition(0);
+                        clip.start();
+                    }
                 }
             }
         });
@@ -33,7 +38,7 @@ public class AudioPreview extends VisTable implements Disposable {
     }
 
     public void dispose() {
-        if (this.clip.isRunning()) {
+        if (this.clip != null && this.clip.isRunning()) {
             this.clip.stop();
         }
     }

@@ -19,7 +19,7 @@ public class Dominion extends GameNode {
         if (file.extension().equalsIgnoreCase("RDF")) {
             return new RdfNode(file, this);
         } else if (file.extension().equalsIgnoreCase("BIN")) {
-            return new BinNode(file, file.sibling(file.nameWithoutExtension() + ".000"), this);
+            return new BinNode(file, this.getFileIgnoreCase(file.parent(), file.nameWithoutExtension() + ".000"), this);
         } else if (file.extension().equalsIgnoreCase("000")) {
             return null;
         }
