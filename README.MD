@@ -61,6 +61,17 @@ Upon that the default retroGDX application core consists of a simple tree contai
 - MIX unk - completely missing (MIXMAX)
 - DAT map - completely missing (may not contain useful assets)
 
+## Eradicator
+- RIBD container - done
+- RAW music - done
+- SOUNDS sound - done
+- TEXTURES texture - missing palette
+- SKIES skybox - missing palette
+- PICTURES image - missing palette
+- SPR_ACTIONS spritesheet - missing palette
+- PALETTE palette - completely missing
+- DB unk - completely missing
+
 ## Future Cop: LAPD
 - container - done
 - bmp image - done
