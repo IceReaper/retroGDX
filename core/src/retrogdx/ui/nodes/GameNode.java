@@ -26,6 +26,16 @@ public abstract class GameNode extends AssetFolderNode {
         return false;
     }
 
+    protected FileHandle getFileIgnoreCase(FileHandle folder, String siblingName) {
+        for (FileHandle sibling : folder.list()) {
+            if (sibling.name().equalsIgnoreCase(siblingName)) {
+                return sibling;
+            }
+        }
+
+        return null;
+    }
+
     protected Array<Tree.Node> populate() {
         Array<Tree.Node> files = new Array<>();
 

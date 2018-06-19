@@ -20,7 +20,7 @@ public class StateOfWar extends GameNode {
 
     public AssetFileNode resolve(FileHandle file) {
         if (file.extension().equalsIgnoreCase("DATA")) {
-            return new DataNode(file, file.sibling(file.nameWithoutExtension() + ".INFO"), this);
+            return new DataNode(file, this.getFileIgnoreCase(file.parent(), file.nameWithoutExtension() + ".INFO"), this);
         } else if (file.extension().equalsIgnoreCase("INFO")) {
             return null;
         }
