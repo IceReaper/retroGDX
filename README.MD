@@ -110,6 +110,10 @@ Upon that the default retroGDX application core consists of a simple tree contai
 - SHA unk - completely missing
 - EDT/MAP/SRF/SRFS/TIL/TMI map - completely missing
 
+## Swarm Assault
+- DDF image container - done
+- SDF sound container - done
+
 ## War Wind + War Wind II: Human Onslaught
 - WAV sound - done
 - RES container - almost done, 000 which contains the game strings, crashes
