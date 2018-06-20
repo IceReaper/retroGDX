@@ -131,8 +131,6 @@ public class Obj {
             int chunkSize = buffer.readInt() - 12;
             buffer.readInt(); // TODO 0x01 - subMesh?
 
-            System.out.println(chunkType);
-
             switch (chunkType) {
                 case "4DGI": // General Information
                     // TODO has a fixed size of 0x3c
@@ -248,6 +246,12 @@ public class Obj {
             }
         }
 
+        // TODO fix this!
+        if (vertices.size() == 0 || normals.size() == 0 || quads.size() == 0) {
+            this.model = new Model();
+            return;
+        }
+
         ModelBuilder modelBuilder = new ModelBuilder();
         modelBuilder.begin();
 
@@ -256,7 +260,14 @@ public class Obj {
 
         try {
             for (int i = 0; i < quads.size(); i++) {
+
                 Quad quad = quads.get(i);
+
+                // TODO fix this!
+                if (quad.vertices != 3 && quad.vertices != 4) {
+                    continue;
+                }
+
                 int bitmap = textures.get(quad.texture).bitmap;
 
                 if (!meshPartBuilders.containsKey(bitmap)) {
