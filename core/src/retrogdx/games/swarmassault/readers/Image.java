@@ -33,14 +33,13 @@ public class Image {
                 int x = 0;
 
                 while (true) {
-                    byte length = imageData.readByte();
-                    byte filler = imageData.readByte();
+                    short length = imageData.readShort();
 
                     if (length == 0) {
                         break;
                     } else if (length < 0) {
                         for (int i = 0; i < -length; i++) {
-                            this.pixels[y * this.width + x++] = filler;
+                            this.pixels[y * this.width + x++] = 0x00;
                         }
                     } else {
                         for (int i = 0; i < length; i++) {
