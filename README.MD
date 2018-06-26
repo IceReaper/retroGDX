@@ -112,6 +112,7 @@ Upon that the default retroGDX application core consists of a simple tree contai
 
 ## Swarm Assault
 - DDF image container - done
+- ANI animation metadata - done
 - SDF sound container - done
 
 ## War Wind + War Wind II: Human Onslaught

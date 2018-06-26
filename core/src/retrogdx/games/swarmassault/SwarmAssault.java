@@ -17,7 +17,7 @@ public class SwarmAssault extends GameNode {
 
     public AssetFileNode resolve(FileHandle file) {
         if (file.extension().equalsIgnoreCase("DDF")) {
-            return new DdfNode(file, this);
+            return new DdfNode(file, this.getFileIgnoreCase(file.parent(), file.nameWithoutExtension() + ".ANI"), this);
         } else if (file.extension().equalsIgnoreCase("SDF")) {
             return new SdfNode(file, this);
         }
