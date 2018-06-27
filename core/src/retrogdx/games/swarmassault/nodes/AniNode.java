@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import retrogdx.games.swarmassault.readers.Image;
 import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.AnimationPreview;
-import retrogdx.ui.previews.ImageSetPreview;
 import retrogdx.utils.SmartByteBuffer;
 
 public class AniNode extends AssetFileNode {

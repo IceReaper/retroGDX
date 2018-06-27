@@ -39,14 +39,18 @@ public class DdfNode extends FolderVirtualNode {
             List<SmartByteBuffer> frames = new ArrayList<>();
 
             for (String frame : entry.getValue()) {
-                frames.add(ddfFiles.get(frame));
-                usedFrames.add(frame);
+                if (ddfFiles.containsKey(frame)) {
+                    frames.add(ddfFiles.get(frame));
+                    usedFrames.add(frame);
+                }
             }
 
-            nodes.add(new AniNode(entry.getKey(), frames.toArray(new SmartByteBuffer[0]), palette));
+            if (frames.size() > 0) {
+                nodes.add(new AniNode(entry.getKey(), frames.toArray(new SmartByteBuffer[0]), palette));
+            }
         }
 
-        for (Entry<String, SmartByteBuffer> file: ddf.getFiles().entrySet()) {
+        for (Entry<String, SmartByteBuffer> file: ddfFiles.entrySet()) {
             if (!file.getKey().equals("palette.pal") && !usedFrames.contains(file.getKey())) {
                 nodes.add(new ImageNode(file.getKey(), file.getValue(), palette));
             }
