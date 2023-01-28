@@ -3,10 +3,15 @@ package retrogdx.games.warwind;
 import com.badlogic.gdx.files.FileHandle;
 import retrogdx.games.warwind.nodes.DatNode;
 import retrogdx.games.warwind.nodes.ResNode;
+import retrogdx.games.warwind.readers.Pal;
 import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.nodes.GameNode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class WarWind extends GameNode {
+    public static Map<String, Pal> PALETTES = new HashMap<>();
     public WarWind() {
         super("War Wind");
     }

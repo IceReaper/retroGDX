@@ -3,6 +3,8 @@ package retrogdx.games.warwind.nodes;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import com.badlogic.gdx.utils.Array;
+import retrogdx.games.warwind.WarWind;
+import retrogdx.games.warwind.readers.Pal;
 import retrogdx.games.warwind.readers.Res;
 import retrogdx.generic.nodes.RiffWaveNode;
 import retrogdx.ui.nodes.GameNode;
@@ -28,6 +30,7 @@ public class ResNode extends FolderVirtualNode {
                 nodes.add(new D3grNode(file.getKey(), file.getValue()));
             } else if (file.getKey().endsWith(".PAL")) {
                 nodes.add(new PalNode(file.getKey(), file.getValue()));
+                WarWind.PALETTES.put(file.getKey(), new Pal(file.getValue()));
             } else {
                 System.out.println("Unknown file format: " + file.getKey());
             }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import retrogdx.games.warwind.WarWind;
 import retrogdx.games.warwind.readers.D3gr;
 import retrogdx.ui.nodes.AssetFileNode;
 import retrogdx.ui.previews.ImageSetPreview;
@@ -26,7 +27,11 @@ public class D3grNode extends AssetFileNode {
             for (int y = 0; y < frame.height; y++) {
                 for (int x = 0; x < frame.width; x++) {
                     int index = frame.pixels[x + y * frame.width] & 0xff;
-                    pixmap.drawPixel(x, y, (index << 24) | (index << 16) | (index << 8) | 0xff);
+                    if (WarWind.PALETTES.containsKey("0.PAL")) {
+                        pixmap.drawPixel(x, y, WarWind.PALETTES.get("0.PAL").colors[index]);
+                    } else {
+                        pixmap.drawPixel(x, y, (index << 24) | (index << 16) | (index << 8) | 0xff);
+                    }
                 }
             }
 
