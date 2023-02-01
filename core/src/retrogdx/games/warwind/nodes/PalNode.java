@@ -15,10 +15,10 @@ public class PalNode extends AssetFileNode {
     public void showPreview(Table previewArea) {
         Pal pal = new Pal(this.buffer);
 
-        Pixmap pixmap = new Pixmap(256, 256, Pixmap.Format.RGBA8888);
+        Pixmap pixmap = new Pixmap(16, 16, Pixmap.Format.RGBA8888);
 
-        for (int i = 0; i < 256 * 256; i++) {
-            pixmap.drawPixel(i % 256, i / 256, pal.colors[i]);
+        for (int i = 0; i < 16 * 16; i++) {
+            pixmap.drawPixel(i % 16, i / 16, pal.colors[i]);
         }
 
         previewArea.add(new ImagePreview(pixmap));

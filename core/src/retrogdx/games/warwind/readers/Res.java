@@ -35,7 +35,16 @@ public class Res {
 
             switch (test) {
                 case 0x3344:
-                    files.put(i + ".D3GR", fileBuffer);
+                    fileBuffer.position(4);
+                    int flags = fileBuffer.readInt();
+                    fileBuffer.position(0);
+                    switch (flags) {
+                        case 0x2001:
+                            files.put(i + ".PAL", fileBuffer);
+                            break;
+                        default: //0x8001
+                            files.put(i + ".D3GR", fileBuffer);
+                    }
                     break;
                 case 0x4952:
                     files.put(i + ".WAV", fileBuffer);
@@ -44,7 +53,7 @@ public class Res {
                     // Nothing here - removed file.
                     break;
                 default:
-                    files.put(i + ".PAL", fileBuffer);
+                    files.put(i + ".UNK", fileBuffer);
                     break;
             }
         }
